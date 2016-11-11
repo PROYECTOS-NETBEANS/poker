@@ -1,46 +1,40 @@
 package poker.servidor.negocio;
 
-import java.util.LinkedList;
-import jsocket.client.OnConnectedEventClient;
+
 import jsocket.server.*;
 
-public class ServerPoker implements jsocket.client.OnConnectedListenerClient{
+public class ServerPoker implements OnConnectedListenerServer{
     
     private JSocketServer servidor = null;
-    private LinkedList<Mesa> mesas = null;
-    private LinkedList<Jugador> jugadores = null;
+    private Juego game = null;
     
     public ServerPoker(){
+        this.inicializar();
+    }
+    private void inicializar(){
         servidor = new JSocketServer(5555);
         servidor.addEventListener(this);
-        mesas = new LinkedList<Mesa>();
-        jugadores = new LinkedList<Jugador>();
+        
+        game = new Juego();
+    }
+    @Override
+    public void onServerStar(OnConnectedEventServer oces) {
         
     }
-    
+
     @Override
-    public void onConnect(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void onConnect(Object o, OnConnectedEventServer oces, String string) {
+
     }
 
     @Override
-    public void onDisconnect(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void onDisconnect(Object o, OnConnectedEventServer oces) {
+
     }
 
     @Override
-    public void onRead(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void onRead(Object o, OnConnectedEventServer oces, String string) {
+
     }
 
-    @Override
-    public void onConnectRefused() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void onConnectFinally() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
