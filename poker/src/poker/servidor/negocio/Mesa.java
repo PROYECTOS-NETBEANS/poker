@@ -1,7 +1,7 @@
 package poker.servidor.negocio;
 
 import java.util.HashMap;
-
+import poker.servidor.datos.*;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -20,13 +20,22 @@ public class Mesa {
      */
     private int nroMax = 0;
     
-    public Mesa(int id){
+    /**
+     * Inicializacion con la configuraciones iniciales
+     * @param id Identificador unico de mesa
+     * @param nroMax Numero maximo que jugadores aceptados en la mesa
+     */
+    public Mesa(int id, int nroMax){
         this.jugadores = new HashMap<>();
         this.baraja = new Baraja();
         this.estado = true;
-        this.nroMax = 0;
+        this.nroMax = nroMax;
         this.id = id;
     }
+    /**
+     * Devuelve identificador unico de la mesa
+     * @return Identificador de mesa
+     */
     public int getId(){
         return this.id;
     }
@@ -53,5 +62,12 @@ public class Mesa {
      */
     public boolean existJugador(int id){
         return jugadores.containsKey(id);
+    }
+    /**
+     * True si la mesa esta vacia false cuando este llena
+     * @return 
+     */
+    public boolean mesaEstaVacia(){
+        return estado;
     }
 }

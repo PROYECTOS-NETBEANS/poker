@@ -2,6 +2,8 @@ package poker.servidor.negocio;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
+import poker.servidor.datos.Archivo;
+import poker.servidor.datos.Jugador;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -48,9 +50,16 @@ public class Baraja {
     }
 
     public static void main(String arg[]){
-    
-        Baraja b = new Baraja();
-        b.barajar();
+        Archivo bd = new Archivo();
+        /*bd.guardarJugador(new Jugador("mikezen2", 310, "M"));
+        bd.guardarJugador(new Jugador("juan34", 1000, "M"));
+        bd.guardarJugador(new Jugador("pedro", 300, "M"));
+        bd.guardarJugador(new Jugador("maria", 0, "F"));
+        
+        Jugador j = bd.getJugador("pedro");
+        
+        System.out.println("jug obt : " + j.toString());         
+       */
     }
     
     /**

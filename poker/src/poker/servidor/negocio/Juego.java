@@ -2,32 +2,42 @@ package poker.servidor.negocio;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
-
+import poker.servidor.datos.*;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
 public class Juego {
-    
+    private Archivo bd = null;
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
+    /**
+     * Identificador auto-incrementador para la mesa
+     */
+    private int idMesa = 0;
+    /**
+     * Identificador auto-incrementador para los jugadores
+     */
+    private int idJugador = 0;
     
     public Juego(){
-        mesas = new HashMap<>();
-        jugadores = new HashMap<>();
+        this.mesas = new HashMap<>();
+        this.jugadores = new HashMap<>();
+        this.idJugador = 0;
+        this.idMesa = 0;
+        this.bd = new Archivo();
     }
     
     /**
      * Crea un nuevo jugador con un monto de 1000 fichas por defecto
      * y se lo adiciona a la lista de jugadores conectados
-     * @param id Identificador unico de jugador
      * @param nick nombre de jugador
      * @param sexo Sexo del jugador
      */
-    public void setJugador(int id ,String nick, String sexo ){
-        Jugador jg = new Jugador(id, nick, 1000, sexo);
-        jugadores.put(id, jg);
+    public void setJugador(String nick, String sexo){
+        Jugador jg = new Jugador(nick, 1000, sexo);        
+        jg.setId(bd.guardarJugador(jg));        
+        jugadores.put(jg.getId(), jg);
     }
     /**
      * Elimina un jugador del juego y mesa
@@ -47,8 +57,12 @@ public class Juego {
         jugadores.remove(id);
 
     }
-    
+    /**
+     * Crea una mesa vacia e inicializa sus configuraciones por defecto
+     */
     public void crearMesa(){
-        
+        mesas.put(idMesa, new Mesa(this.idMesa, Utils.nroMaximoJugadores));
+        this.idMesa++;
     }
+    
 }

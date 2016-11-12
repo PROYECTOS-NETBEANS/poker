@@ -17,6 +17,12 @@ public class ServerPoker implements OnConnectedListenerServer{
         
         game = new Juego();
     }
+    
+    public void iniciarServidor(){        
+        game.crearMesa();
+    }
+    //--------------------------------------------------------------------------------
+    // Escuchadores de eventos del socket
     @Override
     public void onServerStar(OnConnectedEventServer oces) {
         
