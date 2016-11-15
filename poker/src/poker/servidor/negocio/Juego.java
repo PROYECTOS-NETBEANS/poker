@@ -11,6 +11,7 @@ public class Juego {
     private Archivo bd = null;
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
+    
     /**
      * Identificador auto-incrementador para la mesa
      */
@@ -61,8 +62,14 @@ public class Juego {
      * Crea una mesa vacia e inicializa sus configuraciones por defecto
      */
     public void crearMesa(){
-        mesas.put(idMesa, new Mesa(this.idMesa, Utils.nroMaximoJugadores));
+        mesas.put(idMesa, new Mesa(this.idMesa, Utils.nroMaximoJugadores, 10));
         this.idMesa++;
     }
-    
+    /**
+     * Cuando se inicia la partida se asigna el dealer y los
+     * jugadores que tendran la ciega pequeña y grande
+     */
+    public void iniciarPartida(){
+        
+    }
 }

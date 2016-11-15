@@ -10,6 +10,8 @@ public class Mesa {
     
     private int id = 0;
     private Baraja baraja = null;
+    private Casa house = null;
+    private int apuestaMin = 0;
     private HashMap<Integer, Jugador> jugadores = null;
     /**
      * True si la mesa esta vacia false cuando este llena
@@ -24,13 +26,18 @@ public class Mesa {
      * Inicializacion con la configuraciones iniciales
      * @param id Identificador unico de mesa
      * @param nroMax Numero maximo que jugadores aceptados en la mesa
+     * @param apuestaMin Es el monto minimo que se debe de apostar
      */
-    public Mesa(int id, int nroMax){
+    public Mesa(int id, int nroMax, int apuestaMin){
         this.jugadores = new HashMap<>();
         this.baraja = new Baraja();
+        this.house = new Casa();
+        this.id = id;
+        
         this.estado = true;
         this.nroMax = nroMax;
-        this.id = id;
+        this.apuestaMin = apuestaMin;
+
     }
     /**
      * Devuelve identificador unico de la mesa

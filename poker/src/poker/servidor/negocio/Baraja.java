@@ -3,7 +3,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 import poker.servidor.datos.Archivo;
-import poker.servidor.datos.Jugador;
+
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
