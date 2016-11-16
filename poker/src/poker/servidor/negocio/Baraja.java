@@ -3,6 +3,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 import poker.servidor.datos.Archivo;
+import poker.servidor.datos.Jugador;
 
 /**
  * 
@@ -60,6 +61,13 @@ public class Baraja {
         
         System.out.println("jug obt : " + j.toString());         
        */
+        Jugador j =  bd.getJugador("mikezenk");
+        if(j == null){
+            System.out.println("jugador No encontrado");
+        }else{
+            System.out.println("jugador encontrado :" + j.toString());
+        }
+        
     }
     
     /**

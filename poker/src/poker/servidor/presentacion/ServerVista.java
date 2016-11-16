@@ -1,18 +1,36 @@
 package poker.servidor.presentacion;
 
+import javax.swing.DefaultListModel;
+import jsocket.server.JSocketServer;
+import jsocket.server.OnConnectedEventServer;
+import jsocket.server.OnConnectedListenerServer;
+import poker.servidor.negocio.ServerPoker;
+
+
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class ServerVista extends javax.swing.JFrame {
+public class ServerVista extends javax.swing.JFrame implements OnConnectedListenerServer{
 
+    private DefaultListModel usuarios = null;
+    private ServerPoker server = null;
+    
     /**
      * Creates new form vista
      */
     public ServerVista() {
         initComponents();
+        inicializar();
     }
-
+    /**
+     * Inicializa los objetos e inicia el servidor
+     */
+    private void inicializar(){
+        usuarios = new DefaultListModel();
+        server = new ServerPoker(this);
+        server.iniciarServidor();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -24,16 +42,24 @@ public class ServerVista extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lstLista = new javax.swing.JList<>();
+        lstUsuarios = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Iniciar Servidor");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jScrollPane1.setViewportView(lstLista);
+        jScrollPane1.setViewportView(lstUsuarios);
 
         jLabel1.setText("Usuarios Conectados Al Juego :");
+
+        lblEstado.setText("ESTADO DE SERVIDOR : DETENIDO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -47,6 +73,10 @@ public class ServerVista extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(lblEstado)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -57,11 +87,17 @@ public class ServerVista extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(lblEstado)
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,6 +139,79 @@ public class ServerVista extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JList<String> lstLista;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JList<String> lstUsuarios;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onServerStar(OnConnectedEventServer oces) {
+        lblEstado.setText("ESTADO DE SERVIDOR : INICIADO");
+    }
+
+    @Override
+    public void onConnect(Object o, OnConnectedEventServer data, String nick) {
+        // cuando un usuario se conecta
+        this.addUsuarioList(new UsuarioModel(data.getOrigenClient(), nick));
+    }
+
+    @Override
+    public void onDisconnect(Object o, OnConnectedEventServer data) {
+        if(data.getClientDisconnect()){
+            System.out.println("vista.onDisconnect >> key : " + String.valueOf(data.getOrigenClient()));
+            JSocketServer.removeClient(data.getOrigenClient());
+            this.removerUsuario(data.getOrigenClient());
+        } 
+    }
+
+    @Override
+    public void onRead(Object o, OnConnectedEventServer oces, String string) {
+        // Aqui llegan los mensajes de todos los clientes
+        System.out.println("No se implemento la lectura de mensajes");
+    }
+    /**
+     * Elimina un usuario de la lista de usuarios
+     * @param key Identificador primario del usuario conectado
+     */
+    private void removerUsuario(int key){
+        for(int i = 0; i < usuarios.getSize(); i++){
+            UsuarioModel u = (UsuarioModel) usuarios.get(i);
+            if(u.getKey() == key){
+                usuarios.remove(i);
+                lstUsuarios.setModel(usuarios);
+                this.repaint();
+                return;
+            }
+        }
+    }
+    
+    private void addUsuarioList(UsuarioModel usr){
+        usuarios.addElement(usr);
+        lstUsuarios.setModel(usuarios);
+    }
+    
+}
+
+class UsuarioModel{
+    private int key = 0;
+    private String userName = "";
+    /**
+     * Constructor de clase
+     * @param key identificador unico de usuario
+     * @param userName nombre de usuario de la persona que acaba de conectarse
+     * @param ip ip del cliente que se conecto
+     */
+    public UsuarioModel(int key, String userName){
+        this.key = key;
+        this.userName = userName;        
+    }
+    public int getKey(){
+        return this.key;
+    }
+    public String getUserName(){
+        return this.userName;
+    }
+    @Override
+    public String toString(){
+        return this.userName;
+    }
 }

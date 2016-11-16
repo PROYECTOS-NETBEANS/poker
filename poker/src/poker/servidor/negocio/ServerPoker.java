@@ -1,46 +1,27 @@
 package poker.servidor.negocio;
 
 
+import java.util.EventListener;
 import jsocket.server.*;
 
-public class ServerPoker implements OnConnectedListenerServer{
+public class ServerPoker{
     
     private JSocketServer servidor = null;
     private Juego game = null;
     
-    public ServerPoker(){
-        this.inicializar();
+    public ServerPoker(EventListener listener){
+        this.inicializar(listener);
     }
-    private void inicializar(){
+    private void inicializar(EventListener listener){
         servidor = new JSocketServer(5555);
-        servidor.addEventListener(this);
-        
+        servidor.addEventListener(listener);        
         game = new Juego();
     }
-    
+    /**
+     * Iniciamos el servidor y creamos la primera mesa
+     */
     public void iniciarServidor(){        
+        servidor.iniciarServicio();
         game.crearMesa();
-    }
-    //--------------------------------------------------------------------------------
-    // Escuchadores de eventos del socket
-    @Override
-    public void onServerStar(OnConnectedEventServer oces) {
-        
-    }
-
-    @Override
-    public void onConnect(Object o, OnConnectedEventServer oces, String string) {
-
-    }
-
-    @Override
-    public void onDisconnect(Object o, OnConnectedEventServer oces) {
-
-    }
-
-    @Override
-    public void onRead(Object o, OnConnectedEventServer oces, String string) {
-
-    }
-
+    }    
 }

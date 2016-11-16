@@ -1,18 +1,26 @@
 package poker.cliente.presentacion;
-
+import jsocket.client.*;
+import poker.cliente.negocio.PokerClient;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class InicializarVista extends javax.swing.JFrame {
+public class InicializarVista extends javax.swing.JFrame implements OnConnectedListenerClient{
 
+    private PokerClient cliente = null;
     /**
      * Creates new form vista
      */
     public InicializarVista() {
         initComponents();
+        this.inicializar();
     }
-
+    private void inicializar(){
+        cliente = new PokerClient(this, 5555, "192.168.0.100");
+        cliente.conectarServidor("pedro");
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +86,31 @@ public class InicializarVista extends javax.swing.JFrame {
                 new InicializarVista().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void onConnect(Object o, OnConnectedEventClient ocec) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onDisconnect(Object o, OnConnectedEventClient ocec) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onRead(Object o, OnConnectedEventClient ocec) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onConnectRefused() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onConnectFinally() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

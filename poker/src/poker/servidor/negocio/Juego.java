@@ -31,14 +31,27 @@ public class Juego {
     
     /**
      * Crea un nuevo jugador con un monto de 1000 fichas por defecto
-     * y se lo adiciona a la lista de jugadores conectados
      * @param nick nombre de jugador
      * @param sexo Sexo del jugador
      */
-    public void setJugador(String nick, String sexo){
-        Jugador jg = new Jugador(nick, 1000, sexo);        
+    public void guardarJugador(String nick, String sexo){
+        Jugador jg = new Jugador(nick, 1000, sexo);      
         jg.setId(bd.guardarJugador(jg));        
-        jugadores.put(jg.getId(), jg);
+    }
+    /**
+     * Metodo que obtiene un jugador a partir del nick del usuario, si encuentra
+     * se asigna a la lista de jugadores conectados y devuelve true
+     * @param nick Nombre de usuario
+     * @return true si encuentra al jugador en la bd, caso contrario falso
+     */
+    public boolean getJugador(String nick){
+        Jugador jg = bd.getJugador(nick);
+        if(jg != null){
+            jugadores.put( jg.getId(), jg );
+            return true;
+        }else{
+            return false;
+        }        
     }
     /**
      * Elimina un jugador del juego y mesa
