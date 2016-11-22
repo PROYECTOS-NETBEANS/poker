@@ -13,9 +13,11 @@ import jsocket.client.*;
  */
 public class PokerClient implements OnConnectedListenerClient{
     private JSocketClient cliente = null;
+    private JuegoCliente game = null;
     
-    public PokerClient(EventListener listener, int puerto, String ip){
+    public PokerClient(EventListener listener, int puerto, String ip){        
         this.inicializar(listener, puerto, ip);
+        game = new JuegoCliente();
     }
     /**
      * Inicializa todos los objetos para la conexion 
@@ -41,9 +43,8 @@ public class PokerClient implements OnConnectedListenerClient{
             cliente.conectarServidor(nick);
         } catch (Exception e) {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
-        }
-        
-    }    
+        }        
+    }
 
     @Override
     public void onConnect(Object o, OnConnectedEventClient ocec) {

@@ -1,17 +1,12 @@
 package poker.cliente.presentacion;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.io.File;
-import javax.swing.ImageIcon;
-import jsocket.client.*;
 import poker.cliente.negocio.PokerClient;
 import poker.servidor.presentacion.Lienzo;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class InicializarVista extends javax.swing.JFrame implements OnConnectedListenerClient{
+public class InicializarVista extends javax.swing.JFrame {
 
     private PokerClient cliente = null;
     private Lienzo lienzo = null;
@@ -28,10 +23,6 @@ public class InicializarVista extends javax.swing.JFrame implements OnConnectedL
         lienzo = new Lienzo();        
         lienzo.setBounds(10, 10, 200, 200);
         lienzo.setBackground(Color.ORANGE);
-        File file = new File("resources/lienzo.jpg");
-        System.out.println("pat : " + file.getAbsolutePath());
-        ImageIcon img = new ImageIcon(file.getAbsolutePath());
-        lienzo.cargarImagen(img);
         this.getContentPane().add(lienzo);
     }
     
@@ -102,31 +93,6 @@ public class InicializarVista extends javax.swing.JFrame implements OnConnectedL
                 new InicializarVista().setVisible(true);
             }
         });
-    }
-
-    @Override
-    public void onConnect(Object o, OnConnectedEventClient ocec) {
-        System.out.println("on connect no implementado!!");
-    }
-
-    @Override
-    public void onDisconnect(Object o, OnConnectedEventClient ocec) {
-        System.out.println("on disconnect no implementado!!");
-    }
-
-    @Override
-    public void onRead(Object o, OnConnectedEventClient ocec) {
-        System.out.println("on Read no implementado!!");
-    }
-
-    @Override
-    public void onConnectRefused() {
-        System.out.println("on conect refused no implementado!!");
-    }
-
-    @Override
-    public void onConnectFinally() {
-        System.out.println("on connect finally no implementado!!");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
