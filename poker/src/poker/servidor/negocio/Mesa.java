@@ -12,6 +12,12 @@ public class Mesa {
     private Baraja baraja = null;
     private Casa house = null;
     private int apuestaMin = 0;
+    /**
+     * Es la lista que contiene las cartas de los jugadores en la mesa
+     * key : Es el identificador unico del jugador
+     * value : Es una lista con las cartas del jugador
+     */
+    private HashMap<Integer,Object> cartasJugadores = null;
     private HashMap<Integer, Jugador> jugadores = null;
     /**
      * True si la mesa esta vacia false cuando este llena
@@ -37,7 +43,7 @@ public class Mesa {
         this.estado = true;
         this.nroMax = nroMax;
         this.apuestaMin = apuestaMin;
-
+        this.cartasJugadores = new HashMap<>();
     }
     /**
      * Devuelve identificador unico de la mesa

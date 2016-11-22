@@ -1,6 +1,12 @@
 package poker.cliente.presentacion;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.io.File;
+import javax.swing.ImageIcon;
 import jsocket.client.*;
 import poker.cliente.negocio.PokerClient;
+import poker.servidor.presentacion.Lienzo;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -8,6 +14,7 @@ import poker.cliente.negocio.PokerClient;
 public class InicializarVista extends javax.swing.JFrame implements OnConnectedListenerClient{
 
     private PokerClient cliente = null;
+    private Lienzo lienzo = null;
     /**
      * Creates new form vista
      */
@@ -16,9 +23,16 @@ public class InicializarVista extends javax.swing.JFrame implements OnConnectedL
         this.inicializar();
     }
     private void inicializar(){
-        cliente = new PokerClient(this, 5555, "192.168.0.100");
-        cliente.conectarServidor("pedro");
-        
+        //cliente = new PokerClient(this, 5555, "192.168.0.115");
+        //cliente.conectarServidor("pedro");
+        lienzo = new Lienzo();        
+        lienzo.setBounds(10, 10, 200, 200);
+        lienzo.setBackground(Color.ORANGE);
+        File file = new File("resources/lienzo.jpg");
+        System.out.println("pat : " + file.getAbsolutePath());
+        ImageIcon img = new ImageIcon(file.getAbsolutePath());
+        lienzo.cargarImagen(img);
+        this.getContentPane().add(lienzo);
     }
     
     /**
@@ -30,17 +44,19 @@ public class InicializarVista extends javax.swing.JFrame implements OnConnectedL
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 773, Short.MAX_VALUE)
+            .addGap(0, 549, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 377, Short.MAX_VALUE)
+            .addGap(0, 302, Short.MAX_VALUE)
         );
 
         pack();
@@ -90,29 +106,30 @@ public class InicializarVista extends javax.swing.JFrame implements OnConnectedL
 
     @Override
     public void onConnect(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("on connect no implementado!!");
     }
 
     @Override
     public void onDisconnect(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("on disconnect no implementado!!");
     }
 
     @Override
     public void onRead(Object o, OnConnectedEventClient ocec) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("on Read no implementado!!");
     }
 
     @Override
     public void onConnectRefused() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("on conect refused no implementado!!");
     }
 
     @Override
     public void onConnectFinally() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("on connect finally no implementado!!");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,19 +1,24 @@
-package poker.servidor.datos;
+package poker.utils.datos;
+
+import java.io.Serializable;
 
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Protocolo {
-    private int idCliente;
-    
-    public Protocolo(){
-        this.idCliente = 0;
+public class PaquetePk implements Serializable{
+    private TipoPaquete paquete = null;
+    private String data = "";
+    public PaquetePk(String data, TipoPaquete pq){
+        this.data = "";
+        this.paquete = pq;        
     }
-    public int getData(){
-        return this.idCliente;
+    public String getData(){
+        return this.data;
     }
-    
+    public TipoPaquete getTipoPaquete(){
+        return this.paquete;
+    }
     @Override
     public String toString(){
         return "";

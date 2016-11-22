@@ -1,5 +1,6 @@
 package poker.servidor.negocio;
 
+
 import java.util.HashMap;
 import java.util.Iterator;
 import poker.servidor.datos.*;
@@ -15,7 +16,7 @@ public class Juego {
     /**
      * Identificador auto-incrementador para la mesa
      */
-    private int idMesa = 0;
+    private int idMesa = 1;
     /**
      * Identificador auto-incrementador para los jugadores
      */
@@ -25,7 +26,7 @@ public class Juego {
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
         this.idJugador = 0;
-        this.idMesa = 0;
+        this.idMesa = 1;
         this.bd = new Archivo();
     }
     
@@ -84,5 +85,12 @@ public class Juego {
      */
     public void iniciarPartida(){
         
+    }
+    /**
+     * Metodo que devuelve una lista de mesas
+     * @return 
+     */
+    public HashMap getMesas(){
+        return this.mesas;
     }
 }

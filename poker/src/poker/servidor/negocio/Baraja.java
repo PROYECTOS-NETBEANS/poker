@@ -1,15 +1,16 @@
 package poker.servidor.negocio;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Stack;
 import poker.servidor.datos.Archivo;
 import poker.servidor.datos.Jugador;
-
+import poker.utils.datos.*;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Baraja {
+public class Baraja implements Serializable{
     private Stack<Carta> pila = null;
     
     public Baraja(){
@@ -77,61 +78,61 @@ public class Baraja {
     private LinkedList<Carta> inicializarBaraja(){
         LinkedList<Carta> cartas = new LinkedList();
                 
-        cartas.add(new Carta(2, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(3, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(4, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(5, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(6, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(7, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(8, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(9, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(10, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(11, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(12, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(13, Constantes.CARTA_CORAZON));
-        cartas.add(new Carta(14, Constantes.CARTA_CORAZON));
+        cartas.add(new Carta(2, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(3, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(4, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(5, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(6, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(7, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(8, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(9, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(10, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(11, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(12, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(13, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(14, Constantes.CARTA_CORAZON, Constantes.COLOR_ROJO));
 
-        cartas.add(new Carta(2, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(3, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(4, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(5, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(6, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(7, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(8, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(9, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(10, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(11, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(12, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(13, Constantes.CARTA_DIAMANTE));
-        cartas.add(new Carta(14, Constantes.CARTA_DIAMANTE));
+        cartas.add(new Carta(2, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(3, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(4, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(5, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(6, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(7, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(8, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(9, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(10, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(11, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(12, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(13, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
+        cartas.add(new Carta(14, Constantes.CARTA_DIAMANTE, Constantes.COLOR_ROJO));
  
-        cartas.add(new Carta(2, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(3, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(4, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(5, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(6, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(7, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(8, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(9, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(10, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(11, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(12, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(13, Constantes.CARTA_TREBOL));
-        cartas.add(new Carta(14, Constantes.CARTA_TREBOL));
+        cartas.add(new Carta(2, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(3, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(4, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(5, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(6, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(7, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(8, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(9, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(10, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(11, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(12, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(13, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(14, Constantes.CARTA_TREBOL, Constantes.COLOR_NEGRO));
         
-        cartas.add(new Carta(2, Constantes.CARTA_PICA));
-        cartas.add(new Carta(3, Constantes.CARTA_PICA));
-        cartas.add(new Carta(4, Constantes.CARTA_PICA));
-        cartas.add(new Carta(5, Constantes.CARTA_PICA));
-        cartas.add(new Carta(6, Constantes.CARTA_PICA));
-        cartas.add(new Carta(7, Constantes.CARTA_PICA));
-        cartas.add(new Carta(8, Constantes.CARTA_PICA));
-        cartas.add(new Carta(9, Constantes.CARTA_PICA));
-        cartas.add(new Carta(10, Constantes.CARTA_PICA));
-        cartas.add(new Carta(11, Constantes.CARTA_PICA));
-        cartas.add(new Carta(12, Constantes.CARTA_PICA));
-        cartas.add(new Carta(13, Constantes.CARTA_PICA));
-        cartas.add(new Carta(14, Constantes.CARTA_PICA));
+        cartas.add(new Carta(2, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(3, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(4, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(5, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(6, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(7, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(8, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(9, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(10, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(11, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(12, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(13, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
+        cartas.add(new Carta(14, Constantes.CARTA_PICA, Constantes.COLOR_NEGRO));
        
         return cartas;
     }

@@ -11,7 +11,7 @@ import jsocket.client.*;
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class PokerClient {
+public class PokerClient implements OnConnectedListenerClient{
     private JSocketClient cliente = null;
     
     public PokerClient(EventListener listener, int puerto, String ip){
@@ -26,13 +26,14 @@ public class PokerClient {
     private void inicializar(EventListener listener, int puerto, String ip){
         try {
             cliente = new JSocketClient(puerto, ip);
-            cliente.addEventListener(listener);            
+            cliente.addEventListener(listener);
+            cliente.addEventListener(this);
         } catch (Exception e) {
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
         }
     }
     /**
-     * Inicializa el servicio con el servidor
+     * Inicializa y conecta el servicio con el servidor
      * @param nick Nombre de usuario del cliente
      */
     public void conectarServidor(String nick){
@@ -42,6 +43,31 @@ public class PokerClient {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
         }
         
+    }    
+
+    @Override
+    public void onConnect(Object o, OnConnectedEventClient ocec) {
+        System.out.println("onconnect no implementado");
     }
-    
+
+    @Override
+    public void onDisconnect(Object o, OnConnectedEventClient ocec) {
+        System.out.println("onDisconnect no implementado");
+    }
+
+    @Override
+    public void onRead(Object o, OnConnectedEventClient ocec) {
+        System.out.println("cuando llegue un paquete hay que desglosar");
+        
+    }
+
+    @Override
+    public void onConnectRefused() {
+        System.out.println("onconnectRefused no implementado");
+    }
+
+    @Override
+    public void onConnectFinally() {
+        System.out.println("onConnectFinally no implementado");
+    }
 }

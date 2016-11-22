@@ -1,4 +1,4 @@
-package poker.servidor.negocio;
+package poker.utils.datos;
 
 /**
  * 
@@ -12,4 +12,4 @@ public enum Constantes {
      
     COLOR_ROJO,
     COLOR_NEGRO
-}
+};
