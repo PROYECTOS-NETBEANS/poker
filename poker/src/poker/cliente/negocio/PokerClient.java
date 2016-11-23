@@ -11,21 +11,19 @@ public class PokerClient implements OnConnectedListenerClient{
     private JuegoCliente game = null;
     private Analizador anx = null;
     
-    public PokerClient(EventListener listener, int puerto, String ip){        
-        this.inicializar(listener, puerto, ip);
+    public PokerClient(int puerto, String ip){
+        this.inicializar(puerto, ip);
         game = new JuegoCliente();
         this.anx = new Analizador();
     }
     /**
-     * Inicializa todos los objetos para la conexion 
-     * @param listener Escuchador de eventos que se generan
+     * Inicializa todos los objetos para la conexion     
      * @param puerto Puerto donde esta escuchando en el servidor
      * @param ip Dirección ip del servidor
      */
-    private void inicializar(EventListener listener, int puerto, String ip){
+    private void inicializar(int puerto, String ip){
         try {
-            cliente = new JSocketClient(puerto, ip);
-            //cliente.addEventListener(listener);
+            cliente = new JSocketClient(puerto, ip);            
             cliente.addEventListener(this);
         } catch (Exception e) {
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
@@ -52,7 +50,11 @@ public class PokerClient implements OnConnectedListenerClient{
     public void onDisconnect(Object o, OnConnectedEventClient ocec) {
         System.out.println("onDisconnect no implementado");
     }
-
+    /**
+     * Metodo que que se ejecuta cuando llega un paquete del servidor
+     * @param o Objeto donde se genero el evento
+     * @param ocec Evento que se genera cuando llega el paquete
+     */
     @Override
     public void onRead(Object o, OnConnectedEventClient ocec) {
         this.onRead(ocec.getMessage());
@@ -68,7 +70,7 @@ public class PokerClient implements OnConnectedListenerClient{
         System.out.println("onConnectFinally no implementado");
     }
     /**
-     * 
+     * Metodo que analiza el tipo de paquete que llega del servidor
      */
     private void onRead(String data){
         PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);

@@ -1,4 +1,4 @@
-package poker.servidor.presentacion;
+package poker.cliente.presentacion;
 
 import java.awt.Color;
 import javax.swing.ImageIcon; 
@@ -10,8 +10,8 @@ import javax.swing.JPanel;
 import jsocket.client.OnConnectedEventClient;
 import jsocket.client.OnConnectedListenerClient;
 /**
- * 
- * @author LIMBERT
+ * Clase donde se generan las mesas que hay en el servidor
+ * @author Alex Limbert Yalusqui
  */
 public class Lienzo extends JPanel implements OnConnectedListenerClient{
     private Image imgMesa = null;

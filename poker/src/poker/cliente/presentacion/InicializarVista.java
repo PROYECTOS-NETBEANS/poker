@@ -1,7 +1,7 @@
 package poker.cliente.presentacion;
 import java.awt.Color;
 import poker.cliente.negocio.PokerClient;
-import poker.servidor.presentacion.Lienzo;
+import poker.cliente.presentacion.Lienzo;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -18,11 +18,11 @@ public class InicializarVista extends javax.swing.JFrame {
         this.inicializar();
     }
     private void inicializar(){
-        //cliente = new PokerClient(this, 5555, "192.168.0.115");
-        cliente = new PokerClient(null, 5555, "localhost");
+        cliente = new PokerClient(5555, "192.168.0.115");
+        //cliente = new PokerClient(5555, "localhost");
         
         cliente.conectarServidor("pedro");
-        lienzo = new Lienzo();        
+        lienzo = new Lienzo();
         lienzo.setBounds(10, 10, 200, 200);
         lienzo.setBackground(Color.ORANGE);
         this.getContentPane().add(lienzo);
