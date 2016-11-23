@@ -60,6 +60,6 @@ public class ServerPoker implements OnConnectedListenerServer{
         String data = Parser.objectToString(game.getMesas());
         PaquetePk p = new PaquetePk(data, TipoPaquete.LISTA_MESAS);
         // solo enviamos el paquete encapsulado al cliente        
-        servidor.sendMessageAll(Parser.objectToString(p), -1);        
+        servidor.sendMessageAll(Parser.objectToString(p), -1);
     }
 }

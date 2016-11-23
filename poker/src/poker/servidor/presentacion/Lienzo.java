@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import jsocket.client.OnConnectedEventClient;
 import jsocket.client.OnConnectedListenerClient;
 /**
- *
+ * 
  * @author LIMBERT
  */
 public class Lienzo extends JPanel implements OnConnectedListenerClient{

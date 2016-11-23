@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package poker.cliente.negocio;
 import java.util.EventListener;
 import jsocket.client.*;
+import poker.utils.datos.*;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -14,10 +9,12 @@ import jsocket.client.*;
 public class PokerClient implements OnConnectedListenerClient{
     private JSocketClient cliente = null;
     private JuegoCliente game = null;
+    private Analizador anx = null;
     
     public PokerClient(EventListener listener, int puerto, String ip){        
         this.inicializar(listener, puerto, ip);
         game = new JuegoCliente();
+        this.anx = new Analizador();
     }
     /**
      * Inicializa todos los objetos para la conexion 
@@ -28,7 +25,7 @@ public class PokerClient implements OnConnectedListenerClient{
     private void inicializar(EventListener listener, int puerto, String ip){
         try {
             cliente = new JSocketClient(puerto, ip);
-            cliente.addEventListener(listener);
+            //cliente.addEventListener(listener);
             cliente.addEventListener(this);
         } catch (Exception e) {
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
@@ -58,10 +55,9 @@ public class PokerClient implements OnConnectedListenerClient{
 
     @Override
     public void onRead(Object o, OnConnectedEventClient ocec) {
-        System.out.println("cuando llegue un paquete hay que desglosar");
-        
+        this.onRead(ocec.getMessage());
     }
-
+    
     @Override
     public void onConnectRefused() {
         System.out.println("onconnectRefused no implementado");
@@ -70,5 +66,13 @@ public class PokerClient implements OnConnectedListenerClient{
     @Override
     public void onConnectFinally() {
         System.out.println("onConnectFinally no implementado");
+    }
+    /**
+     * 
+     */
+    private void onRead(String data){
+        PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);
+        anx.analizarPaquete(pk);
+        
     }
 }

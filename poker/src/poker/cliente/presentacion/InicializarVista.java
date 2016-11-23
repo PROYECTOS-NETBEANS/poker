@@ -19,7 +19,9 @@ public class InicializarVista extends javax.swing.JFrame {
     }
     private void inicializar(){
         //cliente = new PokerClient(this, 5555, "192.168.0.115");
-        //cliente.conectarServidor("pedro");
+        cliente = new PokerClient(null, 5555, "localhost");
+        
+        cliente.conectarServidor("pedro");
         lienzo = new Lienzo();        
         lienzo.setBounds(10, 10, 200, 200);
         lienzo.setBackground(Color.ORANGE);

@@ -10,5 +10,8 @@ import java.util.EventListener;
 public interface OnPackageListener extends EventListener{
     public void listaMesas();
     public void nuevaMesa();
-    public void mesaLlena();
+    public void mesaLlena(String data);
+    
+    public void nuevoJugador(String data);
+    
 }
