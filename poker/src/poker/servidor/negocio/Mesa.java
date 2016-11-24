@@ -83,4 +83,11 @@ public class Mesa {
     public boolean mesaEstaVacia(){
         return estado;
     }
+    /**
+     * Metodo que cambia de estado de la mesa de acuerdo
+     * @param b Estado de la mesa [true: mesa vacia, false : mesa llena]
+     */
+    public void setEstadoMesa(boolean b){
+        this.estado = b;
+    }
 }

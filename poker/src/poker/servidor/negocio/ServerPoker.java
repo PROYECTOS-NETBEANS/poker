@@ -2,6 +2,8 @@ package poker.servidor.negocio;
 
 
 import java.util.EventListener;
+import java.util.HashMap;
+import java.util.Iterator;
 import jsocket.server.*;
 import poker.utils.datos.PaquetePk;
 import poker.utils.datos.Parser;
@@ -56,10 +58,14 @@ public class ServerPoker implements OnConnectedListenerServer{
      * Metodo que envia al cliente todas la mesas
      * que hay creadas en el servidor
      */    
-    private void enviarMesas(){        
-        String data = Parser.objectToString(game.getMesas());
-        PaquetePk p = new PaquetePk(data, TipoPaquete.LISTA_MESAS);
-        // solo enviamos el paquete encapsulado al cliente        
-        servidor.sendMessageAll(Parser.objectToString(p), -1);
+    private void enviarMesas(){
+        HashMap mesas = game.getMesas();
+        Iterator it = mesas.entrySet().iterator();
+        while(it.hasNext()){
+            Mesa mesa = (Mesa) it.next();
+            String data = Parser.objectToString(mesa);
+            PaquetePk p = new PaquetePk(data, TipoPaquete.MESA);
+            servidor.sendMessageAll(Parser.objectToString(p) , -1);
+        }
     }
 }

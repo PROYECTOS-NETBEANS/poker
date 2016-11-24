@@ -1,7 +1,7 @@
 package poker.cliente.negocio;
 import java.util.EventListener;
+import javax.swing.event.EventListenerList;
 import jsocket.client.*;
-import poker.utils.datos.*;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -14,7 +14,8 @@ public class PokerClient implements OnConnectedListenerClient{
     public PokerClient(int puerto, String ip){
         this.inicializar(puerto, ip);
         game = new JuegoCliente();
-        this.anx = new Analizador();
+        anx = new Analizador();
+        anx.addEventListener(game);
     }
     /**
      * Inicializa todos los objetos para la conexion     
@@ -23,7 +24,7 @@ public class PokerClient implements OnConnectedListenerClient{
      */
     private void inicializar(int puerto, String ip){
         try {
-            cliente = new JSocketClient(puerto, ip);            
+            cliente = new JSocketClient(puerto, ip);          
             cliente.addEventListener(this);
         } catch (Exception e) {
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
@@ -72,9 +73,7 @@ public class PokerClient implements OnConnectedListenerClient{
     /**
      * Metodo que analiza el tipo de paquete que llega del servidor
      */
-    private void onRead(String data){
-        PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);
-        anx.analizarPaquete(pk);
-        
+    private void onRead(String data){        
+        anx.setMessage(data);        
     }
 }
