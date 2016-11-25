@@ -48,7 +48,6 @@ public class Analizador {
         }
     }
     private void nuevaMesa(String data){
-        
         Mesa mesa = (Mesa) Parser.stringToObject(data, Mesa.class);
         
         Object[] listeners = listenerList.getListenerList();
@@ -58,7 +57,7 @@ public class Analizador {
                  ((OnPackageListener) listeners[i]).nuevaMesa(mesa);
             }
         }
-        
+
     }
     private void nuevoJugador(String data){
         

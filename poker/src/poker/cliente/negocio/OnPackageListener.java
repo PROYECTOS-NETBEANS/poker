@@ -1,7 +1,6 @@
 package poker.cliente.negocio;
 
 import java.util.EventListener;
-import java.util.HashMap;
 import poker.servidor.datos.Jugador;
 import poker.servidor.negocio.Mesa;
 
@@ -15,16 +14,16 @@ public interface OnPackageListener extends EventListener{
      * Mesa nueva que llega del servidor
      * @param mesa 
      */
-    public void nuevaMesa(Mesa mesa);
+    public void onNuevaMesa(Mesa mesa);
     /**
      * Cambia el estado de la mesa 
      * @param idMesa Identificador primario de mesa que se cambiará el estado
      * @param estado Estado [true : mesa llena, false mesa vacia]
      */
-    public void mesaLlena(int idMesa, boolean estado);
+    public void onMesaLlena(int idMesa, boolean estado);
     /**
      * Cuando un jugador nuevo entra a la mesa
      * @param jg Jugador que llega del servidor
      */
-    public void nuevoJugador(Jugador jg);
+    public void onNuevoJugador(Jugador jg);
 }

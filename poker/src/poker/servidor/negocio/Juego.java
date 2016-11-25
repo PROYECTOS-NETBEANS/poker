@@ -89,7 +89,7 @@ public class Juego {
      * Metodo que devuelve una lista de mesas
      * @return 
      */
-    public HashMap getMesas(){
+    public HashMap<Integer, Mesa> getMesas(){
         return this.mesas;
     }
 }

@@ -6,7 +6,6 @@ import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;
 import poker.servidor.negocio.ServerPoker;
 
-
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>

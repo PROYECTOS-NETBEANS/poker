@@ -4,6 +4,7 @@ package poker.servidor.negocio;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import jsocket.server.*;
 import poker.utils.datos.PaquetePk;
 import poker.utils.datos.Parser;
@@ -59,13 +60,17 @@ public class ServerPoker implements OnConnectedListenerServer{
      * que hay creadas en el servidor
      */    
     private void enviarMesas(){
-        HashMap mesas = game.getMesas();
-        Iterator it = mesas.entrySet().iterator();
-        while(it.hasNext()){
-            Mesa mesa = (Mesa) it.next();
-            String data = Parser.objectToString(mesa);
-            PaquetePk p = new PaquetePk(data, TipoPaquete.MESA);
-            servidor.sendMessageAll(Parser.objectToString(p) , -1);
+        try{
+            HashMap<Integer, Mesa> mesas = game.getMesas();
+            Iterator it = mesas.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry e = (Map.Entry) it.next();
+                String mesa = Parser.objectToString((Mesa) e.getValue());
+                PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
+                servidor.sendMessageAll(Parser.objectToString(p) , -1);
+            }
+        }catch(Exception e){
+            System.out.println("[ServerPoker.EnviarMesas()] : " + e.getMessage());
         }
     }
 }

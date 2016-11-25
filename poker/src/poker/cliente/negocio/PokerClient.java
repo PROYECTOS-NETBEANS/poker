@@ -1,6 +1,4 @@
 package poker.cliente.negocio;
-import java.util.EventListener;
-import javax.swing.event.EventListenerList;
 import jsocket.client.*;
 /**
  * 
@@ -73,7 +71,7 @@ public class PokerClient implements OnConnectedListenerClient{
     /**
      * Metodo que analiza el tipo de paquete que llega del servidor
      */
-    private void onRead(String data){        
-        anx.setMessage(data);        
+    private void onRead(String data){
+        anx.setMessage(data);
     }
 }

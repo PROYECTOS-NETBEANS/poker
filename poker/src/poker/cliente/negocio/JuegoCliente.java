@@ -14,42 +14,49 @@ public class JuegoCliente implements OnPackageListener{
      * Lista de mesas que hay en el servidor
      */
     private HashMap<Integer, Mesa> mesas = null;
-
+    
     public JuegoCliente(){
         this.mesas = new HashMap<>();
     }
     
-    
+    public Entidad getMesa(int index){
+        
+    }
     /**
      * Adiciona una mesa a la lista de mesas
-     * @param m 
+     * @param m una mesa que llega del servidor
      */
     private void addMesa(Mesa m){
         this.mesas.put(m.getId(), m);
-        System.out.println("mesa cli : " + Integer.toString(m.getId()));
     }
-    
+    /**
+     * Cambia de Estado a la mesa
+     * @param idMesa Identificador primario de mesa
+     * @param estado Estado de mesa
+     */
     private void setEstadoMesa(int idMesa, boolean estado){
         this.mesas.get(idMesa).setEstadoMesa(estado);                
     }
-    
+    /**
+     * Adiciona un jugador a la lista de jugadores de la mesa
+     * @param jg Jugador que llega del servidor
+     */
     private void addJugador(Jugador jg){
         System.out.println("Nuevo jugador no implementado!!!!");
     }
     // de aqui hacia abajo solo los metodos de la interfaz
     @Override
-    public void nuevaMesa(Mesa mesa) {
+    public void onNuevaMesa(Mesa mesa) {
         this.addMesa(mesa);
     }
 
     @Override
-    public void mesaLlena(int idMesa, boolean estado) {
+    public void onMesaLlena(int idMesa, boolean estado) {
         this.setEstadoMesa(idMesa, estado);
     }
 
     @Override
-    public void nuevoJugador(Jugador jg) {
+    public void onNuevoJugador(Jugador jg) {
         this.addJugador(jg);
     }
-
 }
