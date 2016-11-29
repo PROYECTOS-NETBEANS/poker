@@ -30,8 +30,6 @@ public class ServerPoker implements OnConnectedListenerServer{
     public void iniciarServidor(){        
         servidor.iniciarServicio();
         game.crearMesa();
-        game.crearMesa();
-        game.crearMesa();
     }
 
     @Override
@@ -65,12 +63,23 @@ public class ServerPoker implements OnConnectedListenerServer{
             Iterator it = mesas.entrySet().iterator();
             while(it.hasNext()){
                 Map.Entry e = (Map.Entry) it.next();
-                String mesa = Parser.objectToString((Mesa) e.getValue());
-                PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
-                servidor.sendMessageAll(Parser.objectToString(p) , -1);
+                this.enviarMesa((Mesa)e.getValue());
             }
         }catch(Exception e){
             System.out.println("[ServerPoker.EnviarMesas()] : " + e.getMessage());
         }
+    }
+    /**
+     * Envia una mesa a los clientes
+     * @param m Mesa a enviar a los clientes
+     */
+    private void enviarMesa(Mesa m){
+        String mesa = Parser.objectToString(m);
+        PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
+        servidor.sendMessageAll(Parser.objectToString(p) , -1);
+    }
+    public void nuevaMesa(){
+        Mesa m = game.crearMesa();
+        this.enviarMesa(m);
     }
 }

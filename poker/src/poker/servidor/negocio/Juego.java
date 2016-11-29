@@ -73,10 +73,13 @@ public class Juego {
     }
     /**
      * Crea una mesa vacia e inicializa sus configuraciones por defecto
+     * @return Devuelve la mesa creada
      */
-    public void crearMesa(){
-        mesas.put(idMesa, new Mesa(this.idMesa, Utils.nroMaximoJugadores, 10));
+    public Mesa crearMesa(){
+        Mesa m = new Mesa(this.idMesa, Utils.nroMaximoJugadores, 10);
+        mesas.put(idMesa, m);
         this.idMesa++;
+        return m;
     }
     /**
      * Cuando se inicia la partida se asigna el dealer y los

@@ -54,7 +54,7 @@ public class Analizador {
         
         for(int i = 0; i < listeners.length; i++){
             if(listeners[i] instanceof OnPackageListener){
-                 ((OnPackageListener) listeners[i]).nuevaMesa(mesa);
+                 ((OnPackageListener) listeners[i]).onNuevaMesa(mesa);
             }
         }
 

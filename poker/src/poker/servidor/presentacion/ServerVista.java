@@ -1,6 +1,7 @@
 package poker.servidor.presentacion;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
 import jsocket.server.JSocketServer;
 import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;
@@ -14,7 +15,7 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
 
     private DefaultListModel usuarios = null;
     private ServerPoker server = null;
-    
+
     /**
      * Creates new form vista
      */
@@ -44,6 +45,7 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
         lstUsuarios = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
+        addMesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,14 +62,27 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
 
         lblEstado.setText("ESTADO DE SERVIDOR : DETENIDO");
 
+        addMesa.setText("Add Mesa");
+        addMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMesaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnIniciar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnIniciar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addMesa)
+                        .addGap(47, 47, 47)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -84,8 +99,13 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(btnIniciar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(addMesa)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(lblEstado)
                 .addGap(25, 25, 25))
@@ -97,6 +117,10 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         server.iniciarServidor();
     }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void addMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addMesaActionPerformed
+        server.nuevaMesa();
+    }//GEN-LAST:event_addMesaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,6 +159,7 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addMesa;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

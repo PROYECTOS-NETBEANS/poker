@@ -1,4 +1,5 @@
 package poker.cliente.negocio;
+import java.util.Observer;
 import jsocket.client.*;
 /**
  * 
@@ -11,10 +12,11 @@ public class PokerClient implements OnConnectedListenerClient{
     
     public PokerClient(int puerto, String ip){
         this.inicializar(puerto, ip);
-        game = new JuegoCliente();
+        game = JuegoCliente.getJuegoCliente();
         anx = new Analizador();
         anx.addEventListener(game);
     }
+    
     /**
      * Inicializa todos los objetos para la conexion     
      * @param puerto Puerto donde esta escuchando en el servidor
@@ -39,7 +41,6 @@ public class PokerClient implements OnConnectedListenerClient{
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
         }        
     }
-
     @Override
     public void onConnect(Object o, OnConnectedEventClient ocec) {
         System.out.println("onconnect no implementado");
@@ -73,5 +74,8 @@ public class PokerClient implements OnConnectedListenerClient{
      */
     private void onRead(String data){
         anx.setMessage(data);
+    }
+    public void addObserver(Observer o){
+        game.addObserver(o);
     }
 }

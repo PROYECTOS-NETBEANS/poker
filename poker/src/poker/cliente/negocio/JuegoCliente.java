@@ -1,25 +1,37 @@
 package poker.cliente.negocio;
 
 import java.util.HashMap;
-import poker.cliente.negocio.OnPackageListener;
 import poker.servidor.datos.Jugador;
 import poker.servidor.negocio.Mesa;
-
+import java.util.Observable;
 /**
- * 
+ * Esto se crea cada vez que vez que se conecta al servidor
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class JuegoCliente implements OnPackageListener{
+public class JuegoCliente extends Observable implements OnPackageListener {
+    
+    private static JuegoCliente game = new JuegoCliente();
     /**
      * Lista de mesas que hay en el servidor
      */
     private HashMap<Integer, Mesa> mesas = null;
     
-    public JuegoCliente(){
+    private JuegoCliente(){
         this.mesas = new HashMap<>();
     }
-    
-    public Entidad getMesa(int index){
+    public static JuegoCliente getJuegoCliente(){
+        if(game == null){
+            game = new JuegoCliente();
+        }
+        return game;
+    }
+    /**
+     * metodo que devuelve las mesas que hay en el servidor
+     * @return 
+     */
+    public HashMap getMesas(){
+
+        return ((mesas.size() > 0) ? this.mesas : null);
         
     }
     /**
@@ -28,6 +40,8 @@ public class JuegoCliente implements OnPackageListener{
      */
     private void addMesa(Mesa m){
         this.mesas.put(m.getId(), m);
+        System.out.println("llego una mesa!!!");
+        this.notificarCambios();
     }
     /**
      * Cambia de Estado a la mesa
@@ -58,5 +72,9 @@ public class JuegoCliente implements OnPackageListener{
     @Override
     public void onNuevoJugador(Jugador jg) {
         this.addJugador(jg);
+    }
+    private void notificarCambios(){
+        this.setChanged();
+        this.notifyObservers();
     }
 }

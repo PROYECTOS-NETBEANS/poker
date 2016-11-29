@@ -1,7 +1,9 @@
 package poker.cliente.presentacion;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Rectangle;
+import javax.swing.JPanel;
 import poker.cliente.negocio.PokerClient;
-import poker.cliente.presentacion.Lienzo;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -18,16 +20,19 @@ public class InicializarVista extends javax.swing.JFrame {
         this.inicializar();
     }
     private void inicializar(){
-        cliente = new PokerClient(5555, "192.168.0.115");
+        cliente = new PokerClient(5555, "192.168.0.100");
         //cliente = new PokerClient(5555, "localhost");
         
         cliente.conectarServidor("pedro");
         lienzo = new Lienzo();
-        lienzo.setBounds(10, 10, 200, 200);
-        lienzo.setBackground(Color.ORANGE);
+        lienzo.setBounds(10, 10, this.getWidth() - 10, this.getHeight() - 10);
+        lienzo.addMouseMotionListener(lienzo);
+        lienzo.addMouseListener(lienzo);
+        cliente.addObserver(lienzo);
+        lienzo.setBackground(Color.BLUE);        
         this.getContentPane().add(lienzo);
+
     }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,18 +43,36 @@ public class InicializarVista extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(397, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         pack();
@@ -98,6 +121,7 @@ public class InicializarVista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
