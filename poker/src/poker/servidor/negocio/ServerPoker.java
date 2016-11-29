@@ -50,7 +50,7 @@ public class ServerPoker implements OnConnectedListenerServer{
 
     @Override
     public void onRead(Object o, OnConnectedEventServer oces, String string) {
-        System.out.println("onRead no implementado!!");
+        servidor..
     }
     
     /**

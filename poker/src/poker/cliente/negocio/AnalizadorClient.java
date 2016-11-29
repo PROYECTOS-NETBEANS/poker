@@ -3,16 +3,17 @@ import java.util.EventListener;
 import javax.swing.event.EventListenerList;
 import poker.servidor.negocio.Mesa;
 import poker.utils.datos.*;
+import jsocket.client.JSocketClient;
 /**
  * Clase que analiza cada paquete que llega del servidor
  * y ejecuta sus respectivos metodos del escuchador
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Analizador {
+public class AnalizadorClient {
     
     private EventListenerList listenerList = new EventListenerList();
     
-    public Analizador(){
+    public AnalizadorClient(){
     }
         /**
      * Metodo que adiciona un escuchador a la lista de escuchadores
@@ -20,6 +21,9 @@ public class Analizador {
      */
     public void addEventListener(EventListener listener){
         listenerList.add(EventListener.class, listener);
+    }
+    public void setConexion(JSocketClient cliente){
+        
     }
     /**
      * Metodo que elimina un escuchador de la lista de escuchadores
@@ -36,7 +40,7 @@ public class Analizador {
     public void setMessage(String data){
         PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);
         this.analizarPaquete(pk);
-    }
+    }    
     private void analizarPaquete(PaquetePk p){
         switch(p.getTipoPaquete()){
             case MESA:
@@ -61,5 +65,16 @@ public class Analizador {
     }
     private void nuevoJugador(String data){
         
+    }
+    //***METODOS PARA ENVIAR LOS PAQUETES AL SERVIDOR (empiezan con la letra g)
+    
+    /**
+     * Metodo para generar el envio del identificador de la mesa al servidor
+     * @param idMesa Identificador de mesa
+     * @return una cadena para enviar al servidor
+     */
+    public String gIngresarMesa(int idMesa){
+        PaquetePk pk = new PaquetePk(String.valueOf(idMesa), TipoPaquete.INGRESAR_A_MESA);
+        return Parser.objectToString(pk);
     }
 }

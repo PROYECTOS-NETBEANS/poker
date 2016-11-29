@@ -1,6 +1,9 @@
 package poker.cliente.negocio;
+import java.util.HashMap;
 import java.util.Observer;
 import jsocket.client.*;
+import poker.utils.datos.PaquetePk;
+import poker.utils.datos.TipoPaquete;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -8,12 +11,12 @@ import jsocket.client.*;
 public class PokerClient implements OnConnectedListenerClient{
     private JSocketClient cliente = null;
     private JuegoCliente game = null;
-    private Analizador anx = null;
+    private AnalizadorClient anx = null;
     
     public PokerClient(int puerto, String ip){
         this.inicializar(puerto, ip);
         game = JuegoCliente.getJuegoCliente();
-        anx = new Analizador();
+        anx = new AnalizadorClient();
         anx.addEventListener(game);
     }
     
@@ -37,6 +40,7 @@ public class PokerClient implements OnConnectedListenerClient{
     public void conectarServidor(String nick){
         try {
             cliente.conectarServidor(nick);
+            anx.addEventListener(cliente);
         } catch (Exception e) {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
         }        
@@ -75,7 +79,26 @@ public class PokerClient implements OnConnectedListenerClient{
     private void onRead(String data){
         anx.setMessage(data);
     }
+    /**
+     * Metodo que envia un paquete al servidor
+     * @param data Cadena a enviar al servidor
+     */
+    private void enviarPaquete(String data){
+        
+        cliente.sendMessageAll(data);       
+    }
+    /**
+     * Metodo envia la solicitud de ingreso a la mesa
+     * @param idMesa Identificador de mesa
+     */
+    public void ingresarMesa(int idMesa){
+        this.enviarPaquete(anx.gIngresarMesa(idMesa));        
+    }
+    
     public void addObserver(Observer o){
         game.addObserver(o);
+    }
+    public HashMap getMesas(){
+        return game.getMesas();
     }
 }

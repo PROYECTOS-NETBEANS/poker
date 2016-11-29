@@ -73,8 +73,14 @@ public class JuegoCliente extends Observable implements OnPackageListener {
     public void onNuevoJugador(Jugador jg) {
         this.addJugador(jg);
     }
+
     private void notificarCambios(){
         this.setChanged();
         this.notifyObservers();
+    }
+
+    @Override
+    public void onIngresarMesa(int idMesa) {
+        
     }
 }

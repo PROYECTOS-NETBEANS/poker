@@ -26,4 +26,9 @@ public interface OnPackageListener extends EventListener{
      * @param jg Jugador que llega del servidor
      */
     public void onNuevoJugador(Jugador jg);
+    /**
+     * Metodo que envia el id de la mesa donde va ingresar
+     * @param idMesa Identificador de mesa
+     */
+    public void onIngresarMesa(int idMesa);
 }

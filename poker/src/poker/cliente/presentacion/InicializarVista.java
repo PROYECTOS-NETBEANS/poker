@@ -20,11 +20,12 @@ public class InicializarVista extends javax.swing.JFrame {
         this.inicializar();
     }
     private void inicializar(){
-        cliente = new PokerClient(5555, "192.168.0.100");
+        //cliente = new PokerClient(5555, "192.168.0.100");
+        cliente = new PokerClient(5555, "192.168.0.110");
         //cliente = new PokerClient(5555, "localhost");
         
         cliente.conectarServidor("pedro");
-        lienzo = new Lienzo();
+        lienzo = new Lienzo(cliente);
         lienzo.setBounds(10, 10, this.getWidth() - 10, this.getHeight() - 10);
         lienzo.addMouseMotionListener(lienzo);
         lienzo.addMouseListener(lienzo);

@@ -16,10 +16,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import javax.swing.JPanel;
-import poker.cliente.negocio.JuegoCliente;
 import poker.servidor.negocio.Mesa;
 import java.util.Observable;
 import java.util.Observer;
+import poker.cliente.negocio.PokerClient;
 /**
  * Clase donde se generan las mesas que hay en el servidor
  * @author Alex Limbert Yalusqui
@@ -28,7 +28,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     private Image imgMesa = null;
     private File file = null;
     
-    private JuegoCliente game = null;
+    private PokerClient cliente = null;
     
     /* variables privadas para pintar las mesas*/
     private Point pto = new Point(0,0);
@@ -40,9 +40,9 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     
     private HashMap<Integer, Rectangle> ms;
     
-    public Lienzo(){
+    public Lienzo(PokerClient cliente){
         super(true);
-        this.game = JuegoCliente.getJuegoCliente();
+        this.cliente = cliente;
         this.cargarImagenes();
         ms = new HashMap<>();
     }
@@ -72,7 +72,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
      */
     private void pintarMesas(Graphics g){
         // aqui tengo que recorrer las mesas del negocio
-        HashMap<Integer, Mesa> mesas = game.getMesas();
+        HashMap<Integer, Mesa> mesas = cliente.getMesas();
         int i = 1;
         if(mesas != null){
             Iterator<Mesa> it = mesas.values().iterator();
@@ -114,12 +114,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
             this.pintarMesas(g);
         }
     }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
- 
-    }
-
+    
     @Override
     public void mouseMoved(MouseEvent e) {
         if(estaContenido(e.getPoint()) > 0 ){
@@ -151,24 +146,25 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     @Override
     public void mouseClicked(MouseEvent e) {
         int k = estaContenido(e.getPoint());
+        if(k > 0){
+            cliente.ingresarMesa(k);
+        }
+    }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("Se modifico el negocio!");
+        this.repaint();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {}
-
     @Override
     public void mouseReleased(MouseEvent e) {}
-
     @Override
     public void mouseEntered(MouseEvent e) {}
-
     @Override
     public void mouseExited(MouseEvent e) {}
-
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("me llego mesa al lienzo!");
-        this.repaint();
-    }
+     @Override
+    public void mouseDragged(MouseEvent e) {}  
 }
