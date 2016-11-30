@@ -2,12 +2,13 @@ package poker.servidor.negocio;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import poker.cliente.negocio.OnPackageListener;
 import poker.servidor.datos.*;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Juego {
+public class Juego implements OnPackageListener{
     private Archivo bd = null;
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
@@ -94,5 +95,37 @@ public class Juego {
      */
     public HashMap<Integer, Mesa> getMesas(){
         return this.mesas;
+    }
+
+    @Override
+    public void onNuevaMesa(Mesa mesa) {
+        
+    }
+
+    @Override
+    public void onMesaLlena(int idMesa, boolean estado) {
+        
+    }
+
+    @Override
+    public void onNuevoJugador(Jugador jg) {
+        
+    }
+    /**
+     * Llega un identificador de mesa a donde quiere entrar el jugador
+     * @param idMesa Identificador de mesa
+     */
+    @Override
+    public void onIngresarMesa(int idMesa) {
+        
+    }
+    //*******METODOS PRIVADOR DEL NEGOCIO DEL JUEGO 
+    /**
+     * Metodo que ingresa un jugador a una mesa
+     * @param idMesa Identificador de mesa
+     * @param idJugador Identificador de jugador
+     */
+    private void ingresarJugadoraMesa(int idMesa, int idJugador){
+        
     }
 }

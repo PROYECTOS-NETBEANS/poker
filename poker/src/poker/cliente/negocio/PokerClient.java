@@ -2,8 +2,6 @@ package poker.cliente.negocio;
 import java.util.HashMap;
 import java.util.Observer;
 import jsocket.client.*;
-import poker.utils.datos.PaquetePk;
-import poker.utils.datos.TipoPaquete;
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -17,7 +15,7 @@ public class PokerClient implements OnConnectedListenerClient{
         this.inicializar(puerto, ip);
         game = JuegoCliente.getJuegoCliente();
         anx = new AnalizadorClient();
-        anx.addEventListener(game);
+        anx.addEventListener(game);        
     }
     
     /**
@@ -40,7 +38,6 @@ public class PokerClient implements OnConnectedListenerClient{
     public void conectarServidor(String nick){
         try {
             cliente.conectarServidor(nick);
-            anx.addEventListener(cliente);
         } catch (Exception e) {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
         }        

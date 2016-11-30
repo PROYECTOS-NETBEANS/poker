@@ -14,7 +14,7 @@ public class ServerPoker implements OnConnectedListenerServer{
     
     private JSocketServer servidor = null;
     private Juego game = null;
-    
+    private AnalizadorServer anx = null;
     public ServerPoker(EventListener listener){
         this.inicializar(listener);
     }
@@ -23,6 +23,8 @@ public class ServerPoker implements OnConnectedListenerServer{
         servidor.addEventListener(listener);
         servidor.addEventListener(this);
         game = new Juego();
+        // Es el escuchador de paquetes
+        anx.addEventListener(game);
     }
     /**
      * Iniciamos el servidor y creamos las primeras 3 mesas
@@ -50,7 +52,7 @@ public class ServerPoker implements OnConnectedListenerServer{
 
     @Override
     public void onRead(Object o, OnConnectedEventServer oces, String string) {
-        servidor..
+        anax.se
     }
     
     /**

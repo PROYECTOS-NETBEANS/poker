@@ -15,16 +15,14 @@ public class AnalizadorClient {
     
     public AnalizadorClient(){
     }
-        /**
+    /**
      * Metodo que adiciona un escuchador a la lista de escuchadores
      * @param listener Escuchador a adiconar a la lista
      */
     public void addEventListener(EventListener listener){
         listenerList.add(EventListener.class, listener);
     }
-    public void setConexion(JSocketClient cliente){
-        
-    }
+
     /**
      * Metodo que elimina un escuchador de la lista de escuchadores
      * @param listener Escuchador
@@ -40,7 +38,7 @@ public class AnalizadorClient {
     public void setMessage(String data){
         PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);
         this.analizarPaquete(pk);
-    }    
+    }
     private void analizarPaquete(PaquetePk p){
         switch(p.getTipoPaquete()){
             case MESA:

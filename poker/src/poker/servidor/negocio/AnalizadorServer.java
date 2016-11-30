@@ -6,10 +6,44 @@
 
 package poker.servidor.negocio;
 
+import java.util.EventListener;
+import javax.swing.event.EventListenerList;
+import poker.utils.datos.PaquetePk;
+import poker.utils.datos.Parser;
+
 /**
  * 
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
 public class AnalizadorServer {
-     este deve de serr  igual al cliente
+    
+    private EventListenerList listenerList = new EventListenerList();
+    
+    public AnalizadorServer(){
+    }
+    /**
+     * Metodo que adiciona un escuchador a la lista de escuchadores
+     * @param listener Escuchador a adiconar a la lista
+     */
+    public void addEventListener(EventListener listener){
+        listenerList.add(EventListener.class, listener);
+    }    
+    /**
+     * Metodo que deserializar el mensaje que llega
+     * @param data Mensaje que llega para su deserialización.
+     */
+    public void setMessage(String data){
+        PaquetePk pk = (PaquetePk) Parser.stringToObject(data, PaquetePk.class);
+        this.analizarPaquete(pk);
+    }
+    private void analizarPaquete(PaquetePk p){
+        switch(p.getTipoPaquete()){
+            case MESA:
+                this.nuevaMesa(p.getData());
+                break;
+            case JUGADOR:
+                this.nuevoJugador(p.getData());
+                break;
+        }
+    }    
 }
