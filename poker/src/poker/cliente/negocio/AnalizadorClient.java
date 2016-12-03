@@ -3,7 +3,7 @@ import java.util.EventListener;
 import javax.swing.event.EventListenerList;
 import poker.servidor.negocio.Mesa;
 import poker.utils.datos.*;
-import jsocket.client.JSocketClient;
+
 /**
  * Clase que analiza cada paquete que llega del servidor
  * y ejecuta sus respectivos metodos del escuchador

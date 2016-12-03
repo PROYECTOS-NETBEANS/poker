@@ -1,8 +1,5 @@
 package poker.cliente.presentacion;
 import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Rectangle;
-import javax.swing.JPanel;
 import poker.cliente.negocio.PokerClient;
 /**
  *
@@ -21,8 +18,8 @@ public class InicializarVista extends javax.swing.JFrame {
     }
     private void inicializar(){
         //cliente = new PokerClient(5555, "192.168.0.100");
-        cliente = new PokerClient(5555, "192.168.0.110");
-        //cliente = new PokerClient(5555, "localhost");
+        //cliente = new PokerClient(5555, "192.168.0.110");
+        cliente = new PokerClient(5555, "localhost");
         
         cliente.conectarServidor("pedro");
         lienzo = new Lienzo(cliente);

@@ -1,7 +1,6 @@
 package poker.servidor.presentacion;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
 import jsocket.server.JSocketServer;
 import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;

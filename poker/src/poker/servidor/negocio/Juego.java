@@ -114,18 +114,19 @@ public class Juego implements OnPackageListener{
     /**
      * Llega un identificador de mesa a donde quiere entrar el jugador
      * @param idMesa Identificador de mesa
+     * @param idJugador Identificador primario de jugador
      */
     @Override
-    public void onIngresarMesa(int idMesa) {
-        
+    public void onIngresarMesa(int idMesa, int idJugador) {
+        this.ingresarJugadoraMesa(idMesa, idJugador);
     }
-    //*******METODOS PRIVADOR DEL NEGOCIO DEL JUEGO 
+    //*******METODOS PRIVADOS DEL NEGOCIO DEL JUEGO 
     /**
      * Metodo que ingresa un jugador a una mesa
      * @param idMesa Identificador de mesa
      * @param idJugador Identificador de jugador
      */
     private void ingresarJugadoraMesa(int idMesa, int idJugador){
-        
+        System.out.println("no implementaod!! ingresaar mesa");
     }
 }

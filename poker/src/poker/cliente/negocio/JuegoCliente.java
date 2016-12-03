@@ -80,7 +80,7 @@ public class JuegoCliente extends Observable implements OnPackageListener {
     }
 
     @Override
-    public void onIngresarMesa(int idMesa) {
-        
+    public void onIngresarMesa(int idMesa, int idJugador) {
+        System.out.println("no implementado en el cliente el on ingresar mesa");
     }
 }

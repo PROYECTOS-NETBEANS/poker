@@ -1,6 +1,5 @@
 package poker.servidor.negocio;
 
-
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,9 +21,11 @@ public class ServerPoker implements OnConnectedListenerServer{
         servidor = new JSocketServer(5555);
         servidor.addEventListener(listener);
         servidor.addEventListener(this);
+        
         game = new Juego();
         // Es el escuchador de paquetes
-        anx.addEventListener(game);
+        anx = new AnalizadorServer();
+        anx.addEventListener(game);        
     }
     /**
      * Iniciamos el servidor y creamos las primeras 3 mesas
@@ -52,7 +53,9 @@ public class ServerPoker implements OnConnectedListenerServer{
 
     @Override
     public void onRead(Object o, OnConnectedEventServer oces, String string) {
-        anax.se
+        System.out.println("msg d Cliente : " + oces.getMessageClient());
+        System.out.println("idCliente Destino : " + String.valueOf(oces.getDestinoClient()) );
+        System.out.println("idCliente Origen : " + String.valueOf(oces.getDestinoClient()));
     }
     
     /**

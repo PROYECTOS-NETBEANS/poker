@@ -17,9 +17,10 @@ import poker.utils.datos.Parser;
  */
 public class AnalizadorServer {
     
-    private EventListenerList listenerList = new EventListenerList();
+    private EventListenerList listenerList = null;
     
     public AnalizadorServer(){
+        listenerList = new EventListenerList();
     }
     /**
      * Metodo que adiciona un escuchador a la lista de escuchadores
@@ -37,13 +38,6 @@ public class AnalizadorServer {
         this.analizarPaquete(pk);
     }
     private void analizarPaquete(PaquetePk p){
-        switch(p.getTipoPaquete()){
-            case MESA:
-                this.nuevaMesa(p.getData());
-                break;
-            case JUGADOR:
-                this.nuevoJugador(p.getData());
-                break;
-        }
+        
     }    
 }
