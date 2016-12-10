@@ -1,22 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pruebas;
 
-import java.awt.Color;
 import javax.swing.JOptionPane;
 import poker.cliente.negocio.PokerClient;
-
+import poker.cliente.negocio.OnPackageListenerClient;
+import poker.servidor.datos.Jugador;
+import poker.servidor.negocio.Mesa;
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class frmprueba extends javax.swing.JFrame {
+public class frmprueba extends javax.swing.JFrame implements OnPackageListenerClient{
 
     private PokerClient cliente = null;
-    private lienzo2 lienzo = null;    
     
     public frmprueba() {
         initComponents();
@@ -30,14 +25,7 @@ public class frmprueba extends javax.swing.JFrame {
         String nickName = JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
         if(nickName.length() > 0 ){
             cliente = new PokerClient(5555, "localhost");
-            cliente.conectarServidor(nickName);
-            lienzo = new lienzo2(cliente);
-            lienzo.setBounds(10, 10, this.getWidth() - 10, this.getHeight() - 10);
-            lienzo.addMouseMotionListener(lienzo);
-            lienzo.addMouseListener(lienzo);
-            //cliente.addObserver(lienzo);
-            lienzo.setBackground(Color.BLUE);        
-            this.getContentPane().add(lienzo);            
+            cliente.conectarServidor(nickName);  
         }
     }
 
@@ -50,21 +38,40 @@ public class frmprueba extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Click en mesa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(jButton1)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jButton1)
+                .addContainerGap(245, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.entrarMesa();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -102,5 +109,36 @@ public class frmprueba extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onNuevaMesa(Mesa mesa) {
+        
+    }
+
+    @Override
+    public void onMesaLlena(int idMesa, boolean estado) {
+        
+    }
+
+    @Override
+    public void onNuevoJugador(Jugador jg) {
+        
+    }
+
+    @Override
+    public void onJugadorDesconectado(Jugador jg) {
+        
+    }
+
+    @Override
+    public void onIngresarMesa(int idMesa, int idJugador) {
+        
+    }
+    
+    private void entrarMesa(){
+        int idMesa = 1;
+        cliente.ingresarMesa(idMesa);
+    }
 }
