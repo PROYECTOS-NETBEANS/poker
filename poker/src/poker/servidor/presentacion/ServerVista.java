@@ -1,7 +1,6 @@
 package poker.servidor.presentacion;
 
 import javax.swing.DefaultListModel;
-import jsocket.server.JSocketServer;
 import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;
 import poker.servidor.negocio.ServerPoker;
@@ -175,10 +174,10 @@ public class ServerVista extends javax.swing.JFrame implements OnConnectedListen
     }
 
     @Override
-    public void onDisconnect(Object o, OnConnectedEventServer data) {
+    public void onDisconnect(Object o, OnConnectedEventServer data, String userName) {
         if(data.getClientDisconnect()){
             System.out.println("vista.onDisconnect >> key : " + String.valueOf(data.getOrigenClient()));
-            JSocketServer.removeClient(data.getOrigenClient());
+            
             this.removerUsuario(data.getOrigenClient());
         } 
     }

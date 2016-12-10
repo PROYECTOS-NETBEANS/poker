@@ -45,8 +45,11 @@ public class AnalizadorClient {
             case MESA:
                 this.nuevaMesa(p.getData());
                 break;
-            case JUGADOR:                
+            case JUGADOR: // nuevo jugador
                 this.nuevoJugador(p.getData());
+                break;
+            case JUGADOR_DESCONECTADO:
+                this.jugadorDesconectado(p.getData());
                 break;
         }
     }
@@ -56,12 +59,24 @@ public class AnalizadorClient {
         Object[] listeners = listenerList.getListenerList();
         
         for(int i = 0; i < listeners.length; i++){
-            if(listeners[i] instanceof OnPackageListener){
-                 ((OnPackageListener) listeners[i]).onNuevaMesa(mesa);
+            if(listeners[i] instanceof OnPackageListenerClient){
+                 ((OnPackageListenerClient) listeners[i]).onNuevaMesa(mesa);
             }
         }
 
     }
+    private void jugadorDesconectado(String data){
+        
+        Jugador jg = (Jugador) Parser.stringToObject(data, Jugador.class);
+        
+        Object[] listeners = listenerList.getListenerList();
+        
+        for(int i = 0; i < listeners.length; i++){
+            if(listeners[i] instanceof OnPackageListenerClient){
+                 ((OnPackageListenerClient) listeners[i]).onJugadorDesconectado(jg);
+            }
+        }
+    }    
     private void nuevoJugador(String data){
         
         Jugador jg = (Jugador) Parser.stringToObject(data, Jugador.class);
@@ -69,8 +84,8 @@ public class AnalizadorClient {
         Object[] listeners = listenerList.getListenerList();
         
         for(int i = 0; i < listeners.length; i++){
-            if(listeners[i] instanceof OnPackageListener){
-                 ((OnPackageListener) listeners[i]).onNuevoJugador(jg);
+            if(listeners[i] instanceof OnPackageListenerClient){
+                 ((OnPackageListenerClient) listeners[i]).onNuevoJugador(jg);
             }
         }
     }

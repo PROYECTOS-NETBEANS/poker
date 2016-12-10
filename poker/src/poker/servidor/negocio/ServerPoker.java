@@ -4,7 +4,9 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import jsocket.server.*;
+import jsocket.server.OnConnectedEventServer;
+import jsocket.server.OnConnectedListenerServer;
+import jsocket.server.JSocketServer;
 import poker.servidor.datos.Jugador;
 import poker.utils.datos.PaquetePk;
 import poker.utils.datos.Parser;
@@ -47,10 +49,12 @@ public class ServerPoker implements OnConnectedListenerServer{
        // Nno hacer nada cuando se conecta
        this.enviarDatosIniciales(userName);
     }
-
+    // cuando se desconecta del servidor
     @Override
-    public void onDisconnect(Object o, OnConnectedEventServer oces) {
-        System.out.println("onDisconnect no implementado");
+    public void onDisconnect(Object o, OnConnectedEventServer data, String userName) {
+        if(data.getClientDisconnect()){
+            this.usuarioDesconectadoEliminad(data.getOrigenClient(), userName);
+        }
     }
 
     @Override
@@ -59,7 +63,34 @@ public class ServerPoker implements OnConnectedListenerServer{
         System.out.println("idCliente Destino : " + String.valueOf(data.getDestinoClient()) );
         System.out.println("idCliente Origen : " + String.valueOf(data.getDestinoClient()));
     }
-    
+    /**
+     * Metodo encargado de eliminar un usuario que se acaba de desconectar
+     * @param id Identificador unico de cliente en el socket
+     * @param userName Nombre de usuario
+     */
+    private void usuarioDesconectadoEliminad(int id, String userName){        
+        Jugador jg = game.deletejugador(userName);
+        if(jg != null){
+            JSocketServer.removeClient(id);
+            this.enviarJugadorDesconectado(jg);
+        }
+    }
+    /**
+     * Metodo que envia el jugador que se desconecto para que se eliminen de los clientes
+     * @param jg Objeto jugador a eliminar
+     */
+    private void enviarJugadorDesconectado(Jugador jg){
+        try{    
+            System.out.println("jg desconectado : " + jg.getNickName());
+            this.enviarJugador( jg, TipoPaquete.JUGADOR_DESCONECTADO);
+        }catch(Exception e){
+            System.out.println("[ServerPoker.enviarJugadorEliminado]" + e.getMessage());
+        }
+    }
+    /**
+     * Metodo que envia las mesas y jugadores al usuario que acaba de conectar
+     * @param nick nombre de usuario
+     */
     private void enviarDatosIniciales(String nick){
         if(nick.length() > 0){
             if(game.autenticarJugador(nick)){
@@ -93,7 +124,7 @@ public class ServerPoker implements OnConnectedListenerServer{
             Iterator it = jugadores.entrySet().iterator();
             while(it.hasNext()){
                 Map.Entry e =(Map.Entry) it.next();
-                this.enviarJugador((Jugador) e.getValue());
+                this.enviarJugador((Jugador) e.getValue(), TipoPaquete.JUGADOR);
             }
         }catch(Exception e){
             System.out.println("[ServerPoker.enviarJugagores]" + e.getMessage());
@@ -103,10 +134,10 @@ public class ServerPoker implements OnConnectedListenerServer{
      * Envia un jugador a los clientes
      * @param j jugador que se enviará a los clientes
      */
-    private void enviarJugador(Jugador j){
+    private void enviarJugador(Jugador j, TipoPaquete accion){
         System.out.println("enviado jg nick: " + j.getNickName());
         String jugador = Parser.objectToString(j);
-        PaquetePk p = new PaquetePk(jugador, TipoPaquete.JUGADOR);
+        PaquetePk p = new PaquetePk(jugador, accion);
         servidor.sendMessageAll(Parser.objectToString(p), -1);
     }    
     /**

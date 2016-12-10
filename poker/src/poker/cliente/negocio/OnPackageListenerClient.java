@@ -9,7 +9,7 @@ import poker.servidor.negocio.Mesa;
  * cuando llegan los paquetes del servidor.
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public interface OnPackageListener extends EventListener{
+public interface OnPackageListenerClient extends EventListener{
     /**
      * Mesa nueva que llega del servidor
      * @param mesa 
@@ -26,6 +26,12 @@ public interface OnPackageListener extends EventListener{
      * @param jg Jugador que llega del servidor
      */
     public void onNuevoJugador(Jugador jg);
+    
+    /**
+     * Metodo que se desencadena cuando llega un jugador a eliminar
+     * @param jg Jugador a eliminar
+     */
+    public void onJugadorDesconectado(Jugador jg);
     /**
      * Metodo que envia el id de la mesa donde va ingresar
      * @param idMesa Identificador de mesa

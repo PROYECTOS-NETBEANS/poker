@@ -2,13 +2,12 @@ package poker.servidor.negocio;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import poker.cliente.negocio.OnPackageListener;
 import poker.servidor.datos.*;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Juego implements OnPackageListener{
+public class Juego implements OnPackageListenerServer{
     private Archivo bd = null;
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
@@ -56,21 +55,29 @@ public class Juego implements OnPackageListener{
     }
     /**
      * Elimina un jugador del juego y mesa
-     * @param id Identificador unico de jugador
+     * @param nick nombre de jugador a eliminar
+     * @return Retorno el jugador que se elimino, en otro caso retorna nulo
      */
-    public void deletejugador(int id){
-        
-        // eliminamos de la mesa
-        Iterator i = mesas.entrySet().iterator();
-        while (i.hasNext()){
-            Mesa mesa = (Mesa) i.next();
-            if(mesa.existJugador(id)){
-                mesa.deleteJugador(id);                
-            }
-        }
-        
-        jugadores.remove(id);
+    public Jugador deletejugador(String nick){
+        try{
+            Jugador jg = bd.getJugador(nick);
 
+            // eliminamos de la mesa
+            Iterator i = mesas.values().iterator();
+            while (i.hasNext()){
+                System.out.println("llegue a has");
+                Mesa mesa = (Mesa) i.next();
+                System.out.println("pase mesas ****************++");
+                if(mesa.existJugador(jg.getId())){
+                    mesa.deleteJugador(jg.getId());
+                }
+            }
+            jugadores.remove(jg.getId());
+            return jg;
+        }catch(Exception e){
+            System.out.println("[Juego.deleteJugador()]" + e.getMessage());
+            return null;
+        }
     }
     /**
      * Crea una mesa vacia e inicializa sus configuraciones por defecto
@@ -104,20 +111,6 @@ public class Juego implements OnPackageListener{
         return this.jugadores;
     }
 
-    @Override
-    public void onNuevaMesa(Mesa mesa) {
-        
-    }
-
-    @Override
-    public void onMesaLlena(int idMesa, boolean estado) {
-        
-    }
-
-    @Override
-    public void onNuevoJugador(Jugador jg) {
-        
-    }
     /**
      * Llega un identificador de mesa a donde quiere entrar el jugador
      * @param idMesa Identificador de mesa

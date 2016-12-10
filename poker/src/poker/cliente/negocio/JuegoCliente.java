@@ -8,7 +8,7 @@ import java.util.Observable;
  * Esto se crea cada vez que vez que se conecta al servidor
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class JuegoCliente extends Observable implements OnPackageListener {
+public class JuegoCliente extends Observable implements OnPackageListenerClient {
     
     private static JuegoCliente game = new JuegoCliente();
     /**
@@ -74,6 +74,16 @@ public class JuegoCliente extends Observable implements OnPackageListener {
         System.out.println("id : "+ String.valueOf(jg.getId()) + " " + jg.getNickName());
         //this.notificarCambios();
     }
+    
+    /**
+     * Elimina un jugador de la lista de jugadores y de la mesa
+     */
+    private void deleteJugador(Jugador jg){    
+        jugadores.remove(jg.getId());
+        // aqui creo que hay que eliminar de la mesa tambien
+        System.out.println("jugador desconectado : " + jg.getNickName());
+    }
+    
     // de aqui hacia abajo solo los metodos de la interfaz
     @Override
     public void onNuevaMesa(Mesa mesa) {
@@ -98,5 +108,10 @@ public class JuegoCliente extends Observable implements OnPackageListener {
     @Override
     public void onIngresarMesa(int idMesa, int idJugador) {
         System.out.println("no implementado en el cliente el on ingresar mesa");
+    }
+    
+    @Override
+    public void onJugadorDesconectado(Jugador jg){
+        this.deleteJugador(jg);
     }
 }
