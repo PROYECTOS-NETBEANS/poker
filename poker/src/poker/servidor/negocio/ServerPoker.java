@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import jsocket.server.*;
+import poker.servidor.datos.Jugador;
 import poker.utils.datos.PaquetePk;
 import poker.utils.datos.Parser;
 import poker.utils.datos.TipoPaquete;
@@ -14,6 +15,7 @@ public class ServerPoker implements OnConnectedListenerServer{
     private JSocketServer servidor = null;
     private Juego game = null;
     private AnalizadorServer anx = null;
+    
     public ServerPoker(EventListener listener){
         this.inicializar(listener);
     }
@@ -41,9 +43,9 @@ public class ServerPoker implements OnConnectedListenerServer{
     }
 
     @Override
-    public void onConnect(Object o, OnConnectedEventServer oces, String string) {
-        // cuando se conecte un usuario debo de enviarle todas las mesas del servidor
-       this.enviarMesas();
+    public void onConnect(Object sender, OnConnectedEventServer data, String userName) {
+       // Nno hacer nada cuando se conecta
+       this.enviarDatosIniciales(userName);
     }
 
     @Override
@@ -52,12 +54,21 @@ public class ServerPoker implements OnConnectedListenerServer{
     }
 
     @Override
-    public void onRead(Object o, OnConnectedEventServer oces, String string) {
-        System.out.println("msg d Cliente : " + oces.getMessageClient());
-        System.out.println("idCliente Destino : " + String.valueOf(oces.getDestinoClient()) );
-        System.out.println("idCliente Origen : " + String.valueOf(oces.getDestinoClient()));
+    public void onRead(Object sender, OnConnectedEventServer data, String userName) {
+        System.out.println("msg d Cliente : " + data.getMessageClient());
+        System.out.println("idCliente Destino : " + String.valueOf(data.getDestinoClient()) );
+        System.out.println("idCliente Origen : " + String.valueOf(data.getDestinoClient()));
     }
     
+    private void enviarDatosIniciales(String nick){
+        if(nick.length() > 0){
+            if(game.autenticarJugador(nick)){
+                this.enviarJugadores();
+                this.enviarMesas();                
+            }
+        }
+
+    }
     /**
      * Metodo que envia al cliente todas la mesas
      * que hay creadas en el servidor
@@ -68,12 +79,36 @@ public class ServerPoker implements OnConnectedListenerServer{
             Iterator it = mesas.entrySet().iterator();
             while(it.hasNext()){
                 Map.Entry e = (Map.Entry) it.next();
-                this.enviarMesa((Mesa)e.getValue());
+                this.enviarMesa((Mesa) e.getValue());
             }
         }catch(Exception e){
             System.out.println("[ServerPoker.EnviarMesas()] : " + e.getMessage());
         }
     }
+    
+    private void enviarJugadores(){
+        try{
+            HashMap<Integer, Jugador> jugadores = game.getJugadores();
+            System.out.println("jugadores count : " + jugadores.size() );
+            Iterator it = jugadores.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry e =(Map.Entry) it.next();
+                this.enviarJugador((Jugador) e.getValue());
+            }
+        }catch(Exception e){
+            System.out.println("[ServerPoker.enviarJugagores]" + e.getMessage());
+        }
+    }
+   /**
+     * Envia un jugador a los clientes
+     * @param j jugador que se enviará a los clientes
+     */
+    private void enviarJugador(Jugador j){
+        System.out.println("enviado jg nick: " + j.getNickName());
+        String jugador = Parser.objectToString(j);
+        PaquetePk p = new PaquetePk(jugador, TipoPaquete.JUGADOR);
+        servidor.sendMessageAll(Parser.objectToString(p), -1);
+    }    
     /**
      * Envia una mesa a los clientes
      * @param m Mesa a enviar a los clientes

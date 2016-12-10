@@ -45,14 +45,14 @@ public class Juego implements OnPackageListener{
      * @param nick Nombre de usuario
      * @return true si encuentra al jugador en la bd, caso contrario falso
      */
-    public boolean getJugador(String nick){
+    public boolean autenticarJugador(String nick){
         Jugador jg = bd.getJugador(nick);
         if(jg != null){
             jugadores.put( jg.getId(), jg );
             return true;
         }else{
             return false;
-        }        
+        }
     }
     /**
      * Elimina un jugador del juego y mesa
@@ -95,6 +95,13 @@ public class Juego implements OnPackageListener{
      */
     public HashMap<Integer, Mesa> getMesas(){
         return this.mesas;
+    }
+    /**
+     * Metodo que devuelve una lista de jugadores conectados al servidor
+     * @return HashMap lista de jugadores
+     */
+    public HashMap<Integer, Jugador> getJugadores(){
+        return this.jugadores;
     }
 
     @Override
