@@ -8,7 +8,7 @@ import java.util.Observable;
  * Esto se crea cada vez que vez que se conecta al servidor
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class JuegoCliente extends Observable implements OnPackageListenerClient {
+public class JuegoCliente implements OnPackageListenerClient {
     
     private static JuegoCliente game = new JuegoCliente();
     /**
@@ -53,7 +53,7 @@ public class JuegoCliente extends Observable implements OnPackageListenerClient 
     private void addMesa(Mesa m){
         this.mesas.put(m.getId(), m);
         System.out.println("llego una mesa!!!");
-        this.notificarCambios();
+    
     }
     /**
      * Cambia de Estado a la mesa
@@ -100,11 +100,7 @@ public class JuegoCliente extends Observable implements OnPackageListenerClient 
         this.addJugador(jg);
     }
 
-    private void notificarCambios(){
-        this.setChanged();
-        this.notifyObservers();
-    }
-
+    
     @Override
     public void onIngresarMesa(int idMesa, int idJugador) {
         System.out.println("no implementado en el cliente el on ingresar mesa");

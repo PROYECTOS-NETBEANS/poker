@@ -18,13 +18,15 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import poker.cliente.negocio.PokerClient;
 import javax.swing.DefaultListModel;
+import poker.cliente.negocio.OnPackageListenerClient;
 import poker.servidor.datos.Jugador;
+import poker.servidor.negocio.Mesa;
 
 /**
  *
  * @author LIMBERT
  */
-public class Clientesymesas extends javax.swing.JPanel implements MouseMotionListener, MouseListener, Observer{
+public class Clientesymesas extends javax.swing.JPanel implements OnPackageListenerClient{
 //private String[] datos = {"ana","angel","miguel","adriana"};
    private PokerClient cliente = null;
     private DefaultListModel usuarios = null;
@@ -147,48 +149,36 @@ public class Clientesymesas extends javax.swing.JPanel implements MouseMotionLis
         
        jList1.setModel(usuarios);
     }
+
+    @Override
+    public void onNuevaMesa(Mesa mesa) {
+       
+    }
+
+    @Override
+    public void onMesaLlena(int idMesa, boolean estado) {
+        
+    }
+
+    @Override
+    public void onNuevoJugador(Jugador jg) {
+       System.out.print("entro a un nuevo  " + jg.getNickName());
+        cargarjlist();
+        
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onJugadorDesconectado(Jugador jg) {
+        cargarjlist();
+       //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onIngresarMesa(int idMesa, int idJugador) {
+        
+    }
     
-  
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-       // System.out.println("Se modifico el negocio!");
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
 

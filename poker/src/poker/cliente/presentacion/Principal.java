@@ -89,12 +89,11 @@ public class Principal extends javax.swing.JFrame {
         if(nickName.length() > 0 ){
             cliente = new PokerClient(5555, "localhost");
             cliente.conectarServidor(nickName);
-           //cliente.addObserver(p);
              p= new Clientesymesas(cliente);
              p.setBounds(50, 50, this.getWidth() - 10, this.getHeight() - 10);
+             cliente.addEventListener(p);
              this.getContentPane().add(p);
-             //cliente.addObserver(lienzo);
-        }
+        } 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

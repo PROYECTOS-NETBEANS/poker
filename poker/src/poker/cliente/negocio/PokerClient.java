@@ -1,4 +1,5 @@
 package poker.cliente.negocio;
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Observer;
 import jsocket.client.*;
@@ -31,6 +32,14 @@ public class PokerClient implements OnConnectedListenerClient{
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
         }
     }
+    /** metodo adiciona un escuchador
+     * 
+     * @param listener 
+     */
+    public void addEventListener(EventListener listener){
+        anx.addEventListener(listener);
+    }
+    
     /**
      * Inicializa y conecta el servicio con el servidor
      * @param nick Nombre de usuario del cliente
