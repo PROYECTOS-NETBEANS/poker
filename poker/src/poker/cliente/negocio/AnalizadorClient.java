@@ -1,6 +1,7 @@
 package poker.cliente.negocio;
 import java.util.EventListener;
 import javax.swing.event.EventListenerList;
+import poker.servidor.datos.Jugador;
 import poker.servidor.negocio.Mesa;
 import poker.utils.datos.*;
 
@@ -44,7 +45,7 @@ public class AnalizadorClient {
             case MESA:
                 this.nuevaMesa(p.getData());
                 break;
-            case JUGADOR:
+            case JUGADOR:                
                 this.nuevoJugador(p.getData());
                 break;
         }
@@ -63,6 +64,15 @@ public class AnalizadorClient {
     }
     private void nuevoJugador(String data){
         
+        Jugador jg = (Jugador) Parser.stringToObject(data, Jugador.class);
+        
+        Object[] listeners = listenerList.getListenerList();
+        
+        for(int i = 0; i < listeners.length; i++){
+            if(listeners[i] instanceof OnPackageListener){
+                 ((OnPackageListener) listeners[i]).onNuevoJugador(jg);
+            }
+        }
     }
     //***METODOS PARA ENVIAR LOS PAQUETES AL SERVIDOR (empiezan con la letra g)
     

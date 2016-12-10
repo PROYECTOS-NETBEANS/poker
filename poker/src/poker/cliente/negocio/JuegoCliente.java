@@ -15,9 +15,11 @@ public class JuegoCliente extends Observable implements OnPackageListener {
      * Lista de mesas que hay en el servidor
      */
     private HashMap<Integer, Mesa> mesas = null;
+    private HashMap<Integer, Jugador> jugadores = null;
     
     private JuegoCliente(){
         this.mesas = new HashMap<>();
+        this.jugadores = new HashMap<>();
     }
     public static JuegoCliente getJuegoCliente(){
         if(game == null){
@@ -34,6 +36,16 @@ public class JuegoCliente extends Observable implements OnPackageListener {
         return ((mesas.size() > 0) ? this.mesas : null);
         
     }
+    /**
+     * metodo que devuelve la lista de jugadores conectados en el servidor
+     * @return HasMap<Integer, Jugador>
+     */
+    public HashMap getJugadores(){
+
+        return ((jugadores.size() > 0) ? this.jugadores : null);
+        
+    }
+    
     /**
      * Adiciona una mesa a la lista de mesas
      * @param m una mesa que llega del servidor
@@ -56,7 +68,11 @@ public class JuegoCliente extends Observable implements OnPackageListener {
      * @param jg Jugador que llega del servidor
      */
     private void addJugador(Jugador jg){
-        System.out.println("Nuevo jugador no implementado!!!!");
+        System.out.println("id : "+ String.valueOf(jg.getId()) + " " + jg.getNickName());
+        this.jugadores.put(jg.getId(), jg);
+        
+        System.out.println("id : "+ String.valueOf(jg.getId()) + " " + jg.getNickName());
+        //this.notificarCambios();
     }
     // de aqui hacia abajo solo los metodos de la interfaz
     @Override

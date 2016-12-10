@@ -98,4 +98,7 @@ public class PokerClient implements OnConnectedListenerClient{
     public HashMap getMesas(){
         return game.getMesas();
     }
+    public HashMap getJugadores(){
+        return game.getJugadores();        
+    }
 }
