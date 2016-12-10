@@ -5,6 +5,7 @@
  */
 package poker.cliente.presentacion;
 
+import com.sun.prism.paint.Color;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -28,8 +29,9 @@ import poker.servidor.negocio.Mesa;
  */
 public class Clientesymesas extends javax.swing.JPanel implements OnPackageListenerClient{
 //private String[] datos = {"ana","angel","miguel","adriana"};
-   private PokerClient cliente = null;
+    private PokerClient cliente = null;
     private DefaultListModel usuarios = null;
+    private int cantidadmesas = 0;
   // private HashMap<Integer, Rectangle> ms;
     
     /**
@@ -39,6 +41,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         initComponents();
         this.cliente = cliente;
         cargarjlist();
+        
         
        
        
@@ -53,20 +56,34 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
-        jScrollPane1.setViewportView(jList1);
+        setBackground(new java.awt.Color(51, 0, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/mesa.png"))); // NOI18N
         jButton1.setMaximumSize(new java.awt.Dimension(90, 90));
         jButton1.setMinimumSize(new java.awt.Dimension(90, 90));
         jButton1.setPreferredSize(new java.awt.Dimension(90, 90));
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 11, -1, -1));
+
+        jScrollPane1.setViewportView(jList1);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 57, 129, 221));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 204));
+        jLabel1.setText("Lista de jugadores");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 22, -1, -1));
 
         jButton2.setPreferredSize(new java.awt.Dimension(90, 90));
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 119, -1, -1));
 
         jButton3.setText("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -74,44 +91,10 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
                 jButton3ActionPerformed(evt);
             }
         });
+        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 255, 98, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Lista de jugadores");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1)))
-                .addGap(22, 22, 22))
-        );
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/screensaver-fantasy-wallpaper-inspiration-widescreen-gallery-sfondi-screensavers-16962.jpg"))); // NOI18N
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -40, -1, 1100));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -124,6 +107,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
@@ -150,9 +134,33 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
        jList1.setModel(usuarios);
     }
 
+        public void cargarmesa(){
+        HashMap<Integer, Mesa> mesas = cliente.getMesas();
+            if(mesas != null){
+                Iterator<Mesa> it = mesas.values().iterator();
+                cantidadmesas = mesas.size();
+                System.out.println("count " + String.valueOf(mesas.size()));
+                while(it.hasNext()) {
+                    Mesa m = (Mesa) it.next();
+
+                }            
+            } System.out.println("cantidad de mesas  " + String.valueOf(cantidadmesas));
+        }
+    public void pintarmesa(){
+        
+    }
+    public void subirimangen(){
+    // System.out.println("imagen en el boton");
+     //ImageIcon face = new ImageIcon(getClass().getResource("botonmesa.jpg"));
+    // jButton2.setIcon(face);
+       //jButton1.setBackground(Color.GREEN);
+       // System.out.println("imagen en el boton ooo");
+    }
     @Override
     public void onNuevaMesa(Mesa mesa) {
-       
+        System.out.println("poker.cliente.presentacion.Clientesymesas.onNuevaMesa()");
+        cargarmesa();
+       subirimangen();
     }
 
     @Override
