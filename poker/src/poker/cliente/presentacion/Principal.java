@@ -4,24 +4,23 @@
  * and open the template in the editor.
  */
 package poker.cliente.presentacion;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+import poker.cliente.negocio.PokerClient;
 /**
  *
  * @author LIMBERT
  */
 public class Principal extends javax.swing.JFrame {
-   // private JPanel p = new JPanel();
+    private PokerClient cliente = null;
     private Clientesymesas p =null;
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
-         this.setLocationRelativeTo(null);
-        p= new Clientesymesas();
-        p.setBounds(50, 50, this.getWidth() - 10, this.getHeight() - 10);
-       this.getContentPane().add(p);
-        //p.setVisible(true);
+        this.setLocationRelativeTo(null);
+        iniciador();
+        
     }
 
     /**
@@ -82,6 +81,20 @@ public class Principal extends javax.swing.JFrame {
                 new Principal().setVisible(true);
             }
         });
+    }
+    
+    private void iniciador(){
+        String nickName = JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
+       
+        if(nickName.length() > 0 ){
+            cliente = new PokerClient(5555, "localhost");
+            cliente.conectarServidor(nickName);
+           //cliente.addObserver(p);
+             p= new Clientesymesas(cliente);
+             p.setBounds(50, 50, this.getWidth() - 10, this.getHeight() - 10);
+             this.getContentPane().add(p);
+             //cliente.addObserver(lienzo);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

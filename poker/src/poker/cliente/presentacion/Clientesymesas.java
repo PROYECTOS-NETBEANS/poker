@@ -6,25 +6,40 @@
 package poker.cliente.presentacion;
 
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import poker.cliente.negocio.PokerClient;
+import javax.swing.DefaultListModel;
+import poker.servidor.datos.Jugador;
 
 /**
  *
  * @author LIMBERT
  */
-public class Clientesymesas extends javax.swing.JPanel {
-private String[] datos = {"ana","angel","miguel","adriana"};
+public class Clientesymesas extends javax.swing.JPanel implements MouseMotionListener, MouseListener, Observer{
+//private String[] datos = {"ana","angel","miguel","adriana"};
+   private PokerClient cliente = null;
+    private DefaultListModel usuarios = null;
+  // private HashMap<Integer, Rectangle> ms;
+    
     /**
      * Creates new form NewJPanel
      */
-    public Clientesymesas() {
+    public Clientesymesas(PokerClient cliente) {
         initComponents();
-       jList1.setListData(datos);
-       // ImageIcon imagen = new ImageIcon(getClass().getResource("/poker/cliente/presentacion/222.png"));
-       // Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(jButton1.getWidth(), jButton1.getHeight(), Image.SCALE_DEFAULT));
-      // jButton1.setIcon(icono);
-       // this.repaint();
+        this.cliente = cliente;
+        cargarjlist();
+        
+       
+       
     }
 
     /**
@@ -98,7 +113,7 @@ private String[] datos = {"ana","angel","miguel","adriana"};
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       //jList1.setListData("pepe","juan"); // TODO add your handling code here:
+        cargarjlist();       //jList1.setListData("pepe","juan"); // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
@@ -110,4 +125,94 @@ private String[] datos = {"ana","angel","miguel","adriana"};
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * Metodo que carga la lista de los jugadores en el jlist
+     * @param
+     */
+    private void cargarjlist(){
+        HashMap jugadores = cliente.getJugadores();
+        usuarios = new DefaultListModel();
+        jList1.setModel(usuarios);
+        if(jugadores != null){
+                Iterator<Jugador> it = jugadores.values().iterator();
+                
+                while(it.hasNext()) {
+                    Jugador j = (Jugador) it.next();
+                    usuarios.addElement(j.getNickName());
+                    System.out.println("jug: "+ j.getNickName());
+                }            
+
+            }
+        
+       jList1.setModel(usuarios);
+    }
+    
+  
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+       // System.out.println("Se modifico el negocio!");
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+}
+
+class UsuarioModel{
+    private int key = 0;
+    private String userName = "";
+    /**
+     * Constructor de clase
+     * @param key identificador unico de usuario
+     * @param userName nombre de usuario de la persona que acaba de conectarse
+     * @param ip ip del cliente que se conecto
+     */
+    public UsuarioModel(int key, String userName){
+        this.key = key;
+        this.userName = userName;        
+    }
+    public int getKey(){
+        return this.key;
+    }
+    public String getUserName(){
+        return this.userName;
+    }
+    @Override
+    public String toString(){
+        return this.userName;
+    }
 }
