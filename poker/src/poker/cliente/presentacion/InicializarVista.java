@@ -26,7 +26,7 @@ public class InicializarVista extends javax.swing.JFrame {
         lienzo.setBounds(10, 10, this.getWidth() - 10, this.getHeight() - 10);
         lienzo.addMouseMotionListener(lienzo);
         lienzo.addMouseListener(lienzo);
-        cliente.addObserver(lienzo);
+        ///cliente.addObserver(lienzo);
         lienzo.setBackground(Color.BLUE);        
         this.getContentPane().add(lienzo);
 

@@ -101,9 +101,7 @@ public class PokerClient implements OnConnectedListenerClient{
         this.enviarPaquete(anx.gIngresarMesa(idMesa));        
     }
     
-    public void addObserver(Observer o){
-        game.addObserver(o);
-    }
+    
     public HashMap getMesas(){
         return game.getMesas();
     }
