@@ -89,7 +89,7 @@ public class AnalizadorClient {
             }
         }
     }
-    //***METODOS PARA ENVIAR LOS PAQUETES AL SERVIDOR (empiezan con la letra g)
+    //***METODOS PARA ENPAQUETAR LOS ARCHIVOS A ENVIAR (empiezan con la letra g)
     
     /**
      * Metodo para generar el envio del identificador de la mesa al servidor

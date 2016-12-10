@@ -1,7 +1,6 @@
 package poker.cliente.negocio;
 import java.util.EventListener;
 import java.util.HashMap;
-import java.util.Observer;
 import jsocket.client.*;
 /**
  * 
@@ -16,7 +15,7 @@ public class PokerClient implements OnConnectedListenerClient{
         this.inicializar(puerto, ip);
         game = JuegoCliente.getJuegoCliente();
         anx = new AnalizadorClient();
-        anx.addEventListener(game);        
+        anx.addEventListener(game);
     }
     
     /**
@@ -47,6 +46,7 @@ public class PokerClient implements OnConnectedListenerClient{
     public void conectarServidor(String nick){
         try {
             cliente.conectarServidor(nick);
+            game.setNickName(nick);
         } catch (Exception e) {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
         }        
@@ -89,8 +89,7 @@ public class PokerClient implements OnConnectedListenerClient{
      * Metodo que envia un paquete al servidor
      * @param data Cadena a enviar al servidor
      */
-    private void enviarPaquete(String data){
-        
+    private void enviarPaquete(String data){        
         cliente.sendMessageAll(data);       
     }
     /**
@@ -98,13 +97,19 @@ public class PokerClient implements OnConnectedListenerClient{
      * @param idMesa Identificador de mesa
      */
     public void ingresarMesa(int idMesa){
-        this.enviarPaquete(anx.gIngresarMesa(idMesa));        
+        this.enviarPaquete(anx.gIngresarMesa(idMesa));
     }
-    
-    
+    /**
+     * Metodo que devuelve una lista de mesas
+     * @return HashMap con las mesas
+     */
     public HashMap getMesas(){
         return game.getMesas();
     }
+    /**
+     * Metodo que devuelve una lista de jugadores
+     * @return HashMap con los jugadores
+     */
     public HashMap getJugadores(){
         return game.getJugadores();        
     }

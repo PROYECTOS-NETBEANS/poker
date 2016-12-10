@@ -38,6 +38,24 @@ public class AnalizadorServer {
         this.analizarPaquete(pk);
     }
     private void analizarPaquete(PaquetePk p){
+        switch(p.getTipoPaquete()){
+            case INGRESAR_A_MESA:
+                this.ingresarMesa(p.getData());
+                break;
+        }        
+    }
+
+    private void ingresarMesa(String data){
         
+        int idMesa = (Integer) Parser.stringToObject(data, Integer.class);
+        
+        Object[] listeners = listenerList.getListenerList();
+        
+        for(int i = 0; i < listeners.length; i++){
+            if(listeners[i] instanceof OnPackageListenerServer){
+                 ((OnPackageListenerServer) listeners[i]).onIngresarMesa(idMesa, idMesa);
+            }
+        }
     }    
+    
 }

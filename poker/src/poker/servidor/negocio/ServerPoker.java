@@ -34,7 +34,7 @@ public class ServerPoker implements OnConnectedListenerServer{
     /**
      * Iniciamos el servidor y creamos las primeras 3 mesas
      */
-    public void iniciarServidor(){        
+    public void iniciarServidor(){
         servidor.iniciarServicio();
         game.crearMesa();
     }
@@ -59,9 +59,7 @@ public class ServerPoker implements OnConnectedListenerServer{
 
     @Override
     public void onRead(Object sender, OnConnectedEventServer data, String userName) {
-        System.out.println("msg d Cliente : " + data.getMessageClient());
-        System.out.println("idCliente Destino : " + String.valueOf(data.getDestinoClient()) );
-        System.out.println("idCliente Origen : " + String.valueOf(data.getDestinoClient()));
+        this.onRead(data.getMessageClient());
     }
     /**
      * Metodo encargado de eliminar un usuario que se acaba de desconectar
@@ -130,6 +128,12 @@ public class ServerPoker implements OnConnectedListenerServer{
             System.out.println("[ServerPoker.enviarJugagores]" + e.getMessage());
         }
     }
+    /**
+     * Metodo que analiza el tipo de paquete que llega del servidor
+     */
+    private void onRead(String data){
+        anx.setMessage(data);
+    }    
    /**
      * Envia un jugador a los clientes
      * @param j jugador que se enviará a los clientes

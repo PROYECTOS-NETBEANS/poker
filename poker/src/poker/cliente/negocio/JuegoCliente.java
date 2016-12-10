@@ -3,7 +3,6 @@ package poker.cliente.negocio;
 import java.util.HashMap;
 import poker.servidor.datos.Jugador;
 import poker.servidor.negocio.Mesa;
-import java.util.Observable;
 /**
  * Esto se crea cada vez que vez que se conecta al servidor
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -17,10 +16,22 @@ public class JuegoCliente implements OnPackageListenerClient {
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
     
+    /**
+     * Es el jugador que de este cliente
+     */
+    private Jugador player = null;
+    private String nick = null;
+    
     private JuegoCliente(){
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
+        this.jugadores = null;
     }
+    
+    public void setNickName(String nick){
+        this.nick = nick;
+    }
+    
     public static JuegoCliente getJuegoCliente(){
         if(game == null){
             game = new JuegoCliente();
@@ -68,11 +79,12 @@ public class JuegoCliente implements OnPackageListenerClient {
      * @param jg Jugador que llega del servidor
      */
     private void addJugador(Jugador jg){
-        System.out.println("id : "+ String.valueOf(jg.getId()) + " " + jg.getNickName());
         this.jugadores.put(jg.getId(), jg);
-        
-        System.out.println("id : "+ String.valueOf(jg.getId()) + " " + jg.getNickName());
-        //this.notificarCambios();
+        if(this.player == null){
+            if(nick.equals(jg.getNickName())){
+                this.player = jg;
+            }
+        }
     }
     
     /**
