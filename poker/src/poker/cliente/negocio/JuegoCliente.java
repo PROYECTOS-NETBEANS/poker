@@ -68,13 +68,23 @@ public class JuegoCliente implements OnPackageListenerClient {
     }
     
     /**
-     * Adiciona una mesa a la lista de mesas
+     * Adiciona una mesa a la lista de mesas 
+     * y ademas si estoy en la mesa actualiza mi mesa
      * @param m una mesa que llega del servidor
      */
     private void addMesa(Mesa m){
-        this.mesas.put(m.getId(), m);
-        System.out.println("llego una mesa : " + String.valueOf(m.getId()));
-    
+        try{
+            this.mesas.put(m.getId(), m);
+            if(player != null){
+                if(m.existJugador(player.getId())){
+                    this.mesa = m;
+                }
+            }
+            System.out.println("llego una mesa : " + String.valueOf(m.getId()));
+        }catch(Exception e){
+            System.out.println("[JuegoCliente.addMesa]" + e.getMessage());
+        }
+
     }
     /**
      * Cambia de Estado a la mesa

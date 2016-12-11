@@ -78,8 +78,8 @@ public class AnalizadorServer {
         Object[] listeners = listenerList.getListenerList();
         
         for(int i = 0; i < listeners.length; i++){
-            if(listeners[i] instanceof OnPackageListenerServer){
-                 ((OnPackageListenerServer) listeners[i]).onIngresarMesa(Integer.valueOf(lista[0]), Integer.valueOf(lista[1]));
+            if(listeners[i] instanceof OnPackageReadListenerServer){
+                 ((OnPackageReadListenerServer) listeners[i]).onIngresarMesa(Integer.valueOf(lista[0]), Integer.valueOf(lista[1]));
             }
         }
     }    

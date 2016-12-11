@@ -9,7 +9,7 @@ import poker.servidor.datos.*;
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Juego implements OnPackageListenerServer{
+public class Juego implements OnPackageReadListenerServer{
     private Archivo bd = null;
     private HashMap<Integer, Mesa> mesas = null;
     private HashMap<Integer, Jugador> jugadores = null;
