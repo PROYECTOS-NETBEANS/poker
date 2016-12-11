@@ -201,30 +201,32 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         }
     public void pintarmesa(){
         jButton2.setVisible(true);
+        jList3.setVisible(true);
         if (cantidadmesas >= idButton1) {
             jButton1.setText("mesa  " + String.valueOf(idButton1));
-            jLabel3.setText(listarmesa(idButton1));
+            usuarios = new DefaultListModel();
+            jList2.setModel(usuarios);
+            jList2.setModel(listarmesa(idButton1, usuarios));
             if (cantidadmesas >= idButton2) {
                 jButton2.setText("mesa  " + String.valueOf(idButton2));
-                jLabel4.setText(listarmesa(idButton2));
+                usuarios = new DefaultListModel();
+            jList3.setModel(usuarios);
+            jList3.setModel(listarmesa(idButton2, usuarios));
             }else{
                 jButton2.setVisible(false);
-                jLabel4.setText("vacia");
+                jList3.setVisible(false);
             }
         }
  
     }
-     private String[] listarmesa(int id){
-       // int id = 1;
-       String[] listaj=null;
+     private DefaultListModel listarmesa(int id, DefaultListModel usuarios){
         Mesa m = (Mesa) cliente.getMesas().get(id);
         HashMap<Integer, Jugador> lista = m.getJugadores();
         for (Jugador j : lista.values()) {
             System.out.println("jugador en mesa 1 : " + j.getNickName());
-           listaj
-            listaj = listaj+j.getNickName()+" ";
+           usuarios.addElement(j.getNickName());
         }
-        return listaj;
+        return usuarios;
     } 
     public void subirimangen(){
      System.out.println("imagen en el boton");
