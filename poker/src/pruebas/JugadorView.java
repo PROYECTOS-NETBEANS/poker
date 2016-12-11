@@ -5,7 +5,12 @@
  */
 package pruebas;
 
-import java.awt.event.ActionListener;
+
+import java.awt.Image;
+import java.lang.reflect.Modifier;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import poker.servidor.datos.Jugador;
 
 /**
  *
@@ -13,16 +18,25 @@ import java.awt.event.ActionListener;
  */
 public class JugadorView extends javax.swing.JPanel {
 
+    private Jugador jugador = null;
+
     /**
      * Creates new form JugadorView
      * @param lst
      */
-    public JugadorView(ActionListener lst) {
+    public JugadorView(Jugador jg) {
         initComponents();
-        btnverde.addActionListener(lst);
-        btnverde.setActionCommand("btnverde");
+        this.iniciar(jg);
     }
+    private void iniciar(Jugador j){
+        this.jugador = j;
+        /**
+        image = new ImageIcon(this.getClass().getResource("/poker/avatar1.png"));
+        icono = new ImageIcon(image.getImage().getScaledInstance(lavatar.getWidth(), lavatar.getHeight(), Image.SCALE_DEFAULT));
+        lavatar.setIcon(icono);        **/
+        
 
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,47 +46,52 @@ public class JugadorView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lNombreJugador = new javax.swing.JLabel();
+        lMonto = new javax.swing.JLabel();
+        ljugador = new javax.swing.JLabel();
         lcarta2 = new javax.swing.JLabel();
         lcarta1 = new javax.swing.JLabel();
-        btnverde = new javax.swing.JButton();
+        lavatar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lTurno = new javax.swing.JLabel();
+        lTipo = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(51, 255, 51));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lcarta2.setText("carta2");
+        lNombreJugador.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lNombreJugador.setForeground(new java.awt.Color(240, 240, 240));
+        lNombreJugador.setText("JUGADOR XXX");
+        add(lNombreJugador, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 80, -1));
 
-        lcarta1.setText("carta1");
+        lMonto.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        lMonto.setForeground(new java.awt.Color(240, 240, 240));
+        lMonto.setText("Monto Act. : 1000");
+        add(lMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
 
-        btnverde.setText("jButton1");
-        btnverde.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnverdeActionPerformed(evt);
-            }
-        });
+        ljugador.setIcon(new javax.swing.ImageIcon("D:\\2015\\repositorios\\poker\\poker\\resources\\imagenes\\cartas\\logo.png")); // NOI18N
+        add(ljugador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 200, 90));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
-                .addComponent(btnverde)
-                .addGap(61, 61, 61)
-                .addComponent(lcarta1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(lcarta2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(lcarta2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnverde)
-                    .addComponent(lcarta1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(102, 102, 102))
-        );
+        lcarta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/atras.jpg"))); // NOI18N
+        add(lcarta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 70, 100));
+
+        lcarta1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lcarta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/atras.jpg"))); // NOI18N
+        add(lcarta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, -1));
+
+        lavatar.setIcon(new javax.swing.ImageIcon("D:\\2015\\repositorios\\poker\\poker\\resources\\imagenes\\cartas\\avatar1.png")); // NOI18N
+        add(lavatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 90, 80));
+
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setText("Apuesta : 20 $");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 90, 20));
+
+        lTurno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/inactivo.png"))); // NOI18N
+        add(lTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 80));
+
+        lTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/dealer.png"))); // NOI18N
+        add(lTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnverdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnverdeActionPerformed
@@ -81,8 +100,14 @@ public class JugadorView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnverde;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lMonto;
+    private javax.swing.JLabel lNombreJugador;
+    private javax.swing.JLabel lTipo;
+    private javax.swing.JLabel lTurno;
+    private javax.swing.JLabel lavatar;
     private javax.swing.JLabel lcarta1;
     private javax.swing.JLabel lcarta2;
+    private javax.swing.JLabel ljugador;
     // End of variables declaration//GEN-END:variables
 }

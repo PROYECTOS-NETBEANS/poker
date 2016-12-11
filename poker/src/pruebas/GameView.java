@@ -1,28 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pruebas;
 
-import java.awt.event.ActionListener;
+import javax.swing.JPanel;
+import poker.cliente.negocio.PokerClient;
 
 /**
  *
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class panelPrueba extends javax.swing.JPanel {
+public class GameView extends JPanel {
 
+    private PokerClient cliente = null;
     /**
      * Creates new form panelPrueba
-     * @param lst
+     * @param cliente Cliente
      */
-    public panelPrueba(ActionListener lst) {
+    public GameView(PokerClient cliente) {
         initComponents();
-        btnrojo.addActionListener(lst);
-        btnrojo.setActionCommand("btnrojo");
+        this.inicializar(cliente);
     }
-
+    private void inicializar(PokerClient cliente){
+        this.cliente = cliente;
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,32 +32,21 @@ public class panelPrueba extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnrojo = new javax.swing.JButton();
-
         setBackground(new java.awt.Color(255, 0, 0));
-
-        btnrojo.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(btnrojo)
-                .addContainerGap(179, Short.MAX_VALUE))
+            .addGap(0, 814, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(btnrojo)
-                .addContainerGap(156, Short.MAX_VALUE))
+            .addGap(0, 409, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnrojo;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,34 +1,21 @@
 package pruebas;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
 /**
  * Interfaz para jugar el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class frmGame extends javax.swing.JFrame implements ActionListener{
-
-    JugadorView pv = null;
-    panelPrueba pr = null;
+public class frmGame extends javax.swing.JFrame{
+    
+    private JugadorView j = null;
     
     public frmGame() {
         initComponents();
-        this.iniciar();
+        this.inicializar();
     }
-    public void iniciar(){
-        pv = new JugadorView(this);
-        pv.setBounds(10, 10, 200, 200);       
-        pv.setVisible(true);
-        this.getContentPane().add(pv);
-        
-        pr = new panelPrueba(this);
-        pr.setBounds(10, 10, 200, 200);       
-        pr.setVisible(false);
-        this.getContentPane().add(pr);
-
+    private void inicializar(){
+        j = new JugadorView(null);
+        j.setBounds(10, 10, 201, 130);
+        this.getContentPane().add(j);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,11 +32,11 @@ public class frmGame extends javax.swing.JFrame implements ActionListener{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 789, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         pack();
@@ -88,24 +75,6 @@ public class frmGame extends javax.swing.JFrame implements ActionListener{
                 new frmGame().setVisible(true);
             }
         });
-    }
-    /*Este metodo se usara para todos los botones*/
-    @Override
-    public void actionPerformed(ActionEvent e) {            
-            if(e.getActionCommand().equals("btnverde")){
-                System.out.println("me presionaron en el panel verde");
-                pv.setVisible(false);
-                pr.setVisible(true);
-                System.out.println("pase el verde");
-                
-            }else{
-                if(e.getActionCommand().equals("btnrojo")){
-                    pr.setVisible(false);
-                    pv.setVisible(true);
-
-                }
-            }
-
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
