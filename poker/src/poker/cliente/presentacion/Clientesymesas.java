@@ -7,6 +7,7 @@ package poker.cliente.presentacion;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.Icon;
@@ -25,6 +26,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
 //private String[] datos = {"ana","angel","miguel","adriana"};
     private PokerClient cliente = null;
     private DefaultListModel usuarios = null;
+    //private ActionListener lst =null;
     private int cantidadmesas = 0;
     private int idButton1 = 1;
     private int idButton2 = 2;
@@ -33,11 +35,16 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     /**
      * Creates new form NewJPanel
      */
-    public Clientesymesas(PokerClient cliente) {
+    public Clientesymesas(PokerClient cliente,ActionListener lst) {
         initComponents();
         this.cliente = cliente;
+        //this.lst=lst;
         cargarjlist();
         pintarmesa();
+        jButton2.addActionListener(lst);
+        jButton2.setActionCommand("btnverde");
+        jButton1.addActionListener(lst);
+        jButton1.setActionCommand("btnverde");
         
        
        
@@ -140,11 +147,16 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     cliente.ingresarMesa(idButton1);
     
+    
+    
+    
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    cliente.ingresarMesa(idButton2);        // TODO add your handling code here:
+    cliente.ingresarMesa(idButton2);     
+    
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
@@ -185,33 +197,25 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         
        jList1.setModel(usuarios);
     }
-
+/**
+ * este metodo contaviliza la cantidad de mesas exixtente
+ */
         public void cargarmesa(){
-        HashMap<Integer, Mesa> mesas = cliente.getMesas();
-            if(mesas != null){
-                Iterator<Mesa> it = mesas.values().iterator();
-                cantidadmesas = mesas.size();
-                
-                System.out.println("count " + String.valueOf(mesas.size()));
-                while(it.hasNext()) {
-                    Mesa m = (Mesa) it.next();
-
-                }            
-            } System.out.println("cantidad de mesas  " + String.valueOf(cantidadmesas));
+              cantidadmesas = cliente.getMesas().size();
+             
         }
-    public void pintarmesa(){
+    /**
+    * este metodo contaviliza la cantidad de mesas exixtente
+    */
+        public void pintarmesa(){
         jButton2.setVisible(true);
         jList3.setVisible(true);
         if (cantidadmesas >= idButton1) {
             jButton1.setText("mesa  " + String.valueOf(idButton1));
-            usuarios = new DefaultListModel();
-            jList2.setModel(usuarios);
-            jList2.setModel(listarmesa(idButton1, usuarios));
+                jugmesa1();
             if (cantidadmesas >= idButton2) {
                 jButton2.setText("mesa  " + String.valueOf(idButton2));
-                usuarios = new DefaultListModel();
-            jList3.setModel(usuarios);
-            jList3.setModel(listarmesa(idButton2, usuarios));
+                jugmesa2();
             }else{
                 jButton2.setVisible(false);
                 jList3.setVisible(false);
@@ -219,7 +223,19 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         }
  
     }
-     private DefaultListModel listarmesa(int id, DefaultListModel usuarios){
+    private void jugmesa1(){
+            usuarios = new DefaultListModel();
+            jList2.setModel(usuarios);
+            jList2.setModel(listarmesa(idButton1, usuarios));
+    }
+    private void jugmesa2(){
+            usuarios = new DefaultListModel();
+            jList3.setModel(usuarios);
+            jList3.setModel(listarmesa(idButton2, usuarios));
+    }
+    
+    
+    private DefaultListModel listarmesa(int id, DefaultListModel usuarios){
         Mesa m = (Mesa) cliente.getMesas().get(id);
         HashMap<Integer, Jugador> lista = m.getJugadores();
         for (Jugador j : lista.values()) {
@@ -228,13 +244,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         }
         return usuarios;
     } 
-    public void subirimangen(){
-     System.out.println("imagen en el boton");
-     ImageIcon face = new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/botonmesa.jpg"));
-     jButton2.setIcon(face);
-     jButton1.setBackground(Color.GREEN);
-     System.out.println("imagen en el boton ooo");
-    }
+    
     @Override
     public void onNuevaMesa(Mesa mesa) {
         System.out.println("poker.cliente.presentacion.Clientesymesas.onNuevaMesa()");
@@ -258,6 +268,9 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     @Override
     public void onJugadorDesconectado(Jugador jg) {
         cargarjlist();
+        jugmesa1();
+        jugmesa2();
+        
        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }    
     

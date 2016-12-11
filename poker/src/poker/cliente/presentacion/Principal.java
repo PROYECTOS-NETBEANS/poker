@@ -4,16 +4,18 @@
  * and open the template in the editor.
  */
 package poker.cliente.presentacion;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import poker.cliente.negocio.PokerClient;
 /**
  *
  * @author LIMBERT
  */
-public class Principal extends javax.swing.JFrame {
+public class Principal extends javax.swing.JFrame implements ActionListener{
     private PokerClient cliente = null;
-    private static Clientesymesas p =null;
-    private static mesajuego m = null;
+    private Clientesymesas p =null;
+    private mesajuego m = null;
     /**
      * Creates new form Principal
      */
@@ -113,18 +115,25 @@ public class Principal extends javax.swing.JFrame {
     }
 
     public  void cargarjug_mesa(){
-            p= new Clientesymesas(cliente);
-             cliente.addEventListener(p);
-             p.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
-             this.getContentPane().add(p);
+            p= new Clientesymesas(cliente,this);
+            cliente.addEventListener(p);
+            p.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+            p.setVisible(true);
+            this.getContentPane().add(p);
+            
+            
+             m = new mesajuego(cliente,this);
+             m.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+             m.setVisible(false);
+             this.getContentPane().add(m);
            /*
             PanelPrincipal.removeAll();
             PanelPrincipal.add(p);
-            PanelPrincipal.revalidate();
+            PanelPrincipal.revalidate();implements ActionListener
             PanelPrincipal.repaint();*/
     } 
     public void cargarmesajuego(){
-             m = new mesajuego(cliente);
+             m = new mesajuego(cliente,this);
              m.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
              this.getContentPane().add(m);
            /* PanelPrincipal.removeAll();
@@ -140,4 +149,22 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+       if(e.getActionCommand().equals("btnverde")){
+                System.out.println("me presionaron en el panel verde");
+                p.setVisible(false);
+                m.setVisible(true);
+                System.out.println("pase el verde");
+                
+            }else{
+                if(e.getActionCommand().equals("btnrojo")){
+                    m.setVisible(false);
+                    p.setVisible(true);
+
+                }
+            }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

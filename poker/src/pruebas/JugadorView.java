@@ -43,6 +43,11 @@ public class JugadorView extends javax.swing.JPanel {
         lcarta1.setText("carta1");
 
         btnverde.setText("jButton1");
+        btnverde.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnverdeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -69,6 +74,10 @@ public class JugadorView extends javax.swing.JPanel {
                 .addGap(102, 102, 102))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnverdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnverdeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnverdeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
