@@ -90,4 +90,11 @@ public class Mesa {
     public void setEstadoMesa(boolean b){
         this.estado = b;
     }
+    /**
+     * Metodo que devuelve una lista de jugadores que estan en la mesa
+     * @return HashMap con los jugadores de la mesa
+     */
+    public HashMap<Integer, Jugador> getJugadores(){
+        return this.jugadores;
+    }
 }

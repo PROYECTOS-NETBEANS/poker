@@ -4,7 +4,7 @@ package poker.servidor.negocio;
 import java.util.EventListener;
 
 /**
- * 
+ * Metodo que encargado de interpretar los mensajes que llegan de los clientes
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
 public interface OnPackageListenerServer extends EventListener{

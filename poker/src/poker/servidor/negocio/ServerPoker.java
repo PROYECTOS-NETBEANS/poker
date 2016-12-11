@@ -10,7 +10,7 @@ import jsocket.server.JSocketServer;
 import poker.servidor.datos.Jugador;
 import poker.utils.datos.TipoPaquete;
 
-public class ServerPoker implements OnConnectedListenerServer{
+public class ServerPoker implements OnConnectedListenerServer, OnPackageSendListenerServer{
     
     private JSocketServer servidor = null;
     private Juego game = null;
@@ -25,9 +25,13 @@ public class ServerPoker implements OnConnectedListenerServer{
         servidor.addEventListener(this);
         
         game = new Juego();
+        
+        game.addEventListener(this);
+        
         // Es el escuchador de paquetes
         anx = new AnalizadorServer();
-        anx.addEventListener(game);        
+        anx.addEventListener(game);
+        
     }
     /**
      * Iniciamos el servidor y creamos las primeras 3 mesas
@@ -132,7 +136,7 @@ public class ServerPoker implements OnConnectedListenerServer{
     private void onRead(String data){
         anx.setMessage(data);
     }    
-   /**
+    /**
      * Envia un jugador a los clientes
      * @param j jugador que se enviará a los clientes
      */
@@ -148,6 +152,11 @@ public class ServerPoker implements OnConnectedListenerServer{
     }
     public void nuevaMesa(){
         Mesa m = game.crearMesa();
+        this.enviarMesa(m);
+    }
+    // metodos que se invocan para enviar mensajes a los clientes
+    @Override
+    public void onEnviarMesa(Mesa m) {
         this.enviarMesa(m);
     }
 }

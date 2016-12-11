@@ -1,5 +1,7 @@
 package pruebas;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import poker.cliente.negocio.PokerClient;
 import poker.cliente.negocio.OnPackageListenerClient;
@@ -39,13 +41,21 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Click en mesa");
+        jButton1.setText("ingresar a mesa 1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Listar Jugadores de mesa 1");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -56,14 +66,20 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
             .addGroup(layout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jButton1)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(63, 63, 63))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGap(35, 35, 35)
+                .addComponent(jButton2)
+                .addContainerGap(187, Short.MAX_VALUE))
         );
 
         pack();
@@ -72,6 +88,10 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.entrarMesa();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.listar();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -110,6 +130,7 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -134,5 +155,13 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
     private void entrarMesa(){
         int idMesa = 1;
         cliente.ingresarMesa(idMesa);
+    }
+    private void listar(){
+        int id = 1;
+        Mesa m = (Mesa) cliente.getMesas().get(id);
+        HashMap<Integer, Jugador> lista = m.getJugadores();
+        for (Jugador j : lista.values()) {
+            System.out.println("jugador en mesa 1 : " + j.getNickName());            
+        }
     }
 }

@@ -1,8 +1,11 @@
 package poker.servidor.negocio;
 
+import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.swing.event.EventListenerList;
 import poker.servidor.datos.*;
+import poker.utils.datos.Parser;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
@@ -17,13 +20,21 @@ public class Juego implements OnPackageListenerServer{
      */
     private int idMesa = 1;
     
+    private EventListenerList listenerList = null;
+    
     public Juego(){
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
         this.idMesa = 1;
         this.bd = new Archivo();
+        this.listenerList = new EventListenerList();
     }
-    
+    public void addEventListener(EventListener listener){
+        this.listenerList.add(EventListener.class, listener);
+    }
+    public void removeEventListener(EventListener listener){
+        this.listenerList.remove(EventListener.class, listener);
+    }
     /**
      * Crea un nuevo jugador con un monto de 1000 fichas por defecto
      * @param nick nombre de jugador
@@ -125,12 +136,27 @@ public class Juego implements OnPackageListenerServer{
             if(this.mesas.containsKey(idMesa) && this.jugadores.containsKey(idJugador)){
                 Mesa m = this.mesas.get(idMesa);
                 m.setJugador(jugadores.get(idJugador));
-
+                this.mesas.put(m.getId(), m);
+                // si se ingreso la mesa, entonces hay que enviar la mesa con los nuevos cambios
+                this.onEnviarMesa(m);
             }else{
                 System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
             }            
         }catch(Exception e){
             System.out.println("[Juego.ingresarJugadorAMesa]" + e.getMessage());
+        }
+    }
+    /**
+     * Metodo que invoca el evento para enviar las mesas a los clientes
+     */
+    private void onEnviarMesa(Mesa m){
+
+        Object[] listeners = listenerList.getListenerList();
+        
+        for (Object listener : listeners) {
+            if (listener instanceof OnPackageSendListenerServer) {
+                ((OnPackageSendListenerServer) listener).onEnviarMesa(m);
+            }
         }
     }
 }
