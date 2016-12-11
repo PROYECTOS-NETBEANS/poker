@@ -25,4 +25,7 @@ public class Principal {
 		observador.addObserver(miVentanaOpciones);
 	}
 }
-Este es un ejemplomodificado en el servidro
+<<<<<<< f1cd274cd7b95db64491f937350ef72574e57d15
+//Este es un ejemplomodificado en el servidro
+// modificacion en el cliente de para el mergue
+>>>>>>> cec7c1b618b7881f23c3884003acde9535df6131
