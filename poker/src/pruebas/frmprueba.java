@@ -161,4 +161,15 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
             System.out.println("jugador en mesa 1 : " + j.getNickName());            
         }
     }
+    private String listarmesa(int id){
+       // int id = 1;
+       String listaj="";
+        Mesa m = (Mesa) cliente.getMesas().get(id);
+        HashMap<Integer, Jugador> lista = m.getJugadores();
+        for (Jugador j : lista.values()) {
+            System.out.println("jugador en mesa 1 : " + j.getNickName());
+            listaj = listaj+j.getNickName()+" ";
+        }
+        return listaj;
+    } 
 }

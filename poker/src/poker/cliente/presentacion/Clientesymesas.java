@@ -5,16 +5,10 @@
  */
 package poker.cliente.presentacion;
 
-import com.sun.prism.paint.Color;
+import java.awt.Color;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import poker.cliente.negocio.PokerClient;
@@ -32,6 +26,8 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     private PokerClient cliente = null;
     private DefaultListModel usuarios = null;
     private int cantidadmesas = 0;
+    private int idButton1 = 1;
+    private int idButton2 = 2;
   // private HashMap<Integer, Rectangle> ms;
     
     /**
@@ -41,7 +37,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         initComponents();
         this.cliente = cliente;
         cargarjlist();
-        
+        pintarmesa();
         
        
        
@@ -61,16 +57,27 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList<>();
 
-        setBackground(new java.awt.Color(51, 0, 255));
+        setBackground(new java.awt.Color(0, 51, 51));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/mesa.png"))); // NOI18N
+        jButton1.setBackground(new java.awt.Color(0, 204, 0));
         jButton1.setMaximumSize(new java.awt.Dimension(90, 90));
         jButton1.setMinimumSize(new java.awt.Dimension(90, 90));
         jButton1.setPreferredSize(new java.awt.Dimension(90, 90));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 11, -1, -1));
 
         jScrollPane1.setViewportView(jList1);
@@ -82,8 +89,24 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         jLabel1.setText("Lista de jugadores");
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 22, -1, -1));
 
+        jButton2.setBackground(new java.awt.Color(51, 204, 0));
         jButton2.setPreferredSize(new java.awt.Dimension(90, 90));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 119, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 204));
+        jLabel3.setText("vacia");
+        add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 70, 70));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 204));
+        jLabel4.setText("vacia");
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 70, 90));
 
         jButton3.setText("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -92,14 +115,37 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
             }
         });
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 255, 98, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/screensaver-fantasy-wallpaper-inspiration-widescreen-gallery-sfondi-screensavers-16962.jpg"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -40, -1, 1100));
+
+        jScrollPane2.setViewportView(jList2);
+
+        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 80, 90));
+
+        jScrollPane3.setViewportView(jList3);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 80, 90));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        cargarjlist();       //jList1.setListData("pepe","juan"); // TODO add your handling code here:
+        idButton1 = idButton1 +2;
+        idButton2 = idButton2 +2;
+        if (cantidadmesas<idButton1) {
+           idButton1 = 1;
+           idButton2 = 2; 
+        }
+        pintarmesa();
+//jList1.setListData("pepe","juan"); // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    cliente.ingresarMesa(idButton1);
+    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    cliente.ingresarMesa(idButton2);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -108,8 +154,14 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList2;
+    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -139,6 +191,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
             if(mesas != null){
                 Iterator<Mesa> it = mesas.values().iterator();
                 cantidadmesas = mesas.size();
+                
                 System.out.println("count " + String.valueOf(mesas.size()));
                 while(it.hasNext()) {
                     Mesa m = (Mesa) it.next();
@@ -147,20 +200,44 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
             } System.out.println("cantidad de mesas  " + String.valueOf(cantidadmesas));
         }
     public void pintarmesa(){
-        
+        jButton2.setVisible(true);
+        if (cantidadmesas >= idButton1) {
+            jButton1.setText("mesa  " + String.valueOf(idButton1));
+            jLabel3.setText(listarmesa(idButton1));
+            if (cantidadmesas >= idButton2) {
+                jButton2.setText("mesa  " + String.valueOf(idButton2));
+                jLabel4.setText(listarmesa(idButton2));
+            }else{
+                jButton2.setVisible(false);
+                jLabel4.setText("vacia");
+            }
+        }
+ 
     }
+     private String[] listarmesa(int id){
+       // int id = 1;
+       String[] listaj=null;
+        Mesa m = (Mesa) cliente.getMesas().get(id);
+        HashMap<Integer, Jugador> lista = m.getJugadores();
+        for (Jugador j : lista.values()) {
+            System.out.println("jugador en mesa 1 : " + j.getNickName());
+           listaj
+            listaj = listaj+j.getNickName()+" ";
+        }
+        return listaj;
+    } 
     public void subirimangen(){
-    // System.out.println("imagen en el boton");
-     //ImageIcon face = new ImageIcon(getClass().getResource("botonmesa.jpg"));
-    // jButton2.setIcon(face);
-       //jButton1.setBackground(Color.GREEN);
-       // System.out.println("imagen en el boton ooo");
+     System.out.println("imagen en el boton");
+     ImageIcon face = new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/botonmesa.jpg"));
+     jButton2.setIcon(face);
+     jButton1.setBackground(Color.GREEN);
+     System.out.println("imagen en el boton ooo");
     }
     @Override
     public void onNuevaMesa(Mesa mesa) {
         System.out.println("poker.cliente.presentacion.Clientesymesas.onNuevaMesa()");
         cargarmesa();
-       subirimangen();
+        pintarmesa();
     }
 
     @Override

@@ -12,7 +12,8 @@ import poker.cliente.negocio.PokerClient;
  */
 public class Principal extends javax.swing.JFrame {
     private PokerClient cliente = null;
-    private Clientesymesas p =null;
+    private static Clientesymesas p =null;
+    private static mesajuego m = null;
     /**
      * Creates new form Principal
      */
@@ -32,21 +33,38 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 831, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addGap(0, 608, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jButton1)
+                .addContainerGap(344, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+     cambiarpanel();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,13 +107,37 @@ public class Principal extends javax.swing.JFrame {
         if(nickName.length() > 0 ){
             cliente = new PokerClient(5555, "localhost");
             cliente.conectarServidor(nickName);
-             p= new Clientesymesas(cliente);
-             p.setBounds(50, 50, this.getWidth() - 10, this.getHeight() - 10);
-             cliente.addEventListener(p);
-             this.getContentPane().add(p);
+            cargarjug_mesa();
+             
         } 
     }
 
+    public  void cargarjug_mesa(){
+            p= new Clientesymesas(cliente);
+             cliente.addEventListener(p);
+             p.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+             this.getContentPane().add(p);
+           /*
+            PanelPrincipal.removeAll();
+            PanelPrincipal.add(p);
+            PanelPrincipal.revalidate();
+            PanelPrincipal.repaint();*/
+    } 
+    public void cargarmesajuego(){
+             m = new mesajuego(cliente);
+             m.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+             this.getContentPane().add(m);
+           /* PanelPrincipal.removeAll();
+            PanelPrincipal.add(m);
+            PanelPrincipal.revalidate();
+            PanelPrincipal.repaint();*/
+    }
+    public  void cambiarpanel(){
+        p.setVisible(false);
+        cargarmesajuego();
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
