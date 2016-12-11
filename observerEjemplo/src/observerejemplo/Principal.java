@@ -25,3 +25,4 @@ public class Principal {
 		observador.addObserver(miVentanaOpciones);
 	}
 }
+Este es un ejemplomodificado en el servidro
