@@ -25,9 +25,19 @@ public class JuegoCliente implements OnPackageListenerClient {
     private JuegoCliente(){
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
-        this.jugadores = null;
+        //this.jugadores = null;
     }
-    
+    /**
+     * Metodo que devuelve el jugador actual. es decir su propia informacion
+     * @return Jugador con la informacion del jugador
+     */
+    public Jugador getJugador(){
+        return this.player;
+    }
+    /**
+     * Adiciono el nick del jugador
+     * @param nick Nombre de usuario del cliente
+     */
     public void setNickName(String nick){
         this.nick = nick;
     }
@@ -63,7 +73,7 @@ public class JuegoCliente implements OnPackageListenerClient {
      */
     private void addMesa(Mesa m){
         this.mesas.put(m.getId(), m);
-        System.out.println("llego una mesa!!!");
+        System.out.println("llego una mesa : " + String.valueOf(m.getId()));
     
     }
     /**
@@ -76,14 +86,20 @@ public class JuegoCliente implements OnPackageListenerClient {
     }
     /**
      * Adiciona un jugador a la lista de jugadores de la mesa
+     * Ademas verifica si el nick de este jugador es igual al jugador que llega.
      * @param jg Jugador que llega del servidor
      */
     private void addJugador(Jugador jg){
-        this.jugadores.put(jg.getId(), jg);
-        if(this.player == null){
-            if(nick.equals(jg.getNickName())){
-                this.player = jg;
+        try{            
+            this.jugadores.put(jg.getId(), jg);
+            
+            if(this.player == null){
+                if(nick.equals(jg.getNickName())){
+                    this.player = jg;
+                }
             }
+        }catch(Exception e){
+            System.out.println("[JuegoCliente.addJugador]" + e.getMessage());
         }
     }
     
@@ -112,12 +128,6 @@ public class JuegoCliente implements OnPackageListenerClient {
         this.addJugador(jg);
     }
 
-    
-    @Override
-    public void onIngresarMesa(int idMesa, int idJugador) {
-        System.out.println("no implementado en el cliente el on ingresar mesa");
-    }
-    
     @Override
     public void onJugadorDesconectado(Jugador jg){
         this.deleteJugador(jg);

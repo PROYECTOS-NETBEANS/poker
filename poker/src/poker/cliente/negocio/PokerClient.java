@@ -45,7 +45,7 @@ public class PokerClient implements OnConnectedListenerClient{
      */
     public void conectarServidor(String nick){
         try {
-            cliente.conectarServidor(nick);
+            cliente.conectarServidor(nick);            
             game.setNickName(nick);
         } catch (Exception e) {
             System.out.println("Error pokerClient.conectarServidor : " + e.getMessage());
@@ -97,7 +97,10 @@ public class PokerClient implements OnConnectedListenerClient{
      * @param idMesa Identificador de mesa
      */
     public void ingresarMesa(int idMesa){
-        this.enviarPaquete(anx.gIngresarMesa(idMesa));
+        if(game.getJugador() == null)
+            System.out.println("no se encontro jugador para ingresar a la mesa!!");
+        else
+            this.enviarPaquete(anx.gIngresarMesa(idMesa, game.getJugador().getId()));
     }
     /**
      * Metodo que devuelve una lista de mesas

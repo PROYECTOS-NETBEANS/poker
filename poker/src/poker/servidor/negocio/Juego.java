@@ -16,15 +16,10 @@ public class Juego implements OnPackageListenerServer{
      * Identificador auto-incrementador para la mesa
      */
     private int idMesa = 1;
-    /**
-     * Identificador auto-incrementador para los jugadores
-     */
-    private int idJugador = 0;
     
     public Juego(){
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
-        this.idJugador = 0;
         this.idMesa = 1;
         this.bd = new Archivo();
     }
@@ -67,7 +62,6 @@ public class Juego implements OnPackageListenerServer{
             while (i.hasNext()){
                 System.out.println("llegue a has");
                 Mesa mesa = (Mesa) i.next();
-                System.out.println("pase mesas ****************++");
                 if(mesa.existJugador(jg.getId())){
                     mesa.deleteJugador(jg.getId());
                 }
@@ -118,7 +112,7 @@ public class Juego implements OnPackageListenerServer{
      */
     @Override
     public void onIngresarMesa(int idMesa, int idJugador) {
-        this.ingresarJugadoraMesa(idMesa, idJugador);
+        this.ingresarJugadorAMesa(idMesa, idJugador);
     }
     //*******METODOS PRIVADOS DEL NEGOCIO DEL JUEGO 
     /**
@@ -126,7 +120,17 @@ public class Juego implements OnPackageListenerServer{
      * @param idMesa Identificador de mesa
      * @param idJugador Identificador de jugador
      */
-    private void ingresarJugadoraMesa(int idMesa, int idJugador){
-        System.out.println("no implementaod!! ingresaar mesa");
+    private void ingresarJugadorAMesa(int idMesa, int idJugador){
+        try{            
+            if(this.mesas.containsKey(idMesa) && this.jugadores.containsKey(idJugador)){
+                Mesa m = this.mesas.get(idMesa);
+                m.setJugador(jugadores.get(idJugador));
+
+            }else{
+                System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
+            }            
+        }catch(Exception e){
+            System.out.println("[Juego.ingresarJugadorAMesa]" + e.getMessage());
+        }
     }
 }

@@ -8,8 +8,6 @@ import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;
 import jsocket.server.JSocketServer;
 import poker.servidor.datos.Jugador;
-import poker.utils.datos.PaquetePk;
-import poker.utils.datos.Parser;
 import poker.utils.datos.TipoPaquete;
 
 public class ServerPoker implements OnConnectedListenerServer{
@@ -139,19 +137,14 @@ public class ServerPoker implements OnConnectedListenerServer{
      * @param j jugador que se enviará a los clientes
      */
     private void enviarJugador(Jugador j, TipoPaquete accion){
-        System.out.println("enviado jg nick: " + j.getNickName());
-        String jugador = Parser.objectToString(j);
-        PaquetePk p = new PaquetePk(jugador, accion);
-        servidor.sendMessageAll(Parser.objectToString(p), -1);
+        servidor.sendMessageAll(anx.gEnviarJugador(j, accion), -1);
     }    
     /**
      * Envia una mesa a los clientes
      * @param m Mesa a enviar a los clientes
      */
     private void enviarMesa(Mesa m){
-        String mesa = Parser.objectToString(m);
-        PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
-        servidor.sendMessageAll(Parser.objectToString(p) , -1);
+        servidor.sendMessageAll(anx.gEnviarMesa(m), -1);
     }
     public void nuevaMesa(){
         Mesa m = game.crearMesa();

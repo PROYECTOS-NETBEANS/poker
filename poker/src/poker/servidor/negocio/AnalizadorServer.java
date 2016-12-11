@@ -8,8 +8,10 @@ package poker.servidor.negocio;
 
 import java.util.EventListener;
 import javax.swing.event.EventListenerList;
+import poker.servidor.datos.Jugador;
 import poker.utils.datos.PaquetePk;
 import poker.utils.datos.Parser;
+import poker.utils.datos.TipoPaquete;
 
 /**
  * 
@@ -44,16 +46,40 @@ public class AnalizadorServer {
                 break;
         }        
     }
-
+    // METODOS PARA EMPAQUETAR LOS DATOS A ENVIAR
+    /**
+     * Metodo que empaqueta los datos de la mesa en un paquete
+     * @param m Mesa a enviarse al cliente
+     * @return String con la mesa encapsulada
+     */
+    public String gEnviarMesa(Mesa m){
+        String mesa = Parser.objectToString(m);
+        PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
+        return Parser.objectToString(p);
+    }
+    /**
+     * Metodo que encapsula un jugador dentro de un paquete
+     * @param j Jugador a encapsular
+     * @param accion TipoPaquete que se envia
+     * @return Strin es el resultado de haber sido encapsulado
+     */
+    public String gEnviarJugador(Jugador j, TipoPaquete accion){
+        String jugador = Parser.objectToString(j);
+        PaquetePk p = new PaquetePk(jugador, accion);
+        return Parser.objectToString(p);
+    }
+    // METODOS PARA INVOCAR A LOS EVENTOS
     private void ingresarMesa(String data){
         
-        int idMesa = (Integer) Parser.stringToObject(data, Integer.class);
+        String mesa_jug = (String) Parser.stringToObject(data, String.class);
+        System.out.println("analizadorServer.ingresarMesa >id mes jug : " + mesa_jug);
+        String lista[] = mesa_jug.split("-");
         
         Object[] listeners = listenerList.getListenerList();
         
         for(int i = 0; i < listeners.length; i++){
             if(listeners[i] instanceof OnPackageListenerServer){
-                 ((OnPackageListenerServer) listeners[i]).onIngresarMesa(idMesa, idMesa);
+                 ((OnPackageListenerServer) listeners[i]).onIngresarMesa(Integer.valueOf(lista[0]), Integer.valueOf(lista[1]));
             }
         }
     }    

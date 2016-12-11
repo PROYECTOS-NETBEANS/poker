@@ -130,13 +130,7 @@ public class frmprueba extends javax.swing.JFrame implements OnPackageListenerCl
     @Override
     public void onJugadorDesconectado(Jugador jg) {
         
-    }
-
-    @Override
-    public void onIngresarMesa(int idMesa, int idJugador) {
-        
-    }
-    
+    }    
     private void entrarMesa(){
         int idMesa = 1;
         cliente.ingresarMesa(idMesa);

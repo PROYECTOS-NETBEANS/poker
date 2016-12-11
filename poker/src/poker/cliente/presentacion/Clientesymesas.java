@@ -180,13 +180,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     public void onJugadorDesconectado(Jugador jg) {
         cargarjlist();
        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void onIngresarMesa(int idMesa, int idJugador) {
-        
-    }
-    
+    }    
     
 }
 

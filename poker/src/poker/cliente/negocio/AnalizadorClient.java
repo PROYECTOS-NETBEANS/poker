@@ -94,10 +94,11 @@ public class AnalizadorClient {
     /**
      * Metodo para generar el envio del identificador de la mesa al servidor
      * @param idMesa Identificador de mesa
+     * @param idJugador Identificador primario de jugador
      * @return una cadena para enviar al servidor
      */
-    public String gIngresarMesa(int idMesa){
-        PaquetePk pk = new PaquetePk(String.valueOf(idMesa), TipoPaquete.INGRESAR_A_MESA);
+    public String gIngresarMesa(int idMesa, int idJugador){
+        PaquetePk pk = new PaquetePk(String.valueOf(idMesa) + "-" + String.valueOf(idJugador)  , TipoPaquete.INGRESAR_A_MESA);
         return Parser.objectToString(pk);
     }
 }

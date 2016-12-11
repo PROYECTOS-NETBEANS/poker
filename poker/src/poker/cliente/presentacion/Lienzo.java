@@ -147,7 +147,7 @@ public class Lienzo extends JPanel implements MouseMotionListener, MouseListener
     public void mouseClicked(MouseEvent e) {
         int k = estaContenido(e.getPoint());
         if(k > 0){
-            cliente.ingresarMesa(k);
+            //cliente.ingresarMesa(k);
         }
     }
 
