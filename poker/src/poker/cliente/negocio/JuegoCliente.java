@@ -17,15 +17,15 @@ public class JuegoCliente implements OnPackageListenerClient {
     private HashMap<Integer, Jugador> jugadores = null;
     
     /**
-     * Es el jugador que de este cliente
+     * Es el jugador que este cliente
      */
     private Jugador player = null;
+    private Mesa mesa = null;
     private String nick = null;
     
     private JuegoCliente(){
         this.mesas = new HashMap<>();
-        this.jugadores = new HashMap<>();
-        //this.jugadores = null;
+        this.jugadores = new HashMap<>();       
     }
     /**
      * Metodo que devuelve el jugador actual. es decir su propia informacion

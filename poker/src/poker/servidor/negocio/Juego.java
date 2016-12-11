@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.event.EventListenerList;
 import poker.servidor.datos.*;
-import poker.utils.datos.Parser;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>

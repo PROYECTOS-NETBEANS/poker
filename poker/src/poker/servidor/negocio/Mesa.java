@@ -3,21 +3,29 @@ package poker.servidor.negocio;
 import java.util.HashMap;
 import poker.servidor.datos.*;
 /**
- * 
+ * Clase encargada de todo el negocio que ocurre en la mesa
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
 public class Mesa {
-    
+    /**
+     * Identificador unico de mesa
+     */
     private int id = 0;
+    /**
+     * Baraja que hay en la mesa
+     */
     private Baraja baraja = null;
     private Casa house = null;
     private int apuestaMin = 0;
     /**
-     * Es la lista que contiene las cartas de los jugadores en la mesa
+     * Es la lista que contiene las manos de cada jugador
      * key : Es el identificador unico del jugador
      * value : Es una lista con las cartas del jugador
      */
-    private HashMap<Integer,Object> cartasJugadores = null;
+    private HashMap<Integer,ManoPoker> manosJugadores = null;
+    /**
+     * Lista de jugadores que estan en la mesa
+     */
     private HashMap<Integer, Jugador> jugadores = null;
     /**
      * True si la mesa esta vacia false cuando este llena
@@ -43,7 +51,7 @@ public class Mesa {
         this.estado = true;
         this.nroMax = nroMax;
         this.apuestaMin = apuestaMin;
-        this.cartasJugadores = new HashMap<>();
+        this.manosJugadores = new HashMap<>();
     }
     /**
      * Devuelve identificador unico de la mesa
@@ -96,5 +104,25 @@ public class Mesa {
      */
     public HashMap<Integer, Jugador> getJugadores(){
         return this.jugadores;
+    }
+    /**
+     * Metodo ingresa una carta a su mazo de cartas
+     * @param idJugador identificador primario de jugador
+     * @param carta La carta que se esta ingresando al mazo del jugador
+     */
+    public void setCarta(int idJugador, Carta carta){        
+        try{
+            if(this.manosJugadores.containsKey(idJugador)){
+                ManoPoker mano = this.manosJugadores.get(idJugador);
+                mano.setCarta(carta);
+                this.manosJugadores.put(idJugador, mano);
+            }else{
+                ManoPoker mano = new ManoPoker(idJugador);
+                mano.setCarta(carta);
+                this.manosJugadores.put(idJugador, mano);
+            }           
+        }catch(Exception e){
+            System.out.println("[Mesa.setCarta]" + e.getMessage());
+        }
     }
 }

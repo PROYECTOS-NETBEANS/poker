@@ -13,6 +13,7 @@ public class Carta {
      * Constructor de carta
      * @param nro El valor de la carta
      * @param simbolo El palo al que la carta pertenece
+     * @param color El color de la carta
      */
     public Carta(int nro, Constantes simbolo, Constantes color){
         this.nro = nro;
