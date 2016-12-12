@@ -135,11 +135,13 @@ public class JuegoCliente implements OnPackageListenerClient {
 
     @Override
     public void onNuevoJugador(Jugador jg) {
-        this.addJugador(jg);
+        System.out.println("JuegoCliente.onNuevoJugador ok");
+        this.addJugador(jg);        
     }
 
     @Override
     public void onJugadorDesconectado(Jugador jg){
+        System.out.println("JuegoCliente.onJugadorDesconectado ok");
         this.deleteJugador(jg);
     }
 }

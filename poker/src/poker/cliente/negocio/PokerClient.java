@@ -31,14 +31,20 @@ public class PokerClient implements OnConnectedListenerClient{
             System.out.println("Error pokerCliente.inicializar : " + e.getMessage());
         }
     }
-    /** metodo adiciona un escuchador
-     * 
-     * @param listener 
+    /** 
+     * metodo adiciona un escuchador de tipos de paquetes
+     * @param listener Escuchador de tipos de paquetes
      */
-    public void addEventListener(EventListener listener){
+    public void addEventListenerPackages(EventListener listener){
         anx.addEventListener(listener);
     }
-    
+    /**
+     * Metodo que adiciona un escuchador de paquetes del socket
+     * @param listener Escuchador de paquetes
+     */
+    public void addEventListenerSocket(EventListener listener){
+        cliente.addEventListener(listener);
+    }
     /**
      * Inicializa y conecta el servicio con el servidor
      * @param nick Nombre de usuario del cliente

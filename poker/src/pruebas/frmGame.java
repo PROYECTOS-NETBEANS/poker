@@ -1,21 +1,48 @@
 package pruebas;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
+import jsocket.client.OnConnectedEventClient;
+import jsocket.client.OnConnectedListenerClient;
+import poker.cliente.negocio.PokerClient;
+
 /**
- * Interfaz para jugar el juego
+ * Interfaz Principal del juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class frmGame extends javax.swing.JFrame{
+public class frmGame extends javax.swing.JFrame implements ActionListener, OnConnectedListenerClient{
     
-    private GameView g = null;
+    private GameView viewGame = null;
+    private InicioView viewIni = null;
     
+    private PokerClient cliente = null;
+    private String nickName = "Error de usuario";
     public frmGame() {
         initComponents();
-        this.inicializar();
+        this.login();
     }
-    private void inicializar(){
-        g = new GameView(null);
-        g.setBounds(10, 10, 814, 409);
-        this.getContentPane().add(g);
+    /**
+     * Inicializa las vistas que se mostraran cuando inicie session
+     */
+    private void inicializarVistaInicial(){    
+        viewIni = new InicioView(cliente, this);
+        this.setLayout(new BorderLayout());
+        this.add(viewIni, BorderLayout.CENTER);
+        this.getContentPane().add(viewIni);
+        
+    }
+    private void login(){
+        nickName = JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
+        
+        if(nickName.length() > 0 ){
+            cliente = new PokerClient(5555, "localhost");
+            this.inicializarVistaInicial();            
+            cliente.addEventListenerSocket(this);
+            cliente.addEventListenerPackages(viewIni);
+            cliente.conectarServidor(nickName);            
+        } 
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,11 +59,11 @@ public class frmGame extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 789, Short.MAX_VALUE)
+            .addGap(0, 907, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 474, Short.MAX_VALUE)
         );
 
         pack();
@@ -75,6 +102,37 @@ public class frmGame extends javax.swing.JFrame{
                 new frmGame().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+         
+    }
+
+    @Override
+    public void onConnect(Object o, OnConnectedEventClient ocec) {
+        System.out.println("un suario conextado!!");
+        this.setTitle("Usuario : <" + this.nickName + "> Conectado al servidor ");
+    }
+
+    @Override
+    public void onDisconnect(Object o, OnConnectedEventClient ocec) {
+        System.out.println("no implement frmGame.onDisconnect");
+    }
+
+    @Override
+    public void onRead(Object o, OnConnectedEventClient ocec) {
+        System.out.println("no implement frmGame.onRead");
+    }
+
+    @Override
+    public void onConnectRefused() {
+        System.out.println("no implement frmGame.onConnectRefused");
+    }
+
+    @Override
+    public void onConnectFinally() {
+        System.out.println("no implement frmGame.onConnectFinally");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
