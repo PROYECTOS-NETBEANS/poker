@@ -6,10 +6,14 @@
 package poker.cliente.presentacion;
 
 import java.awt.Image;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
 import javax.swing.JComponent;
+import org.w3c.dom.events.MouseEvent;
 import poker.cliente.negocio.PokerClient;
 import poker.servidor.negocio.Mesa;
 
@@ -17,7 +21,7 @@ import poker.servidor.negocio.Mesa;
  *
  * @author llanos
  */
-public class mesajuego extends javax.swing.JPanel {
+public class mesajuego extends javax.swing.JPanel  {
         private Mesa mesa=null;
         private PokerClient cliente=null;
        // private ActionListener lst =null;
@@ -45,6 +49,7 @@ public class mesajuego extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         mesapoker = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(0, 102, 102));
         setMaximumSize(new java.awt.Dimension(1100, 650));
         setMinimumSize(new java.awt.Dimension(1100, 650));
         setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -81,4 +86,6 @@ private void tamañoicon(JComponent componente,String dirimagen){
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel mesapoker;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -5,6 +5,8 @@
  */
 package poker.cliente.presentacion;
 
+import java.awt.event.MouseEvent;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -78,6 +80,11 @@ public class MesaVista extends javax.swing.JFrame {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/screensaver-fantasy-wallpaper-inspiration-widescreen-gallery-sfondi-screensavers-16962.jpg"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jLabel1.getAccessibleContext().setAccessibleName("fondo");
 
@@ -88,6 +95,13 @@ public class MesaVista extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+            int x=evt.getX();
+            int y=evt.getY();
+        jButton1.setText("  "+x+" , "+y);        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MousePressed
 
     /**
      * @param args the command line arguments
@@ -136,4 +150,6 @@ public class MesaVista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
+
+    
 }

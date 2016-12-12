@@ -21,7 +21,8 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
      */
     public Principal() {
         initComponents();
-        this.setLocationRelativeTo(null);
+      // this.setLocationRelativeTo(null);
+       this.setSize(1500, 800);
         iniciador();
         
     }
@@ -107,6 +108,7 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
             p.setBounds(1, 1, this.getWidth() - 10, this.getHeight() - 10);
             p.setVisible(true);
             this.getContentPane().add(p);
+            //this.setSize(450,350);
             
             
              m = new mesajuego(cliente,this);
