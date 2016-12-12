@@ -103,7 +103,7 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
 
     public  void cargarjug_mesa(){
             p= new Clientesymesas(cliente,this);
-            cliente.addEventListener(p);
+            cliente.addEventListenerPackages(p);
             p.setBounds(1, 1, this.getWidth() - 10, this.getHeight() - 10);
             p.setVisible(true);
             this.getContentPane().add(p);
