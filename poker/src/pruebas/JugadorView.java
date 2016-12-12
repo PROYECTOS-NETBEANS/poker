@@ -5,12 +5,10 @@
  */
 package pruebas;
 
-
-import java.awt.Image;
-import java.lang.reflect.Modifier;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import poker.servidor.datos.Jugador;
+import poker.utils.datos.Constantes;
 
 /**
  *
@@ -19,23 +17,77 @@ import poker.servidor.datos.Jugador;
 public class JugadorView extends javax.swing.JPanel {
 
     private Jugador jugador = null;
-
+    private Constantes TIPO_JUGADOR = Constantes.TIPO_NORMAL;
+    private Constantes ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
+    private Constantes TURNO = Constantes.TURNO_NO_TOCA;
     /**
      * Creates new form JugadorView
-     * @param lst
+     * @param jg Jugador a cual pertenece esta vista
      */
-    public JugadorView(Jugador jg) {
+    public JugadorView(Jugador jg) {       
         initComponents();
         this.iniciar(jg);
     }
     private void iniciar(Jugador j){
-        this.jugador = j;
-        /**
-        image = new ImageIcon(this.getClass().getResource("/poker/avatar1.png"));
-        icono = new ImageIcon(image.getImage().getScaledInstance(lavatar.getWidth(), lavatar.getHeight(), Image.SCALE_DEFAULT));
-        lavatar.setIcon(icono);        **/
+        this.jugador = j;   
+        this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());
+        this.lMonto.setText("Monto act. : " + String.valueOf(this.jugador.getMonto()));
+        this.TIPO_JUGADOR = Constantes.TIPO_NORMAL;
+        this.ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
+    }
+    public void actualizarDatos(int monto, Constantes tipoJug, Constantes estadoConex, Constantes turno){
+        this.lMonto.setText("Monto act. : " + String.valueOf(monto));
+        this.TIPO_JUGADOR = tipoJug;
+        this.ESTADO_CONEXION = estadoConex;
+        this.TURNO = turno;
+        this.updateComponentes();
+    }
+    private void updateComponentes(){
+        ImageIcon image;
+        Icon ico;
+        if(this.TURNO == Constantes.TURNO_TOCA)
+            image = new ImageIcon(getClass().getResource("/poker/activo.png"));       
+        else{
+            image = new ImageIcon(getClass().getResource("/poker/inactivo.png"));
+        }
+        //ico = new ImageIcon(image.getImage().getScaledInstance(WIDTH, HEIGHT, Image.ESCALE_DEFAULT))
+        ico = new ImageIcon(image.getImage());
+        this.lTurno.setIcon(ico);
+        // ahora cambiamos el icono de tipo jugador
+        switch(this.TIPO_JUGADOR){
+            case TIPO_CIEGA_GRANDE:
+                image = new ImageIcon(getClass().getResource("/poker/cg.png"));
+                break;
+            case TIPO_CIEGA_PEQUEÑA:
+                image = new ImageIcon(getClass().getResource("/poker/cp.png"));
+                break;
+            case TIPO_DEALER:
+                image = new ImageIcon(getClass().getResource("/poker/dealer.png"));
+                break;
+            case TIPO_NORMAL:
+                image = new ImageIcon(getClass().getResource("/poker/normal.png"));
+                break;          
+        }
+        ico = new ImageIcon(image.getImage());
+        this.lTipo.setIcon(ico);
         
-
+        // ahora cambiamos el estado de conexion
+        switch(this.ESTADO_CONEXION){
+            case ESTADO_CONECTADO:
+                image = new ImageIcon(getClass().getResource("/poker/avatar1.png"));
+                break;
+            case ESTADO_DESCONECTADO:
+                image = new ImageIcon(getClass().getResource("/poker/avatar1.png"));
+                break;
+            case ESTADO_RETIRADO:
+                image = new ImageIcon(getClass().getResource("/poker/avatar1.png"));
+                break;
+        }
+        ico = new ImageIcon(image.getImage());
+        this.lTipo.setIcon(ico);
+        
+        // finalmente actualizamos el componente
+        this.updateUI();
     }
     /**
      * This method is called from within the constructor to initialize the form.

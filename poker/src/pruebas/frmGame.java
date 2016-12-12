@@ -6,16 +6,16 @@ package pruebas;
  */
 public class frmGame extends javax.swing.JFrame{
     
-    private JugadorView j = null;
+    private GameView g = null;
     
     public frmGame() {
         initComponents();
         this.inicializar();
     }
     private void inicializar(){
-        j = new JugadorView(null);
-        j.setBounds(10, 10, 201, 130);
-        this.getContentPane().add(j);
+        g = new GameView(null);
+        g.setBounds(10, 10, 814, 409);
+        this.getContentPane().add(g);
     }
     /**
      * This method is called from within the constructor to initialize the form.
