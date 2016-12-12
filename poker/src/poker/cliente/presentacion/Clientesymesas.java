@@ -5,13 +5,9 @@
  */
 package poker.cliente.presentacion;
 
-import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import poker.cliente.negocio.PokerClient;
 import javax.swing.DefaultListModel;
 import poker.cliente.negocio.OnPackageListenerClient;
@@ -39,7 +35,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         initComponents();
         this.cliente = cliente;
         //this.lst=lst;
-        cargarjlist();
+        cargarListaJugadores();
         pintarmesa();
         jButton2.addActionListener(lst);
         jButton2.setActionCommand("btnverde");
@@ -61,15 +57,16 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstJugadores = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        lstListaArriba = new javax.swing.JList<>();
         jButton4 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lstListaAbajo = new javax.swing.JList<>();
+        jButton5 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 51, 51));
@@ -90,7 +87,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(211, 11, -1, -1));
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstJugadores);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 57, 129, 221));
 
@@ -116,13 +113,9 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         });
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 90, -1));
 
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lstListaArriba);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 80, 90));
-
-        jScrollPane3.setViewportView(jList3);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 80, 90));
 
         jButton4.setText("salir");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +124,18 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
             }
         });
         add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 80, -1));
+
+        jScrollPane3.setViewportView(lstListaAbajo);
+
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 80, 90));
+
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/screensaver-fantasy-wallpaper-inspiration-widescreen-gallery-sfondi-screensavers-16962.jpg"))); // NOI18N
         add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -149,11 +154,6 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     cliente.ingresarMesa(idButton1);
-    
-    
-    
-    
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -167,30 +167,35 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> lstJugadores;
+    private javax.swing.JList<String> lstListaAbajo;
+    private javax.swing.JList<String> lstListaArriba;
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Metodo que carga la lista de los jugadores en el jlist
+     * Metodo que carga la lista de los jugadores
      * @param
      */
-    private void cargarjlist(){
+    private void cargarListaJugadores(){
         HashMap jugadores = cliente.getJugadores();
         usuarios = new DefaultListModel();
-        jList1.setModel(usuarios);
+        lstJugadores.setModel(usuarios);
         if(jugadores != null){
                 Iterator<Jugador> it = jugadores.values().iterator();
                 
@@ -202,7 +207,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
 
             }
         
-       jList1.setModel(usuarios);
+       lstJugadores.setModel(usuarios);
     }
 /**
  * este metodo contaviliza la cantidad de mesas exixtente
@@ -215,18 +220,18 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     * este metodo pinta los botones con el numero de las mesas y llena la lista
     * de los jugadores de cada mesa
     */
-        public void pintarmesa(){
+        private void pintarmesa(){
         jButton2.setVisible(true);
-        jList3.setVisible(true);
+        lstListaAbajo.setVisible(true);
         if (cantidadmesas >= idButton1) {
             jButton1.setText("mesa  " + String.valueOf(idButton1));
-                jugmesa1();
+                cargarListaJugadoresArriba();
             if (cantidadmesas >= idButton2) {
                 jButton2.setText("mesa  " + String.valueOf(idButton2));
-                jugmesa2();
+                cargarListaJugadoresAbajo();
             }else{
                 jButton2.setVisible(false);
-                jList3.setVisible(false);
+                lstListaAbajo.setVisible(false);
             }
         }
  
@@ -234,18 +239,18 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     /**
     * este metodo carga lista de jugadores de la opcion uno
     */
-    private void jugmesa1(){
+    private void cargarListaJugadoresArriba(){
             usuarios = new DefaultListModel();
-            jList2.setModel(usuarios);
-            jList2.setModel(listarmesa(idButton1, usuarios));
+            lstListaArriba.setModel(usuarios);
+            lstListaArriba.setModel(listarmesa(idButton1, usuarios));
     }
     /**
     * este metodo carga lista de jugadores de la opcion dos
     */
-    private void jugmesa2(){
+    private void cargarListaJugadoresAbajo(){
             usuarios = new DefaultListModel();
-            jList3.setModel(usuarios);
-            jList3.setModel(listarmesa(idButton2, usuarios));
+            lstListaAbajo.setModel(usuarios);
+            lstListaAbajo.setModel(listarmesa(idButton2, usuarios));
     }
     /**
      * este metodo te devuelve la lista de los jugadores de una mesa
@@ -266,7 +271,7 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     
     @Override
     public void onNuevaMesa(Mesa mesa) {
-        System.out.println("poker.cliente.presentacion.Clientesymesas.onNuevaMesa()");
+        System.out.println("mesa : " + mesa.getId());
         cargarmesa();
         pintarmesa();
     }
@@ -279,23 +284,20 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     @Override
     public void onNuevoJugador(Jugador jg) {
        System.out.print("entro a un nuevo  " + jg.getNickName());
-        cargarjlist();
-        
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cargarListaJugadores();
     }
 
     @Override
     public void onJugadorDesconectado(Jugador jg) {
-        cargarjlist();
-        jugmesa1();
-        jugmesa2();
-        
-       //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        cargarListaJugadores();
+        cargarListaJugadoresArriba();
+        //cargarListaJugadoresAbajo();
     }    
 
     @Override
     public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("[clientesymesa.onJugadorIngresaAMesa]");
+        this.pintarmesa();
     }
     
 }

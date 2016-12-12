@@ -39,7 +39,6 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(450, 350));
         setMinimumSize(new java.awt.Dimension(450, 350));
-        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(450, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
