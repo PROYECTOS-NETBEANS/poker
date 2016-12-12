@@ -5,7 +5,11 @@
  */
 package poker.cliente.presentacion;
 
+import java.awt.Image;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.Icon;
+import javax.swing.JComponent;
 import poker.cliente.negocio.PokerClient;
 import poker.servidor.negocio.Mesa;
 
@@ -39,7 +43,7 @@ public class mesajuego extends javax.swing.JPanel {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        fondo = new javax.swing.JLabel();
+        mesapoker = new javax.swing.JLabel();
 
         setMaximumSize(new java.awt.Dimension(1100, 650));
         setMinimumSize(new java.awt.Dimension(1100, 650));
@@ -54,18 +58,27 @@ public class mesajuego extends javax.swing.JPanel {
         });
         add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        fondo.setPreferredSize(new java.awt.Dimension(1100, 650));
-        add(fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 680));
+        mesapoker.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/mesa.png"))); // NOI18N
+        add(mesapoker, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-
+/*
+private void tamañoicon(JComponent componente,String dirimagen){
+    
+    ImageIcon imagen = new ImageIcon(dirimagen);
+    Icon icono = new ImageIcon(imagen.getImage().getScaledInstance(componente.getWidth(),componente.getHeight(), Image.SCALE_DEFAULT));
+    componente.setIcon(icono);
+            
+}
+        
+  */      
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel fondo;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel mesapoker;
     // End of variables declaration//GEN-END:variables
 }

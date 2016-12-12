@@ -124,18 +124,22 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        if(e.getActionCommand().equals("btnverde")){
                 System.out.println("me presionaron en el panel verde");
-                p.setVisible(false);
-                m.setVisible(true);
                 this.setSize(1100, 650);
                 this.setLocation(70, 50);
+                p.setVisible(false);
+                m.setVisible(true);
+                this.repaint();
+                
                 System.out.println("pase el verde");
                 
             }else{
                 if(e.getActionCommand().equals("btnrojo")){
-                    m.setVisible(false);
-                    p.setVisible(true);
                     this.setSize(450, 350);
                     this.setLocationRelativeTo(null);
+                    m.setVisible(false);
+                    p.setVisible(true);
+                    this.repaint();
+                    
 
                 }
             }
