@@ -94,10 +94,9 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
         String nickName = JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
        
         if(nickName.length() > 0 ){
-            cliente = new PokerClient(5555, "localhost");
-            cliente.conectarServidor(nickName);
+            cliente = new PokerClient(5555, "localhost");            
             cargarjug_mesa();
-             
+            cliente.conectarServidor(nickName);
         } 
     }
 

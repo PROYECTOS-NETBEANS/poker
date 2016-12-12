@@ -35,6 +35,8 @@ public class Mesa {
      * Nro maximo de jugadores
      */
     private int nroMax = 0;
+
+    
     
     /**
      * Inicializacion con la configuraciones iniciales
@@ -47,6 +49,8 @@ public class Mesa {
         this.baraja = new Baraja();
         this.house = new Casa();
         this.id = id;
+    
+
         
         this.estado = true;
         this.nroMax = nroMax;
