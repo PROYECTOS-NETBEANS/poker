@@ -141,15 +141,21 @@ public class JuegoCliente implements OnPackageListenerClient {
     private void ingresarJugadorAMesa(Jugador j, Mesa m){
         try {
             if(this.mesa == null){
-               if(this.player.getId() == j.getId())
+                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] PPPPPPPP");
+               if(this.player.getId() == j.getId()){
                    this.mesa = m;
+               }
             }
-            
-            if(this.mesa.getId() == m.getId()){
-                this.mesa = m;
-                this.mesa.setJugador(j);
+            if(this.mesa !=null){
+                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] QQQQQQQQ");
+                if(this.mesa.getId() == m.getId()){
+                    this.mesa = m;
+                    this.mesa.setJugador(j);
+                }
+                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] XXXXX");
+                this.mesas.put(m.getId(), m);                
             }
-            this.mesas.put(m.getId(), m);
+
         } catch (Exception e) {
             System.out.println("[JuegoCliente.ingresarJugadorAMesa]" + e.getMessage());
         }

@@ -57,10 +57,9 @@ public class GameView extends JPanel implements OnPackageListenerClient{
                 System.out.println("ccliente nulos ");
             }
             if(cliente.getJugadoresDeMesa().size() > 0){
-                HashMap<Integer, Jugador> jugador = cliente.getJugadores();
-                Iterator it = jugador.values().iterator();
-                while(it.hasNext()){
-                    Jugador j = (Jugador) it.next();
+                HashMap<Integer, Jugador> jugador = cliente.getJugadoresDeMesa();
+                for (Jugador j : jugador.values()) {
+                    System.out.println("add:: jugador de mesa : " + j.getNickName());
                     this.addJugador(j);
                 }
             }
@@ -78,13 +77,18 @@ public class GameView extends JPanel implements OnPackageListenerClient{
      */
     private void addJugador(Jugador jg){
         try {
-            JugadorView v = new JugadorView(jg);
-            this.calcularPuntos();
-            v.setBounds(punto.x, punto.y, anchoPanel, altoPanel);
-            v.setVisible(true);
-            this.add(v);
-            //this.updateUI();
-            this.vJugadores.put(jg.getId(), v);
+            System.out.println("nombre xxxxxx: " + jg.getNickName());
+            if(!this.vJugadores.containsKey(jg.getId())){
+                JugadorView v = new JugadorView(jg);
+                this.calcularPuntos();
+                v.setBounds(punto.x, punto.y, anchoPanel, altoPanel);
+                v.setVisible(true);
+                this.add(v);
+                this.updateUI();
+                this.vJugadores.put(jg.getId(), v);                
+            }else{
+                // aqui podemos actualizar su jugador
+            }
         }catch (Exception e) {
             System.out.println("[GameView.addJugador] " + e.getMessage());
         }
@@ -130,11 +134,10 @@ public class GameView extends JPanel implements OnPackageListenerClient{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         System.out.println("nro de mesas : " + vJugadores.size());
-        /*for (Iterator iterator = vJugadores.keySet().iterator(); iterator.hasNext();) {
-            int key = (Integer) iterator.next();
-            System.out.println("idjug : " );
-            
-        }*/
+        for (Iterator iterator = vJugadores.values().iterator(); iterator.hasNext();) {
+            JugadorView vista = (JugadorView) iterator.next();
+            System.out.println("idjug : " + vista.jugador.getNickName());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     @Override

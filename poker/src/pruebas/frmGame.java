@@ -156,7 +156,8 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
             String btn[] = action.split("-");
 
             if(btn[0].equals("btnMesaActual")){
-                // es el boton de ingresar a mesa
+                // es el boton de ingresar a mesa                
+                System.out.println("actionPerformed : " + btn[1]);
                 int idMesa = Integer.valueOf(btn[1]);
                 if(idMesa > 0){
                     cliente.ingresarMesa(idMesa);

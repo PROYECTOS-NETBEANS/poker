@@ -11,7 +11,7 @@ import poker.utils.datos.Constantes;
  */
 public class JugadorView extends javax.swing.JPanel {
 
-    private Jugador jugador = null;
+    public Jugador jugador = null;
     private Constantes TIPO_JUGADOR = Constantes.TIPO_NORMAL;
     private Constantes ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
     private Constantes TURNO = Constantes.TURNO_NO_TOCA;
@@ -30,7 +30,7 @@ public class JugadorView extends javax.swing.JPanel {
     private void iniciar(Jugador j){
         try {
             this.jugador = j;
-            this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());
+            this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());            
             this.lMonto.setText("Monto act. : " + String.valueOf(this.jugador.getMonto()));
             this.TIPO_JUGADOR = Constantes.TIPO_NORMAL;
             this.ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
