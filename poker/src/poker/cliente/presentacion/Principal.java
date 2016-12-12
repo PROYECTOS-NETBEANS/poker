@@ -35,38 +35,25 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        setMaximumSize(new java.awt.Dimension(450, 350));
+        setMinimumSize(new java.awt.Dimension(450, 350));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(450, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addGap(0, 608, Short.MAX_VALUE))
+            .addGap(0, 434, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jButton1)
-                .addContainerGap(344, Short.MAX_VALUE))
+            .addGap(0, 367, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     cambiarpanel();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,37 +104,20 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
     public  void cargarjug_mesa(){
             p= new Clientesymesas(cliente,this);
             cliente.addEventListener(p);
-            p.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+            p.setBounds(1, 1, this.getWidth() - 10, this.getHeight() - 10);
             p.setVisible(true);
             this.getContentPane().add(p);
             
             
              m = new mesajuego(cliente,this);
-             m.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
+             m.setBounds(1, 1, this.getWidth() - 10, this.getHeight() - 10);
              m.setVisible(false);
              this.getContentPane().add(m);
-           /*
-            PanelPrincipal.removeAll();
-            PanelPrincipal.add(p);
-            PanelPrincipal.revalidate();implements ActionListener
-            PanelPrincipal.repaint();*/
+           
     } 
-    public void cargarmesajuego(){
-             m = new mesajuego(cliente,this);
-             m.setBounds(1, 50, this.getWidth() - 10, this.getHeight() - 10);
-             this.getContentPane().add(m);
-           /* PanelPrincipal.removeAll();
-            PanelPrincipal.add(m);
-            PanelPrincipal.revalidate();
-            PanelPrincipal.repaint();*/
-    }
-    public  void cambiarpanel(){
-        p.setVisible(false);
-        cargarmesajuego();
-        
-    }
+ 
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -156,12 +126,16 @@ public class Principal extends javax.swing.JFrame implements ActionListener{
                 System.out.println("me presionaron en el panel verde");
                 p.setVisible(false);
                 m.setVisible(true);
+                this.setSize(1100, 650);
+                this.setLocation(70, 50);
                 System.out.println("pase el verde");
                 
             }else{
                 if(e.getActionCommand().equals("btnrojo")){
                     m.setVisible(false);
                     p.setVisible(true);
+                    this.setSize(450, 350);
+                    this.setLocationRelativeTo(null);
 
                 }
             }
