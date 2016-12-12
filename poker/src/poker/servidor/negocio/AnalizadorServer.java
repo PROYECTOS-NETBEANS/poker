@@ -7,6 +7,7 @@
 package poker.servidor.negocio;
 
 import java.util.EventListener;
+import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 import poker.servidor.datos.Jugador;
 import poker.utils.datos.PaquetePk;
@@ -56,6 +57,27 @@ public class AnalizadorServer {
         String mesa = Parser.objectToString(m);
         PaquetePk p = new PaquetePk(mesa, TipoPaquete.MESA);
         return Parser.objectToString(p);
+    }
+    /**
+     * Metodo que empaqueta un jugador y el id de la mesa
+     * @param j Jugador 
+     * @param idMesa Identificador de mesa
+     * @return 
+     */
+    public String gEnviarjugadorIngresadoAMesa(Jugador j, Mesa mesa){
+        try {
+            String jg = Parser.objectToString(j);
+            String m = Parser.objectToString(mesa);
+            LinkedList<String> lista = new LinkedList<>();
+            lista.add(jg);
+            lista.add(m);
+            String r = Parser.objectToString(lista);
+            PaquetePk p = new PaquetePk(r, TipoPaquete.INGRESAR_A_MESA);
+            return Parser.objectToString(p);
+        } catch (Exception e) {
+            System.out.println("[AnalizadorServer.gEnviarjugadorIngresadoAMesa]" + e.getMessage());
+            return "";
+        }   
     }
     /**
      * Metodo que encapsula un jugador dentro de un paquete

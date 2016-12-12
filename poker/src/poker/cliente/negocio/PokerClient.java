@@ -38,6 +38,9 @@ public class PokerClient implements OnConnectedListenerClient{
     public void addEventListenerPackages(EventListener listener){
         anx.addEventListener(listener);
     }
+    public void removeEventListenerPackages(EventListener listener){
+        anx.removeEventListener(listener);
+    }
     /**
      * Metodo que adiciona un escuchador de paquetes del socket
      * @param listener Escuchador de paquetes
@@ -120,6 +123,29 @@ public class PokerClient implements OnConnectedListenerClient{
      * @return HashMap con los jugadores
      */
     public HashMap getJugadores(){
-        return game.getJugadores();        
+        return game.getJugadores();
+    }
+    /**
+     * Metodo que devuelve los jugadores de mi mesa de juego
+     * @return mapa con jugadores
+     */
+    public HashMap getJugadoresDeMesa(){
+        try {
+            if(game == null)
+                System.out.println("game nulo");
+            return game.getJugadoresDeMesa();
+        } catch (Exception e) {
+            System.out.println("Pokercliente.getJugadoresDeMesa" + e.getMessage());
+            return null;
+        }
+        
+    }
+    /**
+     * Devuelve el identificador de la mesa donde estamos jugando
+     * @return 
+     */
+    public int getIdMesaDeJuego(){
+        return game.getIdMesaDeJuego();
     }
 }
+

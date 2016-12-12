@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pruebas;
 
 import javax.swing.Icon;
@@ -24,16 +19,25 @@ public class JugadorView extends javax.swing.JPanel {
      * Creates new form JugadorView
      * @param jg Jugador a cual pertenece esta vista
      */
-    public JugadorView(Jugador jg) {       
-        initComponents();
-        this.iniciar(jg);
+    public JugadorView(Jugador jg) {
+        try {
+            initComponents();
+            this.iniciar(jg);            
+        } catch (Exception e) {
+            System.out.println("[JugadorView.JugadorView]" + e.getMessage());
+        }
     }
     private void iniciar(Jugador j){
-        this.jugador = j;   
-        this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());
-        this.lMonto.setText("Monto act. : " + String.valueOf(this.jugador.getMonto()));
-        this.TIPO_JUGADOR = Constantes.TIPO_NORMAL;
-        this.ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
+        try {
+            this.jugador = j;
+            this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());
+            this.lMonto.setText("Monto act. : " + String.valueOf(this.jugador.getMonto()));
+            this.TIPO_JUGADOR = Constantes.TIPO_NORMAL;
+            this.ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
+        } catch (Exception e) {
+            System.out.println("[JugadorView.iniciar] " + e.getMessage());
+        }
+
     }
     public void actualizarDatos(int monto, Constantes tipoJug, Constantes estadoConex, Constantes turno){
         this.lMonto.setText("Monto act. : " + String.valueOf(monto));
@@ -108,6 +112,7 @@ public class JugadorView extends javax.swing.JPanel {
         lTurno = new javax.swing.JLabel();
         lTipo = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(0, 51, 51));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lNombreJugador.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -120,17 +125,17 @@ public class JugadorView extends javax.swing.JPanel {
         lMonto.setText("Monto Act. : 1000");
         add(lMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
 
-        ljugador.setIcon(new javax.swing.ImageIcon("D:\\2015\\repositorios\\poker\\poker\\resources\\imagenes\\cartas\\logo.png")); // NOI18N
+        ljugador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/logo.png"))); // NOI18N
         add(ljugador, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 200, 90));
 
-        lcarta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/atras.jpg"))); // NOI18N
+        lcarta2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/atras.jpg"))); // NOI18N
         add(lcarta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 70, 100));
 
         lcarta1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lcarta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/atras.jpg"))); // NOI18N
         add(lcarta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, -1));
 
-        lavatar.setIcon(new javax.swing.ImageIcon("D:\\2015\\repositorios\\poker\\poker\\resources\\imagenes\\cartas\\avatar1.png")); // NOI18N
+        lavatar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/avatar1.png"))); // NOI18N
         add(lavatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 90, 80));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -147,7 +152,7 @@ public class JugadorView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnverdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnverdeActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnverdeActionPerformed
 
 

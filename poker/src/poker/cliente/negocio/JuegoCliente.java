@@ -14,6 +14,9 @@ public class JuegoCliente implements OnPackageListenerClient {
      * Lista de mesas que hay en el servidor
      */
     private HashMap<Integer, Mesa> mesas = null;
+    /**
+     * Lista de jugadores conectados al servidor
+     */
     private HashMap<Integer, Jugador> jugadores = null;
     
     /**
@@ -66,7 +69,26 @@ public class JuegoCliente implements OnPackageListenerClient {
         return ((jugadores.size() > 0) ? this.jugadores : null);
         
     }
-    
+    /**
+     * Metodo que devuelve la lista de jugadores de mi mesa de juego
+     * @param idMesa Identificador de mesa
+     * @return Mapa con los jugadores de la mesa
+     */
+    public HashMap<Integer, Jugador> getJugadoresDeMesa(){
+        try{
+            if(this.mesa == null)
+                System.out.println("mesa nulo XXXXXXXXXXXXx");
+            
+            if(this.mesa.getJugadores() == null)
+                System.out.println("jugadores nulos XXXXXXXXXXXXx");
+            
+            return this.mesa.getJugadores();
+            
+        }catch(Exception e){
+            System.out.println("[JuegoCliente.getJugadoresDeMesa]" + e.getMessage());
+            return null;
+        }
+    }
     /**
      * Adiciona una mesa a la lista de mesas 
      * y ademas si estoy en la mesa actualiza mi mesa
@@ -78,9 +100,9 @@ public class JuegoCliente implements OnPackageListenerClient {
             if(player != null){
                 if(m.existJugador(player.getId())){
                     this.mesa = m;
+                    System.out.println("[JuegoCliente.addMesa] actualizando mi mesa !!");
                 }
             }
-            System.out.println("llego una mesa : " + String.valueOf(m.getId()));
         }catch(Exception e){
             System.out.println("[JuegoCliente.addMesa]" + e.getMessage());
         }
@@ -95,12 +117,12 @@ public class JuegoCliente implements OnPackageListenerClient {
         this.mesas.get(idMesa).setEstadoMesa(estado);                
     }
     /**
-     * Adiciona un jugador a la lista de jugadores de la mesa
+     * Adiciona un jugador a la lista de jugadores
      * Ademas verifica si el nick de este jugador es igual al jugador que llega.
      * @param jg Jugador que llega del servidor
      */
     private void addJugador(Jugador jg){
-        try{            
+        try{
             this.jugadores.put(jg.getId(), jg);
             
             if(this.player == null){
@@ -112,7 +134,27 @@ public class JuegoCliente implements OnPackageListenerClient {
             System.out.println("[JuegoCliente.addJugador]" + e.getMessage());
         }
     }
-    
+    /**
+     * Metodo que ingresa un jugador a la mesa
+     * @param j Jugador a actualizar
+     */
+    private void ingresarJugadorAMesa(Jugador j, Mesa m){
+        try {
+            if(this.mesa == null){
+               if(this.player.getId() == j.getId())
+                   this.mesa = m;
+            }
+            
+            if(this.mesa.getId() == m.getId()){
+                this.mesa = m;
+                this.mesa.setJugador(j);
+            }
+            this.mesas.put(m.getId(), m);
+        } catch (Exception e) {
+            System.out.println("[JuegoCliente.ingresarJugadorAMesa]" + e.getMessage());
+        }
+        
+    }
     /**
      * Elimina un jugador de la lista de jugadores y de la mesa
      */
@@ -121,7 +163,21 @@ public class JuegoCliente implements OnPackageListenerClient {
         // aqui creo que hay que eliminar de la mesa tambien
         System.out.println("jugador desconectado : " + jg.getNickName());
     }
-    
+    /**
+     * Metodo que nos devuelve el Identificador de mesa donde estamos participando en el juego
+     * @return Identificador de mesa donde esta jugando
+     */
+    public int getIdMesaDeJuego(){
+        try{
+            if(this.mesa != null)
+                return this.mesa.getId();
+            else
+                return -1;
+        }catch(Exception e){
+            System.out.println("[JuegoCliente.getMesaDeJuego]" + e.getMessage());
+            return -1;
+        }
+    }
     // de aqui hacia abajo solo los metodos de la interfaz
     @Override
     public void onNuevaMesa(Mesa mesa) {
@@ -136,12 +192,18 @@ public class JuegoCliente implements OnPackageListenerClient {
     @Override
     public void onNuevoJugador(Jugador jg) {
         System.out.println("JuegoCliente.onNuevoJugador ok");
-        this.addJugador(jg);        
+        this.addJugador(jg);
     }
 
     @Override
     public void onJugadorDesconectado(Jugador jg){
         System.out.println("JuegoCliente.onJugadorDesconectado ok");
         this.deleteJugador(jg);
+    }
+
+    @Override
+    public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
+        this.ingresarJugadorAMesa(jg, m);
+        System.out.println("[JuegoCliente.onJugadorIngresaAMesa] ok");
     }
 }

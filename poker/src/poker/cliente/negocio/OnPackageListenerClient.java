@@ -22,11 +22,17 @@ public interface OnPackageListenerClient extends EventListener{
      */
     public void onMesaLlena(int idMesa, boolean estado);
     /**
-     * Cuando un jugador nuevo entra a la mesa
+     * Cuando un jugador nuevo entra al servidor
      * @param jg Jugador que llega del servidor
      */
     public void onNuevoJugador(Jugador jg);
-    
+    /**
+     * Metodo que se desencadena cuando ingresa
+     * un jugador a una mesa
+     * @param jg Jugador que ingresa a la mesa
+     * @param idMesa Identificador de mesa
+     */
+    public void onJugadorIngresaAMesa(Jugador jg, Mesa m);
     /**
      * Metodo que se desencadena cuando llega un jugador a eliminar
      * @param jg Jugador a eliminar

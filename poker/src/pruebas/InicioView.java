@@ -1,7 +1,6 @@
 package pruebas;
 
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.Iterator;
 import poker.cliente.negocio.PokerClient;
 import javax.swing.DefaultListModel;
@@ -17,11 +16,15 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     
     private PokerClient cliente = null;
     private DefaultListModel usuarios = null;
-        
-    private int cantidadmesas = 0;
-    private int idButton1 = 1;
-    private int idButton2 = 2;
     
+    /**
+     * Identificador de mesa actual
+     */
+    private Mesa m = null;
+    /**
+     * El index de la mesa que esta actualmente en el boton
+     */
+    private int indexMesa = 1;
     /**
      * Vista con la lista de usuarios y lista de mesas
      * @param cliente Negocio del cliente
@@ -31,15 +34,75 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
         initComponents();
         this.inicializar(cliente, lst);
     }
+    
+    /**
+     * Metodo que carga en el boton la mesa siguiente
+     */
+    private void nextMesa(){
+        if(indexMesa + 1 <= this.cliente.getMesas().size()){
+            indexMesa++;
+            this.cargarMesa();
+        }else{
+            indexMesa = 1;
+            this.cargarMesa();
+        }
+    }
+    /**
+     * Inicializa todos los componentes del la vista
+     * @param cliente Negocio del cliente
+     * @param lst ActionListenter para el boton de ingresar a mesa
+     */
     private void inicializar(PokerClient cliente, ActionListener lst){        
         this.cliente = cliente;
-        this.pintarmesa();
-        usuarios = new DefaultListModel();
-
-        this.btnMesaAbajo.addActionListener(lst);
-        this.btnMesaArriba.addActionListener(lst);
+        usuarios = new DefaultListModel();        
+        this.btnMesaActual.addActionListener(lst);     
     }
+    /**
+     * Metodo que carga una mesa al boton
+     */
+    public void cargarMesa(){
+        try{
+            System.out.println("xx");
+            
+            if(cliente.getMesas() == null)
+                System.out.println("lista dde mesas nulo");
 
+            if(cliente == null)
+                System.out.println("cliente nulo");
+            
+            if(cliente.getMesas().size() > 0){
+                int i = 1;
+                System.out.println("xxaaa");
+                Iterator it = cliente.getMesas().values().iterator();
+                while(it.hasNext()){
+                    Mesa m = (Mesa) it.next();
+                    if(i == this.indexMesa){
+                        this.m = m;
+                        this.pintarMesa(this.m);
+                    }
+                    i++;
+                }
+            }else{ // si no hay ninguna mesa :: deshabilito el boton
+                System.out.println("xx");
+                this.btnMesaActual.setEnabled(false);
+                this.btnMesaActual.setText("No hay Mesas");
+            }            
+        }catch(Exception e){
+            System.out.println("[InicioView.cargarMesa] " + e.getMessage());
+        }
+    }
+    /**
+     * Adiciona los datos de la mesa pera el boton actual
+     */
+    public void pintarMesa(Mesa ms){
+        this.btnMesaActual.setText("Mesa # " + String.valueOf(ms.getId()));
+        this.btnMesaActual.setActionCommand("btnMesaActual-" + String.valueOf(ms.getId()));
+        if(ms.mesaEstaVacia()){
+            this.setEnabled(true);
+        }else{
+            this.setEnabled(false);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,18 +112,11 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnMesaArriba = new javax.swing.JButton();
+        btnMesaActual = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstJugadores = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
-        btnMesaAbajo = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        lstJugadoresArriba = new javax.swing.JList<>();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        lstJugadoresAbajo = new javax.swing.JList<>();
+        btnNextMesa = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -71,50 +127,24 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
         setPreferredSize(new java.awt.Dimension(450, 350));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMesaArriba.setBackground(new java.awt.Color(0, 204, 0));
-        btnMesaArriba.setMaximumSize(new java.awt.Dimension(90, 90));
-        btnMesaArriba.setMinimumSize(new java.awt.Dimension(90, 90));
-        btnMesaArriba.setPreferredSize(new java.awt.Dimension(90, 90));
-        btnMesaArriba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMesaArribaActionPerformed(evt);
-            }
-        });
-        add(btnMesaArriba, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
+        btnMesaActual.setBackground(new java.awt.Color(0, 204, 0));
+        btnMesaActual.setText("Sin Mesa");
+        btnMesaActual.setMaximumSize(new java.awt.Dimension(90, 90));
+        btnMesaActual.setMinimumSize(new java.awt.Dimension(90, 90));
+        btnMesaActual.setPreferredSize(new java.awt.Dimension(90, 90));
+        add(btnMesaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, -1, -1));
 
         jScrollPane1.setViewportView(lstJugadores);
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 57, 129, 221));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 204));
-        jLabel1.setText("Jugadores en Mesa");
-        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
-
-        btnMesaAbajo.setBackground(new java.awt.Color(51, 204, 0));
-        btnMesaAbajo.setPreferredSize(new java.awt.Dimension(90, 90));
-        btnMesaAbajo.addActionListener(new java.awt.event.ActionListener() {
+        btnNextMesa.setText("Sig. Mesas>");
+        btnNextMesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMesaAbajoActionPerformed(evt);
+                btnNextMesaActionPerformed(evt);
             }
         });
-        add(btnMesaAbajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, -1, -1));
-
-        jButton3.setText("Siguientes mesas >>");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 180, 60));
-
-        jScrollPane2.setViewportView(lstJugadoresArriba);
-
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 80, 90));
-
-        jScrollPane3.setViewportView(lstJugadoresAbajo);
-
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 80, 90));
+        add(btnNextMesa, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 90, 60));
 
         btnSalir.setText("X");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -122,10 +152,7 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
                 btnSalirActionPerformed(evt);
             }
         });
-        add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 40, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cliente/presentacion/screensaver-fantasy-wallpaper-inspiration-widescreen-gallery-sfondi-screensavers-16962.jpg"))); // NOI18N
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 170, 20));
+        add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 40, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 204));
@@ -138,23 +165,9 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
         add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        idButton1 = idButton1 +2;
-        idButton2 = idButton2 +2;
-        if (cantidadmesas<idButton1) {
-           idButton1 = 1;
-           idButton2 = 2; 
-        }
-        pintarmesa();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void btnMesaArribaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesaArribaActionPerformed
-        cliente.ingresarMesa(idButton1);
-    }//GEN-LAST:event_btnMesaArribaActionPerformed
-
-    private void btnMesaAbajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesaAbajoActionPerformed
-        cliente.ingresarMesa(idButton2);     
-    }//GEN-LAST:event_btnMesaAbajoActionPerformed
+    private void btnNextMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextMesaActionPerformed
+        this.nextMesa();
+    }//GEN-LAST:event_btnNextMesaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
       System.exit(0);
@@ -162,20 +175,13 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMesaAbajo;
-    private javax.swing.JButton btnMesaArriba;
+    private javax.swing.JButton btnMesaActual;
+    private javax.swing.JButton btnNextMesa;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JList<String> lstJugadores;
-    private javax.swing.JList<String> lstJugadoresAbajo;
-    private javax.swing.JList<String> lstJugadoresArriba;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -197,84 +203,43 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
         }
     }
     /**
+     * Verifica si un modelo de usuario esta ya en la lista de usuarios conectados
+     * @param usr modelo de usuario
+     * @return True si lo encuentra , en otro caso falso
+    */
+    private boolean usuarioContains(UsuarioModel usr){
+        boolean estado = false;
+        for(int i = 0; i < usuarios.getSize(); i++){
+            UsuarioModel u = (UsuarioModel) usuarios.get(i);
+            if(u.getKey() == usr.getKey()){
+                estado = true;
+            }
+        }
+        return estado;
+    }
+    /**
      * Adiciona un jugador a la lista de jugadores conectado en el servidor
      * @param usr Modelo de usuario
      */
     private void addJugador(UsuarioModel usr){
-        usuarios.addElement(usr);
-        lstJugadores.setModel(usuarios);
-    }
-    /**
-    * este metodo contaviliza la cantidad de mesas exixtente
-    */
-    private void cargarmesa(){
-          cantidadmesas = cliente.getMesas().size();
-    }
-    /**
-    * este metodo pinta los botones con el numero de las mesas y llena la lista
-    * de los jugadores de cada mesa
-    */
-    public void pintarmesa(){        
-        btnMesaAbajo.setVisible(true);
-        lstJugadoresAbajo.setVisible(true);
-        if (cantidadmesas >= idButton1) {
-            btnMesaArriba.setText("mesa  " + String.valueOf(idButton1));
-            jugmesa1();
-            if (cantidadmesas >= idButton2) {
-                btnMesaAbajo.setText("mesa  " + String.valueOf(idButton2));
-                jugmesa2();
-            }else{
-                btnMesaAbajo.setVisible(false);
-                lstJugadoresAbajo.setVisible(false);
-            }
+        if(!usuarioContains(usr)){
+            usuarios.addElement(usr);
+            lstJugadores.setModel(usuarios);            
         }
- 
     }
-    /**
-    * este metodo carga lista de jugadores de la opcion uno
-    */
-    private void jugmesa1(){
-            usuarios = new DefaultListModel();
-            lstJugadoresArriba.setModel(usuarios);
-            lstJugadoresArriba.setModel(listarmesa(idButton1, usuarios));
-    }
-    /**
-    * este metodo carga lista de jugadores de la opcion dos
-    */
-    private void jugmesa2(){
-            usuarios = new DefaultListModel();
-            lstJugadoresAbajo.setModel(usuarios);
-            lstJugadoresAbajo.setModel(listarmesa(idButton2, usuarios));
-    }
-    /**
-     * este metodo te devuelve la lista de los jugadores de una mesa
-     * @param id identificador de la mesa
-     * @param usuarios en un modelo para cargar la jlist
-     * @return DefaultListModel
-     */
-    private DefaultListModel listarmesa(int id, DefaultListModel usuarios){
-        Mesa m = (Mesa) cliente.getMesas().get(id);
-        HashMap<Integer, Jugador> lista = m.getJugadores();
-        for (Jugador j : lista.values()) {
-            System.out.println("jugador en mesa 1 : " + j.getNickName());
-            usuarios.addElement(j.getNickName());
-        }
-        return usuarios;
-    } 
-    
     @Override
-    public void onNuevaMesa(Mesa mesa) {
-        cargarmesa();
-        pintarmesa();
+    public void onNuevaMesa(Mesa mesa) {        
+        this.cargarMesa();
+        System.out.println("InicioViewer.onNuevaMesa cargando mesa");
     }
 
     @Override
     public void onMesaLlena(int idMesa, boolean estado) {
-        
+        System.out.println("InicioViewer.onMesaLlena no implementado");
     }
     @Override
-    public void onNuevoJugador(Jugador jg) {      
-        System.out.println("InicioView.onNuevoJugador vista");
+    public void onNuevoJugador(Jugador jg){
+        System.out.println("InicioView.onNuevoJugador Llego jg " + jg.getNickName());
         this.addJugador(new UsuarioModel(jg.getId(), jg.getNickName()));
     }
 
@@ -282,11 +247,12 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     public void onJugadorDesconectado(Jugador jg) {
         System.out.println("InicioViewer.onJugadorDesconectado ok");
         this.removerJugador(jg.getId());
-        // estas lineas de abajo dan error por algunos cambios que hize limbert
-        jugmesa1();        
-        jugmesa2();        
     }
-    
+
+    @Override
+    public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
+        System.out.println("InicioView.onJugadorIngresaAMesa no implementado");
+    }
 }
 
 class UsuarioModel{

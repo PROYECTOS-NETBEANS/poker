@@ -131,13 +131,15 @@ public class Juego implements OnPackageReadListenerServer{
      * @param idJugador Identificador de jugador
      */
     private void ingresarJugadorAMesa(int idMesa, int idJugador){
-        try{            
+        try{
             if(this.mesas.containsKey(idMesa) && this.jugadores.containsKey(idJugador)){
                 Mesa m = this.mesas.get(idMesa);
                 m.setJugador(jugadores.get(idJugador));
                 this.mesas.put(m.getId(), m);
-                // si se ingreso la mesa, entonces hay que enviar la mesa con los nuevos cambios
-                this.onEnviarMesa(m);
+                // si se ingreso la mesa, 
+                // entonces hay que enviar el jugador a todas las mesas
+                this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);
+                
             }else{
                 System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
             }            
@@ -155,6 +157,16 @@ public class Juego implements OnPackageReadListenerServer{
         for (Object listener : listeners) {
             if (listener instanceof OnPackageSendListenerServer) {
                 ((OnPackageSendListenerServer) listener).onEnviarMesa(m);
+            }
+        }
+    }
+    private void onEnviarJugadorIngresaMesa(Jugador j, Mesa m){
+        
+        Object[] listeners = listenerList.getListenerList();
+        
+        for (Object listener : listeners) {
+            if (listener instanceof OnPackageSendListenerServer) {
+                ((OnPackageSendListenerServer) listener).onEnviarJugadorIngresadoAMesa(j, m);
             }
         }
     }

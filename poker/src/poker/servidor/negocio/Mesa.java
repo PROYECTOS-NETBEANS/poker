@@ -65,7 +65,11 @@ public class Mesa {
      * @param jg Jugador que ingresa a la mesa
      */
     public void setJugador(Jugador jg){
-        this.jugadores.put(jg.getId(), jg);
+        try {
+            this.jugadores.put(jg.getId(), jg);
+        } catch (Exception e) {
+            System.out.println("[Mesa.setJugador]" + e.getMessage());
+        }        
     }
     
     /**

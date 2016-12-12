@@ -24,25 +24,70 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
         this.login();
     }
     /**
-     * Inicializa las vistas que se mostraran cuando inicie session
+     * Inicializa la vista inicial que se mostraran cuando inicie session
      */
-    private void inicializarVistaInicial(){    
+    private void visualizarVistaInicial(){    
         viewIni = new InicioView(cliente, this);
         this.setLayout(new BorderLayout());
-        this.add(viewIni, BorderLayout.CENTER);
-        this.getContentPane().add(viewIni);
+        
+        this.getContentPane().add(viewIni, BorderLayout.CENTER);
         
     }
+    /**
+     * Metodo que oculta o muestra la vista inicial
+     * @param estado Si es true muestra la vista , false la oculta
+     */
+    private void setVisibleVistaInicial(boolean estado){
+        this.viewIni.setVisible(estado);
+    }
+    /**
+     * Metodo que vizualiza la vista de Game en el formulario
+     */
+    private void visualizarVistaGame(){
+        try{            
+            viewGame = new GameView(cliente, this);
+            // ademas pasamos el escuchador
+            cliente.addEventListenerPackages(viewGame);
+            viewGame.setVisible(true);
+            this.setLayout(new BorderLayout());
+            this.getContentPane().add(viewGame, BorderLayout.CENTER);                    
+        }catch(Exception e){
+            System.out.println("[frmGame.visualizarVistaGame]" + e.getMessage());
+        }
+    }
+    /**
+     * Metodo que elimina la vista Game del formulario
+     */
+    private void removeVistaGame(){
+        this.viewGame.setVisible(false);
+        this.getContentPane().remove(viewGame);
+        cliente.removeEventListenerPackages(cliente);
+        this.viewGame = null;
+    }
+    /**
+     * Metodo que para iniciar session
+     */
     private void login(){
-        nickName = JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
-        
-        if(nickName.length() > 0 ){
-            cliente = new PokerClient(5555, "localhost");
-            this.inicializarVistaInicial();            
-            cliente.addEventListenerSocket(this);
-            cliente.addEventListenerPackages(viewIni);
-            cliente.conectarServidor(nickName);            
-        } 
+        try {
+            nickName =  JOptionPane.showInputDialog("Ingrese un nickName : ", "pedro");
+            
+            if(nickName == null || (nickName != null && ("".equals(nickName)))){
+                throw new Exception("No se ingreso nombre");
+            }
+
+            
+            if(nickName.length() > 0 ){
+                cliente = new PokerClient(5555, "localhost");
+                this.visualizarVistaInicial();
+                cliente.addEventListenerSocket(this);
+                cliente.addEventListenerPackages(viewIni);
+                cliente.conectarServidor(nickName);            
+            }
+        } catch (Exception e) {            
+            System.out.println("[frmGame.login]" + e.getMessage());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error",JOptionPane.WARNING_MESSAGE);
+            System.exit(0);
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +151,26 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
 
     @Override
     public void actionPerformed(ActionEvent e) {
-         
+        try{
+            String action = e.getActionCommand();
+            String btn[] = action.split("-");
+
+            if(btn[0].equals("btnMesaActual")){
+                // es el boton de ingresar a mesa
+                int idMesa = Integer.valueOf(btn[1]);
+                if(idMesa > 0){
+                    cliente.ingresarMesa(idMesa);
+                    this.visualizarVistaGame();
+                    this.setVisibleVistaInicial(false);
+                }else{
+                    System.out.println("[frmGame.actionPerformed] No hay idMesa");
+                }
+            }else{
+                // aqui debe de ir otro boton
+            }
+        }catch(Exception ex){
+            System.out.println("[frmGame.actionPerformed]" + ex.getMessage());
+        }
     }
 
     @Override

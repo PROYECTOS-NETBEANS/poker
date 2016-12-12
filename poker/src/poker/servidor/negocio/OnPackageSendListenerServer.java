@@ -1,6 +1,7 @@
 package poker.servidor.negocio;
 
 import java.util.EventListener;
+import poker.servidor.datos.Jugador;
 
 /**
  * Clase que implementa los metodos que se invocaran
@@ -13,4 +14,9 @@ public interface OnPackageSendListenerServer extends EventListener{
      * @param m Mesa que se enviara a los clientes
      */
     public void onEnviarMesa(Mesa m);
+    
+    /**
+     * Envia el jugador y mesa a donde ingreso
+     */
+    public void onEnviarJugadorIngresadoAMesa(Jugador j, Mesa m);
 }

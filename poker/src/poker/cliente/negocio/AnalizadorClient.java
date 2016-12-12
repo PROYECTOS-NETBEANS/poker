@@ -1,5 +1,6 @@
 package poker.cliente.negocio;
 import java.util.EventListener;
+import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 import poker.servidor.datos.Jugador;
 import poker.servidor.negocio.Mesa;
@@ -29,7 +30,13 @@ public class AnalizadorClient {
      * @param listener Escuchador
      */
     public void removeEventListener(EventListener listener){
-        listenerList.remove(EventListener.class, listener);
+        try {
+            listenerList.remove(EventListener.class, listener);
+        } catch (Exception e) {
+            System.out.println("[analizadorClient.removeEventListener]" + e.getMessage());
+        }
+    
+        
     }
 
     /**
@@ -51,6 +58,9 @@ public class AnalizadorClient {
             case JUGADOR_DESCONECTADO:
                 this.jugadorDesconectado(p.getData());
                 break;
+            case INGRESAR_A_MESA:
+                this.onJugadorIngresaAMesa(p.getData());
+                break;                
         }
     }
     private void nuevaMesa(String data){
@@ -77,6 +87,26 @@ public class AnalizadorClient {
             }
         }
     }    
+    private void onJugadorIngresaAMesa(String data){
+        try {
+            LinkedList <String> lista = (LinkedList<String>) Parser.stringToObject(data, LinkedList.class);
+
+            Jugador jg = (Jugador) Parser.stringToObject((String) lista.get(0), Jugador.class);
+
+            Mesa m = (Mesa) Parser.stringToObject((String) lista.get(1), Mesa.class);
+
+            Object[] listeners = listenerList.getListenerList();
+
+            for(int i = 0; i < listeners.length; i++){
+                if(listeners[i] instanceof OnPackageListenerClient){
+                     ((OnPackageListenerClient) listeners[i]).onJugadorIngresaAMesa(jg, m);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("[AnalizadorClient.onJugadorIngresaAMesa]" + e.getMessage());
+        }
+
+    }
     private void nuevoJugador(String data){
         
         Jugador jg = (Jugador) Parser.stringToObject(data, Jugador.class);

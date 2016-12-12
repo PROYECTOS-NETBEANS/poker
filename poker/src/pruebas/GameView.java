@@ -1,16 +1,20 @@
 package pruebas;
 
 import java.awt.Point;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
 import javax.swing.JPanel;
+import poker.cliente.negocio.OnPackageListenerClient;
 import poker.cliente.negocio.PokerClient;
 import poker.servidor.datos.Jugador;
+import poker.servidor.negocio.Mesa;
 
 /**
- *
+ * vista de juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class GameView extends JPanel {
+public class GameView extends JPanel implements OnPackageListenerClient{
 
     private PokerClient cliente = null;
     
@@ -34,7 +38,7 @@ public class GameView extends JPanel {
      * Creates new form panelPrueba
      * @param cliente Cliente
      */
-    public GameView(PokerClient cliente) {
+    public GameView(PokerClient cliente, ActionListener lst) {
         initComponents();
         this.inicializar(cliente);
     }
@@ -43,18 +47,48 @@ public class GameView extends JPanel {
         this.punto = new Point(0, 10);
         this.vJugadores = new HashMap<>();
     }
+    /**
+     * Metodo que carga todos los jugadores que hay en la mesa actualmente
+     */
+    private void cargarJugadores(){
+        try{
+            System.out.println("3333333");
+            if(cliente == null){
+                System.out.println("ccliente nulos ");
+            }
+            if(cliente.getJugadoresDeMesa().size() > 0){
+                HashMap<Integer, Jugador> jugador = cliente.getJugadores();
+                Iterator it = jugador.values().iterator();
+                while(it.hasNext()){
+                    Jugador j = (Jugador) it.next();
+                    this.addJugador(j);
+                }
+            }
+        }catch(Exception e){
+            System.out.println("[GameView.cargarJugadores]" + e.getMessage());
+        }
+    }
     private void calcularPuntos(){
         this.punto.x = (this.espaciado * (vJugadores.size() + 1)) + ((vJugadores.size()) * anchoPanel);
         // punto en y no se esta calculando
-    } 
+    }
+    /**
+     * Metodo que adiciona la un jugador a la vista
+     * @param jg Jugador 
+     */
     private void addJugador(Jugador jg){
-        JugadorView v = new JugadorView(jg);
-        this.calcularPuntos();
-        v.setBounds(punto.x, punto.y, anchoPanel, altoPanel);
-        v.setVisible(true);    
-        this.add(v);    
-        this.updateUI();
-        this.vJugadores.put(jg.getId(), v);        
+        try {
+            JugadorView v = new JugadorView(jg);
+            this.calcularPuntos();
+            v.setBounds(punto.x, punto.y, anchoPanel, altoPanel);
+            v.setVisible(true);
+            this.add(v);
+            //this.updateUI();
+            this.vJugadores.put(jg.getId(), v);
+        }catch (Exception e) {
+            System.out.println("[GameView.addJugador] " + e.getMessage());
+        }
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,21 +99,72 @@ public class GameView extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 0, 0));
+        jButton1 = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(0, 51, 51));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 883, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(674, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(136, 136, 136))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(426, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.out.println("nro de mesas : " + vJugadores.size());
+        /*for (Iterator iterator = vJugadores.keySet().iterator(); iterator.hasNext();) {
+            int key = (Integer) iterator.next();
+            System.out.println("idjug : " );
+            
+        }*/
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    @Override
+    public void onNuevaMesa(Mesa mesa) {
+        System.out.println("GameView.onNuevaMesa no implementado");
+    }
+
+    @Override
+    public void onMesaLlena(int idMesa, boolean estado) {
+        System.out.println("GameView.onMesaLlena no implementado");
+    }
+
+    @Override
+    public void onNuevoJugador(Jugador jg) {
+        System.out.println("GameView.onNuevoJugador : " + jg.getNickName());
+    }
+
+    @Override
+    public void onJugadorDesconectado(Jugador jg) {
+        System.out.println("GameView.onJugadorDesconectado no implementado");
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
+        System.out.println("GameView.onJugadorIngresaAMesa :" + jg.getNickName());
+        cargarJugadores();
+    }
 }

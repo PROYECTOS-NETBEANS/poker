@@ -150,6 +150,17 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
     private void enviarMesa(Mesa m){
         servidor.sendMessageAll(anx.gEnviarMesa(m), -1);
     }
+    /**
+     * Envia el jugador que ingreso a todas las mesas para que se actualizen
+     * @param idMesa identificador de mesa
+     * @param j Jugador que ingreso a la partida
+     */
+    private void enviarJugadorIngresadoAMesa(Mesa mesa, Jugador j){        
+        servidor.sendMessageAll(anx.gEnviarjugadorIngresadoAMesa(j, mesa), -1);        
+    }
+    /**
+     * Crea una nueva mesa y la envia a todos los jugadores
+     */
     public void nuevaMesa(){
         Mesa m = game.crearMesa();
         this.enviarMesa(m);
@@ -158,5 +169,10 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
     @Override
     public void onEnviarMesa(Mesa m) {
         this.enviarMesa(m);
+    }
+
+    @Override
+    public void onEnviarJugadorIngresadoAMesa(Jugador j, Mesa mesa) {
+       this.enviarJugadorIngresadoAMesa(mesa, j);
     }
 }
