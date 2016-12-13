@@ -16,12 +16,6 @@ public interface OnPackageListenerClient extends EventListener{
      */
     public void onNuevaMesa(Mesa mesa);
     /**
-     * Cambia el estado de la mesa 
-     * @param idMesa Identificador primario de mesa que se cambiará el estado
-     * @param estado Estado [true : mesa llena, false mesa vacia]
-     */
-    public void onMesaLlena(int idMesa, boolean estado);
-    /**
      * Cuando un jugador nuevo entra al servidor
      * @param jg Jugador que llega del servidor
      */
@@ -38,4 +32,11 @@ public interface OnPackageListenerClient extends EventListener{
      * @param jg Jugador a eliminar
      */
     public void onJugadorDesconectado(Jugador jg);
+    
+    /**
+     * Metodo que recibe un mensaje del servidor
+     * @param msg Mensaje que llega desde el servidor
+     * @param idMesa Identificador a donde va dirigido el mensaje
+     */
+    public void onMessageServidor(String msg, int idMesa);
 }

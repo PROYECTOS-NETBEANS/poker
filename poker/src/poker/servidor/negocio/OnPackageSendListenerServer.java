@@ -19,4 +19,10 @@ public interface OnPackageSendListenerServer extends EventListener{
      * Envia el jugador y mesa a donde ingreso
      */
     public void onEnviarJugadorIngresadoAMesa(Jugador j, Mesa m);
+    /**
+     * Envia un mensaje a la mesa con id de mesa
+     * @param message Mensaje que se esta enviando
+     * @param idMesa Identificador de mesa
+     */
+    public void onEnviarMessage(String message, int idMesa);
 }

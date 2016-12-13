@@ -8,12 +8,13 @@ import jsocket.server.OnConnectedEventServer;
 import jsocket.server.OnConnectedListenerServer;
 import jsocket.server.JSocketServer;
 import poker.servidor.datos.Jugador;
+import poker.utils.datos.Constantes;
 import poker.utils.datos.TipoPaquete;
 
 public class ServerPoker implements OnConnectedListenerServer, OnPackageSendListenerServer{
     
     private JSocketServer servidor = null;
-    private Juego game = null;
+    private JuegoServer game = null;
     private AnalizadorServer anx = null;
     
     public ServerPoker(EventListener listener){
@@ -24,7 +25,7 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
         servidor.addEventListener(listener);
         servidor.addEventListener(this);
         
-        game = new Juego();
+        game = new JuegoServer();
         
         game.addEventListener(this);
         
@@ -98,7 +99,6 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
                 this.enviarMesas();                
             }
         }
-
     }
     /**
      * Metodo que envia al cliente todas la mesas
@@ -142,7 +142,10 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
      */
     private void enviarJugador(Jugador j, TipoPaquete accion){
         servidor.sendMessageAll(anx.gEnviarJugador(j, accion), -1);
-    }    
+    }
+    private void enviarMessage(String message, int idMesa){
+        servidor.sendMessageAll(anx.gEnviarMessage(message, idMesa), -1);
+    }
     /**
      * Envia una mesa a los clientes
      * @param m Mesa a enviar a los clientes
@@ -174,5 +177,10 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
     @Override
     public void onEnviarJugadorIngresadoAMesa(Jugador j, Mesa mesa) {
        this.enviarJugadorIngresadoAMesa(mesa, j);
+    }
+
+    @Override
+    public void onEnviarMessage(String message, int idMesa) {
+        this.enviarMessage(message, idMesa);
     }
 }
