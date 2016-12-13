@@ -15,8 +15,22 @@ public class Mesa {
      * Baraja que hay en la mesa
      */
     private Baraja baraja = null;
+    /**
+     * La casa donde esta el pozo acumulado y su baraja
+     */
     private Casa house = null;
-    private int apuestaMin = 0;
+    /**
+     * Apuesta minima que se podra apostar
+     */
+    private int apuestaMin = 20;
+    /**
+     * Ciega alta de la mesa
+     */
+    private int ciegaAlta = 100;
+    /**
+     * Ciega pequeña de la mesa
+     */
+    private int ciegaBaja = 50;
     /**
      * Es la lista que contiene las manos de cada jugador
      * key : Es el identificador unico del jugador
@@ -34,27 +48,32 @@ public class Mesa {
     /**
      * Nro maximo de jugadores
      */
-    private int nroMax = 0;
-
-    
+    private int nroMaxJugadores = 0;
+    /**
+     * Nro minimo de jugadores para empezar la partida
+     */
+    private int nroJugMin = 0;
     
     /**
      * Inicializacion con la configuraciones iniciales
      * @param id Identificador unico de mesa
-     * @param nroMax Numero maximo que jugadores aceptados en la mesa
+     * @param nroMaxJug Nro. maximo de jugadores
+     * @param ciegaAlta ciega alta
+     * @param ciegaBaja ciega baja
      * @param apuestaMin Es el monto minimo que se debe de apostar
+     * @param nroJugMin Es el numero de jugadores minimo para empezar la partida
      */
-    public Mesa(int id, int nroMax, int apuestaMin){
+    public Mesa(int id, int apuestaMin, int nroMaxJug, int ciegaAlta, int ciegaBaja, int nroJugMin){
         this.jugadores = new HashMap<>();
         this.baraja = new Baraja();
         this.house = new Casa();
         this.id = id;
-    
-
-        
+        this.nroJugMin = nroJugMin;
         this.estado = true;
-        this.nroMax = nroMax;
+        this.nroMaxJugadores = nroMaxJug;
         this.apuestaMin = apuestaMin;
+        this.ciegaAlta = ciegaAlta;
+        this.ciegaBaja = ciegaBaja;
         this.manosJugadores = new HashMap<>();
     }
     /**
@@ -70,19 +89,28 @@ public class Mesa {
      */
     public void setJugador(Jugador jg){
         try {
-            this.jugadores.put(jg.getId(), jg);
+            if(this.jugadores.size() < this.nroMaxJugadores){
+                this.jugadores.put(jg.getId(), jg);
+                this.estado = ((this.getJugadores().size() < this.nroMaxJugadores) ? true : false);
+                System.out.println("Estado de mesa : " + String.valueOf(this.estado));
+            }
+            
         } catch (Exception e) {
             System.out.println("[Mesa.setJugador]" + e.getMessage());
         }        
     }
     
     /**
-     * Elimina de la mesa al jugador que se desconectado
+     * Elimina de la mesa al jugador que se a desconectado
      * @param id Identificador de mesa
      */
     public void deleteJugador(int id){
-        this.jugadores.remove(id);
-        
+        try {
+            this.jugadores.remove(id);
+            this.estado = ((this.getJugadores().size() < this.nroMaxJugadores) ? true : false);
+        } catch (Exception e) {
+            System.out.println("[Mesa.deleteJugador]" + e.getMessage());
+        }
     }
     /**
      * Verifica si un jugador esta en la mesa
@@ -98,6 +126,43 @@ public class Mesa {
      */
     public boolean mesaEstaVacia(){
         return estado;
+    }
+    /**
+     * Cuando se cumple la condicion de tener el minimo de jugadores
+     * se inicia la partida automaticamente
+     */
+    public void iniciarPartida(){
+        try {
+            if(this.getJugadores().size() >= this.nroJugMin){
+                if(!this.baraja.estaBarajada()){
+                    this.baraja.barajar();
+                    this.actualizarTipoJugadores();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("[Mesa.iniciarPartida] " + e.getMessage());
+        }
+    }
+    /**
+     * Metodo que obtine una carta de la baraja
+     * @return Carta sacada de la baraja
+     */
+    public Carta getRepartirCarta(){
+        try {
+            return this.baraja.getCarta();
+        } catch (Exception e) {
+            System.out.println("[Mesa.getRepartirCarta] " + e.getMessage());
+            return null;
+        }
+    }
+    /**
+     * Metodo que configura que jugadores seran los dealer
+     * ciega alta y ciega pequeña
+     */
+    public void actualizarTipoJugadores(){
+        if(this.getJugadores().size() >= this.nroJugMin){
+            System.out.println("[Mesa.actualizarTipoJugadores] no se esta aplicando las ciegas dealer" );
+        }
     }
     /**
      * Metodo que cambia de estado de la mesa de acuerdo
