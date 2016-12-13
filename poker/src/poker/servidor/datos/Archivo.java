@@ -21,7 +21,7 @@ public class Archivo {
     private ObjectInputStream entrada = null;
 
     private HashMap<Integer, Jugador> jugadores = null;
-    private int keyValue = 0;
+    private int keyValue = 1;
     
     public Archivo(){
         jugadores = new HashMap<>();

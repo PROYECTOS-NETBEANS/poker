@@ -74,8 +74,6 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
             if(nickName == null || (nickName != null && ("".equals(nickName)))){
                 throw new Exception("No se ingreso nombre");
             }
-
-            
             if(nickName.length() > 0 ){
                 cliente = new PokerClient(5555, "localhost");
                 this.visualizarVistaInicial();
@@ -83,7 +81,7 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
                 cliente.addEventListenerPackages(viewIni);
                 cliente.conectarServidor(nickName);            
             }
-        } catch (Exception e) {            
+        } catch (Exception e) {
             System.out.println("[frmGame.login]" + e.getMessage());
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error",JOptionPane.WARNING_MESSAGE);
             System.exit(0);

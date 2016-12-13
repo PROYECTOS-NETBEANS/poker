@@ -12,9 +12,10 @@ import poker.utils.datos.*;
  */
 public class Baraja implements Serializable{
     private Stack<Carta> pila = null;
-    
+    public boolean estaBarajado = false;
     public Baraja(){
         pila = new Stack<>();
+        estaBarajado = false;
     }
     
     /**
@@ -36,6 +37,13 @@ public class Baraja implements Serializable{
         }
     }
     /**
+     * Verifica si las cartas de la mesa esta barajada
+     * @return true si esta barajada, en otro caso false
+     */
+    public boolean estaBarajada(){
+        return this.estaBarajado;
+    }
+    /**
      * Metodo que baraja las cartas
      */
     public void barajar(){
@@ -49,26 +57,21 @@ public class Baraja implements Serializable{
             pila.add(c);
             System.out.println(c.toString());            
         }
+        this.estaBarajado = true;
     }
 
     public static void main(String arg[]){
         Archivo bd = new Archivo();
-        /*bd.guardarJugador(new Jugador("mikezen2", 310, "M"));
-        bd.guardarJugador(new Jugador("juan34", 1000, "M"));
-        bd.guardarJugador(new Jugador("pedro", 300, "M"));
-        bd.guardarJugador(new Jugador("maria", 0, "F"));
+        /*//ESTOS SON LOS JUGADORES ACTIVOS
+        bd.guardarJugador(new Jugador("mikezen", 1600, "M"));
+        bd.guardarJugador(new Jugador("juan", 1000, "M"));
+        bd.guardarJugador(new Jugador("pedro", 1500, "M"));
+        bd.guardarJugador(new Jugador("maria", 1200, "F"));
+        bd.guardarJugador(new Jugador("elena", 1000, "F"));
+        */
         
-        Jugador j = bd.getJugador("pedro");
-        
-        System.out.println("jug obt : " + j.toString());         
-       */
-        Jugador j =  bd.getJugador("mikezenk");
-        if(j == null){
-            System.out.println("jugador No encontrado");
-        }else{
-            System.out.println("jugador encontrado :" + j.toString());
-        }
-        
+        Jugador j = bd.getJugador("mikezen");
+               
     }
     
     /**
