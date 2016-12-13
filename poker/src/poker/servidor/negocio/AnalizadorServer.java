@@ -90,13 +90,33 @@ public class AnalizadorServer {
         PaquetePk p = new PaquetePk(jugador, accion);
         return Parser.objectToString(p);
     }
+    /**
+     * Metodo que empaqueta un mensaje para enviar a los clientes
+     * @param msg Mensaje a enviarse
+     * @param idMesa Identificador de mesa a donde va dirigido
+     * @return String es un paquete encapsulado
+     */
+    public String gEnviarMessage(String msg, int idMesa){
+        try {
+            String m = Parser.objectToString(msg);
+            String id = Parser.objectToString(idMesa);
+            LinkedList<String> lista = new LinkedList<>();
+            lista.add(m);
+            lista.add(id);
+            String r = Parser.objectToString(lista);
+            PaquetePk p = new PaquetePk(r, TipoPaquete.MESSAGE);
+            return Parser.objectToString(p);
+        } catch (Exception e) {
+            System.out.println("[AnalizadorServer.gEnviarMessage] " + e.getMessage());
+            return "";
+        }
+
+    }
     // METODOS PARA INVOCAR A LOS EVENTOS
     private void ingresarMesa(String data){
         
-        String mesa_jug = (String) Parser.stringToObject(data, String.class);
-        System.out.println("analizadorServer.ingresarMesa >id mes jug : " + mesa_jug);
-        String lista[] = mesa_jug.split("-");
-        
+        String mesa_jug = (String) Parser.stringToObject(data, String.class);        
+        String lista[] = mesa_jug.split("-");        
         Object[] listeners = listenerList.getListenerList();
         
         for (Object listener : listeners) {

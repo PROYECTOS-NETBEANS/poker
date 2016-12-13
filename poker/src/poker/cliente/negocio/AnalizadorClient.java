@@ -60,7 +60,10 @@ public class AnalizadorClient {
                 break;
             case INGRESAR_A_MESA:
                 this.onJugadorIngresaAMesa(p.getData());
-                break;                
+                break;
+            case MESSAGE:
+                this.onMessageServidor(p.getData());
+                break;
         }
     }
     private void nuevaMesa(String data){
@@ -86,7 +89,7 @@ public class AnalizadorClient {
                  ((OnPackageListenerClient) listeners[i]).onJugadorDesconectado(jg);
             }
         }
-    }    
+    }
     private void onJugadorIngresaAMesa(String data){
         try {
             LinkedList <String> lista = (LinkedList<String>) Parser.stringToObject(data, LinkedList.class);
@@ -105,7 +108,25 @@ public class AnalizadorClient {
         } catch (Exception e) {
             System.out.println("[AnalizadorClient.onJugadorIngresaAMesa]" + e.getMessage());
         }
+    }    
+    private void onMessageServidor(String data){
+        try {
+            LinkedList <String> lista = (LinkedList<String>) Parser.stringToObject(data, LinkedList.class);
 
+            String msg = (String) Parser.stringToObject((String) lista.get(0), String.class);
+
+            int idMesa = (Integer) Parser.stringToObject((String) lista.get(1), Integer.class);
+
+            Object[] listeners = listenerList.getListenerList();
+
+            for(int i = 0; i < listeners.length; i++){
+                if(listeners[i] instanceof OnPackageListenerClient){
+                     ((OnPackageListenerClient) listeners[i]).onMessageServidor(msg, idMesa);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("[AnalizadorClient.onMessageServidor]" + e.getMessage());
+        }
     }
     private void nuevoJugador(String data){
         
