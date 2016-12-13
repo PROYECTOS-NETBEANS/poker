@@ -20,7 +20,7 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     /**
      * Identificador de mesa actual
      */
-    private Mesa m = null;
+    private Mesa mesa = null;
     /**
      * El index de la mesa que esta actualmente en el boton
      */
@@ -41,9 +41,11 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     private void nextMesa(){
         if(indexMesa + 1 <= this.cliente.getMesas().size()){
             indexMesa++;
+            System.out.println("mesa index true " + String.valueOf(indexMesa));
             this.cargarMesa();
         }else{
             indexMesa = 1;
+            System.out.println("mesa index false " + String.valueOf(indexMesa));
             this.cargarMesa();
         }
     }
@@ -77,8 +79,8 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
                 while(it.hasNext()){
                     Mesa m = (Mesa) it.next();
                     if(i == this.indexMesa){
-                        this.m = m;
-                        this.pintarMesa(this.m);
+                        this.mesa = m;
+                        this.pintarMesa(this.mesa);
                     }
                     i++;
                 }
@@ -97,11 +99,8 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     public void pintarMesa(Mesa ms){
         this.btnMesaActual.setText("Mesa # " + String.valueOf(ms.getId()));
         this.btnMesaActual.setActionCommand("btnMesaActual-" + String.valueOf(ms.getId()));
-        if(ms.mesaEstaVacia()){
-            this.setEnabled(true);
-        }else{
-            this.setEnabled(false);
-        }
+        System.out.println("estado m : " + String.valueOf(ms.mesaEstaVacia()));
+        this.btnMesaActual.setEnabled(ms.mesaEstaVacia());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -234,10 +233,6 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
     }
 
     @Override
-    public void onMesaLlena(int idMesa, boolean estado) {
-        System.out.println("InicioViewer.onMesaLlena no implementado");
-    }
-    @Override
     public void onNuevoJugador(Jugador jg){
         System.out.println("InicioView.onNuevoJugador Llego jg " + jg.getNickName());
         this.addJugador(new UsuarioModel(jg.getId(), jg.getNickName()));
@@ -251,7 +246,19 @@ public class InicioView extends javax.swing.JPanel implements OnPackageListenerC
 
     @Override
     public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
-        System.out.println("InicioView.onJugadorIngresaAMesa no implementado");
+        this.actualizarEstadoMesa(m);
+    }
+    
+    public void actualizarEstadoMesa(Mesa m){
+        if(this.mesa.getId() == m.getId()){
+            this.btnMesaActual.setEnabled(m.mesaEstaVacia());
+            this.mesa = m;
+        }
+    }
+
+    @Override
+    public void onMessageServidor(String msg, int idMesa) {
+        System.out.println("[InicioView.onMessageServidor] no implementado");
     }
 }
 

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import poker.cliente.negocio.OnPackageListenerClient;
 import poker.cliente.negocio.PokerClient;
@@ -16,6 +17,7 @@ import poker.servidor.negocio.Mesa;
  */
 public class GameView extends JPanel implements OnPackageListenerClient{
 
+    private DefaultListModel mensajeModel = null;
     private PokerClient cliente = null;
     
     /**
@@ -46,6 +48,7 @@ public class GameView extends JPanel implements OnPackageListenerClient{
         this.cliente = cliente;
         this.punto = new Point(0, 10);
         this.vJugadores = new HashMap<>();
+        this.mensajeModel = new DefaultListModel();
     }
     /**
      * Metodo que carga todos los jugadores que hay en la mesa actualmente
@@ -84,7 +87,7 @@ public class GameView extends JPanel implements OnPackageListenerClient{
                 v.setBounds(punto.x, punto.y, anchoPanel, altoPanel);
                 v.setVisible(true);
                 this.add(v);
-                this.updateUI();
+                //this.updateUI();
                 this.vJugadores.put(jg.getId(), v);                
             }else{
                 // aqui podemos actualizar su jugador
@@ -104,6 +107,13 @@ public class GameView extends JPanel implements OnPackageListenerClient{
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstComentarios = new javax.swing.JList<>();
+        vListBotones = new javax.swing.JPanel();
+        btnSubir = new javax.swing.JButton();
+        btnIgualar = new javax.swing.JButton();
+        btnNoIr = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 51, 51));
 
@@ -114,40 +124,99 @@ public class GameView extends JPanel implements OnPackageListenerClient{
             }
         });
 
+        jScrollPane1.setViewportView(lstComentarios);
+
+        vListBotones.setBackground(new java.awt.Color(0, 51, 51));
+
+        btnSubir.setText("Subir 500$");
+
+        btnIgualar.setText("Igualar");
+        btnIgualar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIgualarActionPerformed(evt);
+            }
+        });
+
+        btnNoIr.setText("No ir");
+
+        javax.swing.GroupLayout vListBotonesLayout = new javax.swing.GroupLayout(vListBotones);
+        vListBotones.setLayout(vListBotonesLayout);
+        vListBotonesLayout.setHorizontalGroup(
+            vListBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vListBotonesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnIgualar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNoIr, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSubir)
+                .addGap(24, 24, 24))
+        );
+        vListBotonesLayout.setVerticalGroup(
+            vListBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vListBotonesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(vListBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSubir, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNoIr, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnIgualar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("Estado de Mesa");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(674, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(136, 136, 136))
+                .addGap(52, 52, 52))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(vListBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(313, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(426, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(260, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(vListBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jButton1)
+                        .addGap(19, 19, 19))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("nro de mesas : " + vJugadores.size());
+        System.out.println("nro de jug. : " + vJugadores.size());
         for (Iterator iterator = vJugadores.values().iterator(); iterator.hasNext();) {
             JugadorView vista = (JugadorView) iterator.next();
             System.out.println("idjug : " + vista.jugador.getNickName());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnIgualarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIgualarActionPerformed
+
     @Override
     public void onNuevaMesa(Mesa mesa) {
         System.out.println("GameView.onNuevaMesa no implementado");
-    }
-
-    @Override
-    public void onMesaLlena(int idMesa, boolean estado) {
-        System.out.println("GameView.onMesaLlena no implementado");
     }
 
     @Override
@@ -162,12 +231,28 @@ public class GameView extends JPanel implements OnPackageListenerClient{
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIgualar;
+    private javax.swing.JButton btnNoIr;
+    private javax.swing.JButton btnSubir;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lstComentarios;
+    private javax.swing.JPanel vListBotones;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
         System.out.println("GameView.onJugadorIngresaAMesa :" + jg.getNickName());
         cargarJugadores();
+    }
+
+    @Override
+    public void onMessageServidor(String msg, int idMesa) {
+        System.out.println("xxxx msg : " + msg + " idm : " + String.valueOf(idMesa));
+        if(this.cliente.getIdMesaDeJuego() == idMesa){
+            mensajeModel.addElement(msg);
+            lstComentarios.setModel(mensajeModel);
+        }
     }
 }
