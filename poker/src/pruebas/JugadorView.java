@@ -12,9 +12,6 @@ import poker.utils.datos.Constantes;
 public class JugadorView extends javax.swing.JPanel {
 
     public Jugador jugador = null;
-    private Constantes TIPO_JUGADOR = Constantes.TIPO_NORMAL;
-    private Constantes ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
-    private Constantes TURNO = Constantes.TURNO_NO_TOCA;
     /**
      * Creates new form JugadorView
      * @param jg Jugador a cual pertenece esta vista
@@ -22,7 +19,7 @@ public class JugadorView extends javax.swing.JPanel {
     public JugadorView(Jugador jg) {
         try {
             initComponents();
-            this.iniciar(jg);            
+            this.iniciar(jg);
         } catch (Exception e) {
             System.out.println("[JugadorView.JugadorView]" + e.getMessage());
         }
@@ -32,8 +29,6 @@ public class JugadorView extends javax.swing.JPanel {
             this.jugador = j;
             this.lNombreJugador.setText(this.jugador.getNickName().toUpperCase());            
             this.lMonto.setText("Monto act. : " + String.valueOf(this.jugador.getMonto()));
-            this.TIPO_JUGADOR = Constantes.TIPO_NORMAL;
-            this.ESTADO_CONEXION = Constantes.ESTADO_CONECTADO;
         } catch (Exception e) {
             System.out.println("[JugadorView.iniciar] " + e.getMessage());
         }
@@ -41,16 +36,13 @@ public class JugadorView extends javax.swing.JPanel {
     }
     public void actualizarDatos(int monto, Constantes tipoJug, Constantes estadoConex, Constantes turno){
         this.lMonto.setText("Monto act. : " + String.valueOf(monto));
-        this.TIPO_JUGADOR = tipoJug;
-        this.ESTADO_CONEXION = estadoConex;
-        this.TURNO = turno;
         this.updateComponentes();
     }
     private void updateComponentes(){
         ImageIcon image;
         Icon ico;
-        if(this.TURNO == Constantes.TURNO_TOCA)
-            image = new ImageIcon(getClass().getResource("/poker/activo.png"));       
+        if(this.jugador.TURNO == Constantes.TURNO_TOCA)
+            image = new ImageIcon(getClass().getResource("/poker/activo.png"));
         else{
             image = new ImageIcon(getClass().getResource("/poker/inactivo.png"));
         }
@@ -58,7 +50,7 @@ public class JugadorView extends javax.swing.JPanel {
         ico = new ImageIcon(image.getImage());
         this.lTurno.setIcon(ico);
         // ahora cambiamos el icono de tipo jugador
-        switch(this.TIPO_JUGADOR){
+        switch(this.jugador.TIPO_JUGADOR){
             case TIPO_CIEGA_GRANDE:
                 image = new ImageIcon(getClass().getResource("/poker/cg.png"));
                 break;
@@ -76,7 +68,7 @@ public class JugadorView extends javax.swing.JPanel {
         this.lTipo.setIcon(ico);
         
         // ahora cambiamos el estado de conexion
-        switch(this.ESTADO_CONEXION){
+        switch(this.jugador.ESTADO_CONEXION){
             case ESTADO_CONECTADO:
                 image = new ImageIcon(getClass().getResource("/poker/avatar1.png"));
                 break;
@@ -147,7 +139,7 @@ public class JugadorView extends javax.swing.JPanel {
         lTurno.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/inactivo.png"))); // NOI18N
         add(lTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 80));
 
-        lTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/dealer.png"))); // NOI18N
+        lTipo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/poker/cartas/normal.png"))); // NOI18N
         add(lTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
