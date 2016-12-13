@@ -5,13 +5,20 @@ import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.event.EventListenerList;
 import poker.servidor.datos.*;
+import poker.utils.datos.Constantes;
 /**
  * Clase principal que implementá el juego
  * @author Alex Limbert Yalusqui <limbertyalusqui@gmail.com>
  */
-public class Juego implements OnPackageReadListenerServer{
+public class JuegoServer implements OnPackageReadListenerServer{
     private Archivo bd = null;
+    /**
+     * Lista de mesas <Id de mesa, Mesa>
+     */
     private HashMap<Integer, Mesa> mesas = null;
+    /**
+     * Lista de jugadores <id de jugador, jugador>
+     */
     private HashMap<Integer, Jugador> jugadores = null;
     
     /**
@@ -21,7 +28,7 @@ public class Juego implements OnPackageReadListenerServer{
     
     private EventListenerList listenerList = null;
     
-    public Juego(){
+    public JuegoServer(){
         this.mesas = new HashMap<>();
         this.jugadores = new HashMap<>();
         this.idMesa = 1;
@@ -59,11 +66,11 @@ public class Juego implements OnPackageReadListenerServer{
         }
     }
     /**
-     * Elimina un jugador del juego y mesa
+     * Elimina un jugador del juego y de la mesa
      * @param nick nombre de jugador a eliminar
      * @return Retorno el jugador que se elimino, en otro caso retorna nulo
      */
-    public Jugador deletejugador(String nick){
+    public Jugador deletejugador1(String nick){
         try{
             Jugador jg = bd.getJugador(nick);
 
@@ -84,14 +91,66 @@ public class Juego implements OnPackageReadListenerServer{
         }
     }
     /**
+     * Cambia el estado de la conexion de la conexion
+     * @param idJugador Identificador de jugador
+     * @param estado Estado de conexion.
+     */
+    public void setEstadoConexionJugador(int idJugador, Constantes estado){
+        Jugador j = jugadores.get(idJugador);
+        j.setEstadoJugador(estado);
+        jugadores.put(j.getId(), j);
+        this.actualizarJugadorInMesa(j);
+    }
+    public void setEstadoTurno(int idJugador, Constantes turno){
+        Jugador j = jugadores.get(idJugador);
+        j.setTurnoJugador(turno);
+        jugadores.put(j.getId(), j);
+    }
+    /**
+     * Actulaliza un jugador en todas las mesas
+     * @param j jugador que se va actualizar
+     */
+    public void actualizarJugadorInMesa(Jugador j){
+        for (Iterator iterator = this.mesas.values().iterator(); iterator.hasNext();) {
+            Mesa m = (Mesa) iterator.next();
+            if(m.getJugadores().containsKey(j.getId())){
+                // actualizo la mesa del jugador
+                m.setJugador(j);
+                this.mesas.put(m.getId(), m);
+            }
+        }
+    }
+    /**
+     * Busca el identificador de jugador en base al nombre
+     * @param userName Nombre de usuario a buscar
+     * @return Identificador primario de jugador
+     */
+    public int getIdJugadorByUserName(String userName){
+        try {
+            return bd.getJugador(userName).getId();
+        } catch (Exception e) {
+            System.out.println("[JuegoServer.getJugadorByUserName] " + e.getMessage());
+            return -1;
+        }
+    }
+    /**
      * Crea una mesa vacia e inicializa sus configuraciones por defecto
      * @return Devuelve la mesa creada
      */
     public Mesa crearMesa(){
-        Mesa m = new Mesa(this.idMesa, Utils.nroMaximoJugadores, 10);
-        mesas.put(idMesa, m);
-        this.idMesa++;
-        return m;
+        try {
+            Mesa m = new Mesa(this.idMesa, Utils.nroMaximoJugadores, 
+                                Utils.nroMaximoJugadores, Utils.ciegaAlta, 
+                                Utils.ciegaPequeña, Utils.nroMinimoJugadores);
+            mesas.put(idMesa, m);
+            this.idMesa++;
+            return m;
+        } catch (Exception e) {
+            System.out.println("[JuegoServer.crearMesa] " + e.getMessage());
+            return null;
+        }
+
+
     }
     /**
      * Cuando se inicia la partida se asigna el dealer y los
@@ -136,10 +195,9 @@ public class Juego implements OnPackageReadListenerServer{
                 Mesa m = this.mesas.get(idMesa);
                 m.setJugador(jugadores.get(idJugador));
                 this.mesas.put(m.getId(), m);
-                // si se ingreso la mesa, 
-                // entonces hay que enviar el jugador a todas las mesas
-                this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);
-                
+                System.out.println("mensage se enviara a : " + jugadores.get(idJugador).getNickName());
+                this.onEnviarMessage("Ingreso a la mesa : " + jugadores.get(idJugador).getNickName()  , idMesa);
+                this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);                
             }else{
                 System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
             }            
@@ -160,6 +218,7 @@ public class Juego implements OnPackageReadListenerServer{
             }
         }
     }
+    
     private void onEnviarJugadorIngresaMesa(Jugador j, Mesa m){
         
         Object[] listeners = listenerList.getListenerList();
@@ -170,4 +229,14 @@ public class Juego implements OnPackageReadListenerServer{
             }
         }
     }
+    private void onEnviarMessage(String msg, int idMesa){
+        
+        Object[] listeners = listenerList.getListenerList();
+        
+        for (Object listener : listeners) {
+            if (listener instanceof OnPackageSendListenerServer) {
+                ((OnPackageSendListenerServer) listener).onEnviarMessage(msg, idMesa);
+            }
+        }
+    }    
 }

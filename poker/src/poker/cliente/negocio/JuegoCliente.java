@@ -109,14 +109,6 @@ public class JuegoCliente implements OnPackageListenerClient {
 
     }
     /**
-     * Cambia de Estado a la mesa
-     * @param idMesa Identificador primario de mesa
-     * @param estado Estado de mesa
-     */
-    private void setEstadoMesa(int idMesa, boolean estado){
-        this.mesas.get(idMesa).setEstadoMesa(estado);                
-    }
-    /**
      * Adiciona un jugador a la lista de jugadores
      * Ademas verifica si el nick de este jugador es igual al jugador que llega.
      * @param jg Jugador que llega del servidor
@@ -141,21 +133,17 @@ public class JuegoCliente implements OnPackageListenerClient {
     private void ingresarJugadorAMesa(Jugador j, Mesa m){
         try {
             if(this.mesa == null){
-                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] PPPPPPPP");
                if(this.player.getId() == j.getId()){
                    this.mesa = m;
                }
             }
             if(this.mesa !=null){
-                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] QQQQQQQQ");
                 if(this.mesa.getId() == m.getId()){
                     this.mesa = m;
                     this.mesa.setJugador(j);
                 }
-                System.out.println(" [JuegoCliente.ingresarJugadorAMesa] XXXXX");
-                this.mesas.put(m.getId(), m);                
             }
-
+            this.mesas.put(m.getId(), m);
         } catch (Exception e) {
             System.out.println("[JuegoCliente.ingresarJugadorAMesa]" + e.getMessage());
         }
@@ -191,11 +179,6 @@ public class JuegoCliente implements OnPackageListenerClient {
     }
 
     @Override
-    public void onMesaLlena(int idMesa, boolean estado) {
-        this.setEstadoMesa(idMesa, estado);
-    }
-
-    @Override
     public void onNuevoJugador(Jugador jg) {
         System.out.println("JuegoCliente.onNuevoJugador ok");
         this.addJugador(jg);
@@ -211,5 +194,10 @@ public class JuegoCliente implements OnPackageListenerClient {
     public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
         this.ingresarJugadorAMesa(jg, m);
         System.out.println("[JuegoCliente.onJugadorIngresaAMesa] ok");
+    }
+
+    @Override
+    public void onMessageServidor(String msg, int idMesa) {
+        System.out.println("[JuegoCliente.onMessageServidor] no implementado !!");
     }
 }
