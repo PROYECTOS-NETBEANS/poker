@@ -56,7 +56,7 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
     @Override
     public void onDisconnect(Object o, OnConnectedEventServer data, String userName) {
         if(data.getClientDisconnect()){
-            this.usuarioDesconectadoEliminad(data.getOrigenClient(), userName);
+            this.usuarioDesconectado(data.getOrigenClient(), userName);
         }
     }
 
@@ -69,11 +69,12 @@ public class ServerPoker implements OnConnectedListenerServer, OnPackageSendList
      * @param id Identificador unico de cliente en el socket
      * @param userName Nombre de usuario
      */
-    private void usuarioDesconectadoEliminad(int id, String userName){        
-        Jugador jg = game.deletejugador(userName);
-        if(jg != null){
-            JSocketServer.removeClient(id);
-            this.enviarJugadorDesconectado(jg);
+    private void usuarioDesconectado(int id, String userName){        
+        int idJg = game.getIdJugadorByUserName(userName);
+        if(idJg > 0){
+            JSocketServer.removeClient(id);            
+            this.game.setEstadoConexionJugador(idJg, Constantes.ESTADO_DESCONECTADO);
+            this.enviarJugadorDesconectado(game.getJugadores().get(idJg));
         }
     }
     /**

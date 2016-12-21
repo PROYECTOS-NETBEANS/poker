@@ -91,15 +91,20 @@ public class JuegoServer implements OnPackageReadListenerServer{
         }
     }
     /**
-     * Cambia el estado de la conexion de la conexion
+     * Cambia el estado de la conexion del jugador
      * @param idJugador Identificador de jugador
      * @param estado Estado de conexion.
      */
     public void setEstadoConexionJugador(int idJugador, Constantes estado){
-        Jugador j = jugadores.get(idJugador);
-        j.setEstadoJugador(estado);
-        jugadores.put(j.getId(), j);
-        this.actualizarJugadorInMesa(j);
+        try {
+            Jugador j = jugadores.get(idJugador);
+            j.setEstadoJugador(estado);
+            jugadores.put(j.getId(), j);
+            this.actualizarJugadorInMesa(j);
+        } catch (Exception e) {
+            System.out.println("[JuegoServer.setEstadoConexionJugador]"+ e.getMessage());
+        }
+
     }
     public void setEstadoTurno(int idJugador, Constantes turno){
         Jugador j = jugadores.get(idJugador);
@@ -197,12 +202,26 @@ public class JuegoServer implements OnPackageReadListenerServer{
                 this.mesas.put(m.getId(), m);
                 System.out.println("mensage se enviara a : " + jugadores.get(idJugador).getNickName());
                 this.onEnviarMessage("Ingreso a la mesa : " + jugadores.get(idJugador).getNickName()  , idMesa);
-                this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);                
+                this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);
+                    aqui tengo que enviar algo 
             }else{
                 System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
-            }            
+            }
         }catch(Exception e){
             System.out.println("[Juego.ingresarJugadorAMesa]" + e.getMessage());
+        }
+    }
+    /**
+     * inicializa la partida si cumple el minimo de jugadores
+     * es decir que baraja y setea los dealer y ciegas
+     * @param m Mesa donde se inicializa la partida
+     */
+    public void inicializarPartida(Mesa m){
+        if(!m.partidaEnCurso()){
+            if(m.mesaPuedeIniciarPartida()){
+                m.inicializarPartida();
+                this.onEnviarMessage(".:Empezara la partida:.", idMesa);
+            }
         }
     }
     /**

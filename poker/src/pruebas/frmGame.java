@@ -157,9 +157,9 @@ public class frmGame extends javax.swing.JFrame implements ActionListener, OnCon
                 // es el boton de ingresar a mesa                
                 System.out.println("actionPerformed : " + btn[1]);
                 int idMesa = Integer.valueOf(btn[1]);
-                if(idMesa > 0){
-                    cliente.ingresarMesa(idMesa);
+                if(idMesa > 0){                    
                     this.visualizarVistaGame();
+                    cliente.ingresarMesa(idMesa);
                     this.setVisibleVistaInicial(false);
                 }else{
                     System.out.println("[frmGame.actionPerformed] No hay idMesa");

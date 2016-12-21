@@ -275,12 +275,6 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
         cargarmesa();
         pintarmesa();
     }
-
-    @Override
-    public void onMesaLlena(int idMesa, boolean estado) {
-        
-    }
-
     @Override
     public void onNuevoJugador(Jugador jg) {
        System.out.print("entro a un nuevo  " + jg.getNickName());
@@ -298,6 +292,11 @@ public class Clientesymesas extends javax.swing.JPanel implements OnPackageListe
     public void onJugadorIngresaAMesa(Jugador jg, Mesa m) {
         System.out.println("[clientesymesa.onJugadorIngresaAMesa]");
         this.pintarmesa();
+    }
+
+    @Override
+    public void onMessageServidor(String msg, int idMesa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

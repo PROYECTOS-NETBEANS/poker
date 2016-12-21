@@ -86,9 +86,14 @@ public class AnalizadorServer {
      * @return Strin es el resultado de haber sido encapsulado
      */
     public String gEnviarJugador(Jugador j, TipoPaquete accion){
-        String jugador = Parser.objectToString(j);
-        PaquetePk p = new PaquetePk(jugador, accion);
-        return Parser.objectToString(p);
+        try {
+            String jugador = Parser.objectToString(j);
+            PaquetePk p = new PaquetePk(jugador, accion);
+            return Parser.objectToString(p);            
+        } catch (Exception e) {
+            System.out.println("[AnalizadorServer.gEnviarJugador]" + e.getMessage());
+            return "";
+        }
     }
     /**
      * Metodo que empaqueta un mensaje para enviar a los clientes

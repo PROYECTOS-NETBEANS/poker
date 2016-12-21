@@ -49,6 +49,8 @@ public class GameView extends JPanel implements OnPackageListenerClient{
         this.punto = new Point(0, 10);
         this.vJugadores = new HashMap<>();
         this.mensajeModel = new DefaultListModel();
+        
+        //this.cargarJugadores();
     }
     /**
      * Metodo que carga todos los jugadores que hay en la mesa actualmente
@@ -80,7 +82,6 @@ public class GameView extends JPanel implements OnPackageListenerClient{
      */
     private void addJugador(Jugador jg){
         try {
-            System.out.println("nombre xxxxxx: " + jg.getNickName());
             if(!this.vJugadores.containsKey(jg.getId())){
                 JugadorView v = new JugadorView(jg);
                 this.calcularPuntos();
@@ -203,7 +204,8 @@ public class GameView extends JPanel implements OnPackageListenerClient{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("nro de jug. : " + vJugadores.size());
+        System.out.println("nro de jug. panel : " + vJugadores.size());
+        System.out.println("cliente nro de jug. : " + cliente.getJugadoresDeMesa().size());
         for (Iterator iterator = vJugadores.values().iterator(); iterator.hasNext();) {
             JugadorView vista = (JugadorView) iterator.next();
             System.out.println("idjug : " + vista.jugador.getNickName());
@@ -226,7 +228,10 @@ public class GameView extends JPanel implements OnPackageListenerClient{
 
     @Override
     public void onJugadorDesconectado(Jugador jg) {
-        System.out.println("GameView.onJugadorDesconectado no implementado");
+        if(cliente.getJugadoresDeMesa().containsKey(jg.getId())){
+            this.setMessage(jg.getNickName() + " acaba de desconectarse");
+        }
+        
     }
 
 
@@ -251,8 +256,11 @@ public class GameView extends JPanel implements OnPackageListenerClient{
     public void onMessageServidor(String msg, int idMesa) {
         System.out.println("xxxx msg : " + msg + " idm : " + String.valueOf(idMesa));
         if(this.cliente.getIdMesaDeJuego() == idMesa){
-            mensajeModel.addElement(msg);
-            lstComentarios.setModel(mensajeModel);
+            this.setMessage(msg);
         }
+    }
+    private void setMessage(String ms){
+        mensajeModel.addElement(ms);
+        lstComentarios.setModel(mensajeModel);
     }
 }

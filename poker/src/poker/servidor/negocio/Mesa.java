@@ -53,7 +53,11 @@ public class Mesa {
      * Nro minimo de jugadores para empezar la partida
      */
     private int nroJugMin = 0;
-    
+    /**
+     * Estado de mesa ::: cuando ya hay una partida 
+     * en curso es true, en otro caso es false
+     */
+    private boolean estadoMesa = false;
     /**
      * Inicializacion con la configuraciones iniciales
      * @param id Identificador unico de mesa
@@ -75,6 +79,7 @@ public class Mesa {
         this.ciegaAlta = ciegaAlta;
         this.ciegaBaja = ciegaBaja;
         this.manosJugadores = new HashMap<>();
+        this.estadoMesa = false;
     }
     /**
      * Devuelve identificador unico de la mesa
@@ -82,6 +87,20 @@ public class Mesa {
      */
     public int getId(){
         return this.id;
+    }
+    /**
+     * cambia el estado de mesa True si esta en curso, en otro caso en falso
+     * @param estado 
+     */
+    public void setEstadoDeMesa(boolean estado){
+        this.estadoMesa = estado;
+    }
+    /**
+     * Verifica si la mesa tiene una partida en curso
+     * @return true si ya esta iniciada la partida, falso en otro caso
+     */
+    public boolean partidaEnCurso(){
+        return this.estadoMesa;
     }
     /**
      * metodo que adiciona el jugador a la mesa.
@@ -128,10 +147,24 @@ public class Mesa {
         return estado;
     }
     /**
-     * Cuando se cumple la condicion de tener el minimo de jugadores
-     * se inicia la partida automaticamente
+     * Verifica si la mesa tiene los jugadores 
+     * suficientes para empezar la partida
+     * @return true si tiene los jugadores minimos, falso en otro caso
      */
-    public void iniciarPartida(){
+    public boolean mesaPuedeIniciarPartida(){
+        try {
+            return (this.getJugadores().size() >= this.nroJugMin);
+        } catch (Exception e) {
+            System.out.println("[Mesa.mesaPuedeIniciarPartida] " + e.getMessage());
+            return false;
+        }
+        
+    }
+    /**
+     * Cuando se cumple la condicion de tener el minimo de jugadores
+     * se iniciliza las configuraciones de la partida. como las barajas, deales, etc.
+     */
+    public void inicializarPartida(){
         try {
             if(this.getJugadores().size() >= this.nroJugMin){
                 if(!this.baraja.estaBarajada()){
@@ -159,7 +192,7 @@ public class Mesa {
      * Metodo que configura que jugadores seran los dealer
      * ciega alta y ciega pequeña
      */
-    public void actualizarTipoJugadores(){
+    private void actualizarTipoJugadores(){
         if(this.getJugadores().size() >= this.nroJugMin){
             System.out.println("[Mesa.actualizarTipoJugadores] no se esta aplicando las ciegas dealer" );
         }

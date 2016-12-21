@@ -41,7 +41,7 @@ public class JugadorView extends javax.swing.JPanel {
     private void updateComponentes(){
         ImageIcon image;
         Icon ico;
-        if(this.jugador.TURNO == Constantes.TURNO_TOCA)
+        if(this.jugador.getTurnoJugador() == Constantes.TURNO_TOCA)
             image = new ImageIcon(getClass().getResource("/poker/activo.png"));
         else{
             image = new ImageIcon(getClass().getResource("/poker/inactivo.png"));
@@ -50,7 +50,7 @@ public class JugadorView extends javax.swing.JPanel {
         ico = new ImageIcon(image.getImage());
         this.lTurno.setIcon(ico);
         // ahora cambiamos el icono de tipo jugador
-        switch(this.jugador.TIPO_JUGADOR){
+        switch(this.jugador.getTipoJugador()){
             case TIPO_CIEGA_GRANDE:
                 image = new ImageIcon(getClass().getResource("/poker/cg.png"));
                 break;
@@ -68,7 +68,7 @@ public class JugadorView extends javax.swing.JPanel {
         this.lTipo.setIcon(ico);
         
         // ahora cambiamos el estado de conexion
-        switch(this.jugador.ESTADO_CONEXION){
+        switch(this.jugador.getEstadoJugador()){
             case ESTADO_CONECTADO:
                 image = new ImageIcon(getClass().getResource("/poker/avatar1.png"));
                 break;
