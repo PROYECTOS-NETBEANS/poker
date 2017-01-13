@@ -203,7 +203,7 @@ public class JuegoServer implements OnPackageReadListenerServer{
                 System.out.println("mensage se enviara a : " + jugadores.get(idJugador).getNickName());
                 this.onEnviarMessage("Ingreso a la mesa : " + jugadores.get(idJugador).getNickName()  , idMesa);
                 this.onEnviarJugadorIngresaMesa(jugadores.get(idJugador), m);
-                    aqui tengo que enviar algo 
+                    // aqui tengo que enviar algo 
             }else{
                 System.out.println("[Juego.ingresarJugadorAMesa] No se encontro mesa o jugador para adicionar!!");
             }
